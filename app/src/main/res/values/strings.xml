@@ -1,6 +1,10 @@
 <resources>
+    <!-- Settings -->
     <string name="app_name">DOT</string>
-
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <!-- MainActivity-->
+    <string name="title_activity_nearby">NearbyActivity</string>
+    <string name="nearby">Nearby Place</string>
+    <string name="localTopics">Local Topics</string>
 </resources>
