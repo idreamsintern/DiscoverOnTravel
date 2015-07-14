@@ -1,9 +1,33 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.example.idreams.dot.NearbyActivity">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
-</RelativeLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="2.6">
+
+        <fragment
+            android:name="com.example.idreams.dot.NearbyCategoryFragment"
+            android:id="@+id/nearby_category_fragment"
+            android:layout_weight="1.6"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <fragment
+            android:name="com.example.idreams.dot.ShowNearbyFragment"
+            android:id="@+id/show_nearby_fragment"
+            android:layout_weight="1.0"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <!--<fragment android:name="com.example.android.fragments.ArticleFragment"-->
+    <!--android:id="@+id/article_fragment"-->
+    <!--android:layout_weight="2"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="match_parent" />-->
+
+</LinearLayout>
