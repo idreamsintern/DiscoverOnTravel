@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".NearbyActivity"
+            android:name=".Nearby.NearbyActivity"
             android:label="@string/title_activity_nearby" >
         </activity>
 

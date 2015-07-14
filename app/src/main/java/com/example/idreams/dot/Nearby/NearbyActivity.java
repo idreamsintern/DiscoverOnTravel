@@ -1,12 +1,15 @@
-package com.example.idreams.dot;
+package com.example.idreams.dot.Nearby;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.idreams.dot.R;
 
-public class NearbyActivity extends AppCompatActivity {
+
+public class NearbyActivity extends AppCompatActivity implements NearbyCategoryFragment.CategoryListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,5 +37,12 @@ public class NearbyActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void sendCategory(String text) {
+        FragmentManager fm = getSupportFragmentManager();
+        ShowNearbyFragment showNearbyFragment = (ShowNearbyFragment) fm.findFragmentById(R.id.show_nearby_fragment);
+        showNearbyFragment.changeValue(text);
     }
 }

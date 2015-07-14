@@ -9,13 +9,18 @@
     <string name="localTopics">Local Topics</string>
     <string name="title_activity_tab">TabActivity</string>
 
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <!-- NearbyActivity-->
+    <string name="nearby_settings">Setting</string>
+    <string-array name="category_arrays">
+        <item>Category</item>
+        <item>Food</item>
+    </string-array>
 
-    <string name="hello_world">Hello world!</string>
+    <string-array name="Food">
+        <item></item>
+    </string-array>
+
+    <!-- MapActivity-->
     <string name="title_activity_maps">Map</string>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
