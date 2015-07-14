@@ -1,7 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    android:layout_weight="20.8">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -24,10 +25,11 @@
             android:layout_height="match_parent" />
     </LinearLayout>
 
-    <!--<fragment android:name="com.example.android.fragments.ArticleFragment"-->
-    <!--android:id="@+id/article_fragment"-->
-    <!--android:layout_weight="2"-->
-    <!--android:layout_width="0dp"-->
-    <!--android:layout_height="match_parent" />-->
+    <fragment
+        android:name="com.example.idreams.dot.NearbyScheduleBar"
+        android:id="@+id/nearby_shchedule_bar_fragment"
+        android:layout_weight="18.2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>

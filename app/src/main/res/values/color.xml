@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <item name="color1" type="color">#EFECCA</item>
+    <item name="color2" type="color">#E6E2AF</item>
+    <item name="color3" type="color">#A7A37E</item>
+    <item name="color4" type="color">#046380</item>
+    <item name="color5" type="color">#002F2F</item>
+
     <item name="blue" type="color">#FF33B5E5</item>
     <item name="purple" type="color">#FFAA66CC</item>
     <item name="green" type="color">#FF99CC00</item>
