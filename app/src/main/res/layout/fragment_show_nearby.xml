@@ -5,9 +5,8 @@
     android:background="@color/color1"
     tools:context="com.example.idreams.dot.nearby.ShowNearbyFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="test show"
-        android:id="@+id/textView" />
+    <ListView
+        android:id="@+id/show_nearby_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

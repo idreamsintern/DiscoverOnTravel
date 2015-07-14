@@ -110,7 +110,6 @@ public class NearbyCategoryFragment extends Fragment {
         RequestParams params = new RequestParams();
         params.put("category", currentCategory);
         params.put("keyword", "肉");
-        params.put("coordinates", "25, 121");
         params.put("coordinates", "25.041399,121.554233");
         params.put("radius", 100);   // radius = 100km
         params.put("limit", 20);     // limit = 20
