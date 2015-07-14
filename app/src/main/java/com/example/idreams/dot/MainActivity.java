@@ -7,7 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.example.idreams.dot.Nearby.NearbyActivity;
+import com.example.idreams.dot.nearby.NearbyActivity;
 
 
 public class MainActivity extends AppCompatActivity {

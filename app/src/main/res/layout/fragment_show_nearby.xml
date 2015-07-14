@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color1"
-    tools:context="com.example.idreams.dot.Nearby.ShowNearbyFragment">
+    tools:context="com.example.idreams.dot.nearby.ShowNearbyFragment">
 
     <TextView
         android:layout_width="wrap_content"

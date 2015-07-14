@@ -11,14 +11,14 @@
         android:layout_weight="2.6">
 
         <fragment
-            android:name="com.example.idreams.dot.Nearby.NearbyCategoryFragment"
+            android:name="com.example.idreams.dot.nearby.NearbyCategoryFragment"
             android:id="@+id/nearby_category_fragment"
             android:layout_weight="1.6"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
         <fragment
-            android:name="com.example.idreams.dot.Nearby.ShowNearbyFragment"
+            android:name="com.example.idreams.dot.nearby.ShowNearbyFragment"
             android:id="@+id/show_nearby_fragment"
             android:layout_weight="1.0"
             android:layout_width="match_parent"
@@ -26,7 +26,7 @@
     </LinearLayout>
 
     <fragment
-        android:name="com.example.idreams.dot.Nearby.NearbyScheduleBar"
+        android:name="com.example.idreams.dot.nearby.NearbyScheduleBar"
         android:id="@+id/nearby_shchedule_bar_fragment"
         android:layout_weight="18.2"
         android:layout_width="match_parent"

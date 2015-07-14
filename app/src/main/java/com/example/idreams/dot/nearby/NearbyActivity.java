@@ -1,4 +1,4 @@
-package com.example.idreams.dot.Nearby;
+package com.example.idreams.dot.nearby;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
