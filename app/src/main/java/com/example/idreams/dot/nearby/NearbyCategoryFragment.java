@@ -57,10 +57,11 @@ public class NearbyCategoryFragment extends Fragment {
     private void setView(View view) {
         categorySpinner = (Spinner) view.findViewById(R.id.categorySpinner);
         final String[] categories = getResources().getStringArray(R.array.category_arrays);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, categories);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, categories);
 
         categoryList = (ListView) view.findViewById(R.id.category_list);
-        String[] food = getResources().getStringArray(R.array.Food);
+        final String[] food = getResources().getStringArray(R.array.Food);
+        final String[] travel = getResources().getStringArray(R.array.Travel);
         ArrayAdapter<String> itemsAdapter =
                 new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, food);
         categoryList.setAdapter(itemsAdapter);
@@ -73,6 +74,16 @@ public class NearbyCategoryFragment extends Fragment {
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         int index = parent.getSelectedItemPosition();
                         currentCategory = categories[index];
+
+                        if (index == 1) {
+                            ArrayAdapter<String> itemsAdapter =
+                                    new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, food);
+                            categoryList.setAdapter(itemsAdapter);
+                        } else if(index == 2) {
+                            ArrayAdapter<String> itemsAdapter =
+                                    new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, travel);
+                            categoryList.setAdapter(itemsAdapter);
+                        }
                     }
 
                     @Override
