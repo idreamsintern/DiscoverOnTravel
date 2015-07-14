@@ -7,4 +7,12 @@
     <string name="title_activity_nearby">NearbyActivity</string>
     <string name="nearby">Nearby Place</string>
     <string name="localTopics">Local Topics</string>
+    <string name="title_activity_tab">TabActivity</string>
+
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

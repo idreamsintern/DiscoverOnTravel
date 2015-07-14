@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void localBtn(View view) {
-        Intent intent = new Intent(this, NearbyActivity.class);
+        Intent intent = new Intent(this, MapsActivity.class);
         startActivity(intent);
     }
 
