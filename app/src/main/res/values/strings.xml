@@ -21,5 +21,6 @@
 
     <!-- LocalTopics-->
     <string name="title_activity_local_topics">LocalTopicsActivity</string>
+    <string name="title_activity_topic_list">TopicList</string>
 
 </resources>
