@@ -48,6 +48,10 @@
             android:name=".chat.ChatActivity"
             android:label="@string/app_name">
         </activity>
+        <activity
+            android:name=".localtopics.LocalTopicsActivity"
+            android:label="@string/title_activity_local_topics" >
+        </activity>
     </application>
 
 </manifest>

@@ -38,5 +38,7 @@
     <!--ChatActivity-->
     <string name="title_activity_chat">Chat</string>
 
+    <!-- LocalTopics-->
+    <string name="title_activity_local_topics">LocalTopicsActivity</string>
 
 </resources>
