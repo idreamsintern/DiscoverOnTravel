@@ -40,9 +40,9 @@ public class NearbyActivity extends AppCompatActivity implements NearbyCategoryF
     }
 
     @Override
-    public void sendCategory(String text) {
+    public void sendCategory(String category, String keyword) {
         FragmentManager fm = getSupportFragmentManager();
         ShowNearbyFragment showNearbyFragment = (ShowNearbyFragment) fm.findFragmentById(R.id.show_nearby_fragment);
-        showNearbyFragment.changeValue(text);
+        showNearbyFragment.changeValue(category, keyword);
     }
 }

@@ -3,6 +3,7 @@ package com.example.idreams.dot.nearby;
 import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,8 +31,9 @@ public class NearbyCategoryFragment extends Fragment {
     private TextView settingTextview;
     private ListView categoryList;
 
-    private static final String url = "fb_checkin_search";
+    private int categoryIndex;
     private String currentCategory = "Category";
+    private String currentKeyword = "Keyword";
 
     @Override
     public void onAttach(Activity activity) {
@@ -60,26 +62,47 @@ public class NearbyCategoryFragment extends Fragment {
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, categories);
 
         categoryList = (ListView) view.findViewById(R.id.category_list);
+        final String[] stringDefualt = {};
         final String[] food = getResources().getStringArray(R.array.Food);
         final String[] travel = getResources().getStringArray(R.array.Travel);
         ArrayAdapter<String> itemsAdapter =
-                new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, food);
+                new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, stringDefualt);
         categoryList.setAdapter(itemsAdapter);
 
+        categoryList.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        int index = position;
+                        Log.e(LOG_TAG, categoryIndex + "");
+                        if (categoryIndex == 1) {
+                            currentKeyword = getResources().getStringArray(R.array.Food)[index];
+                            Log.e(LOG_TAG, currentCategory + " 1: " + currentKeyword);
+                            activityCallBack.sendCategory(currentCategory, currentKeyword);
+                        } else if (categoryIndex == 2) {
+                            currentKeyword = getResources().getStringArray(R.array.Travel)[index];
+                            activityCallBack.sendCategory(currentCategory, currentKeyword);
+                            Log.e(LOG_TAG, currentCategory + " 2: " + currentKeyword);
+                        }
+                    }
+                }
+        );
         categorySpinner.setAdapter(adapter);
         categorySpinner.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
 
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        int index = parent.getSelectedItemPosition();
-                        currentCategory = categories[index];
+                        categoryIndex = parent.getSelectedItemPosition();
 
-                        if (index == 1) {
+                        if (categoryIndex == 1) {
+                            currentCategory = categories[categoryIndex];
                             ArrayAdapter<String> itemsAdapter =
                                     new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, food);
                             categoryList.setAdapter(itemsAdapter);
-                        } else if(index == 2) {
+                        } else if (categoryIndex == 2) {
+                            currentCategory = categories[categoryIndex];
                             ArrayAdapter<String> itemsAdapter =
                                     new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, travel);
                             categoryList.setAdapter(itemsAdapter);
@@ -97,37 +120,12 @@ public class NearbyCategoryFragment extends Fragment {
         settingTextview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activityCallBack.sendCategory("test");
+                activityCallBack.sendCategory("test", "");
             }
         });
     }
 
     public interface CategoryListener {
-        void sendCategory(String text);
-    }
-
-    private void getData() {
-        RequestParams params = new RequestParams();
-        params.put("category", currentCategory);
-        params.put("keyword", "肉");
-        params.put("coordinates", "25.041399,121.554233");
-        params.put("radius", 100);   // radius = 100km
-        params.put("limit", 20);     // limit = 20
-        params.put("period", "month");
-        params.put("sort", "upcount");
-        params.put("token", "api_doc_token");
-
-
-        RestClient.post(url, params, new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
-            }
-        });
+        void sendCategory(String category, String keyword);
     }
 }

@@ -6,7 +6,7 @@ package com.example.idreams.dot.utils;
 import com.loopj.android.http.*;
 
 public class RestClient {
-    private static final String BASE_URL = "http://api.ser.ideas.iii.org.tw:80/api/";
+    public static final String BASE_URL = "http://api.ser.ideas.iii.org.tw:80/api/";
 
     private static AsyncHttpClient client = new AsyncHttpClient();
 
