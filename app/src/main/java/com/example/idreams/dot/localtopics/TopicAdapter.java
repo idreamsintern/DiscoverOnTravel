@@ -28,11 +28,11 @@ public class TopicAdapter extends ArrayAdapter<Topic> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.topic_item, parent, false);
         }
         // Lookup view for data population
-        TextView tvName = (TextView) convertView.findViewById(R.id.tv_board);
-        TextView tvHome = (TextView) convertView.findViewById(R.id.tv_topic_name);
+        TextView tvBoard = (TextView) convertView.findViewById(R.id.tv_board);
+        TextView tvTopic = (TextView) convertView.findViewById(R.id.tv_topic_name);
         // Populate the data into the template view using the data object
-        tvName.setText(topic.board);
-        tvHome.setText(topic.topicname);
+        tvBoard.setText(topic.board);
+        tvTopic.setText(topic.title);
         // Return the completed view to render on screen
         return convertView;
     }

@@ -12,22 +12,33 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.idreams.dot.R;
+import com.example.idreams.dot.nearby.CheckIn;
+import com.example.idreams.dot.utils.RestClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.apache.http.Header;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.lang.ref.SoftReference;
 
 public class LocalTopicsActivity extends AppCompatActivity {
 
     private final static String LOG_TAG = "LocalTopicsActivity";
     private ListView boardList;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_local_topics);
-
         final String[] boardStringArray = getResources().getStringArray(R.array.board);
 
         boardList = (ListView) findViewById(R.id.localtopic_list);
 
-        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, boardStringArray);
+        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, boardStringArray);
         boardList.setOnItemClickListener(
                 new AdapterView.OnItemClickListener() {
                     @Override
@@ -64,4 +75,6 @@ public class LocalTopicsActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }
