@@ -11,7 +11,7 @@
     <string name="title_activity_tab">TabActivity</string>
 
     <!-- NearbyActivity-->
-    <string name="nearby_settings">Setting</string>
+    <string name="nearby_settings">我的設定</string>
 
     <!-- MapActivity-->
     <string name="title_activity_maps">Map</string>

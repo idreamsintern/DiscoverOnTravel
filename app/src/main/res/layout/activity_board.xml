@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.idreams.dot.localtopics.BoardActivity">
+    tools:context="com.example.idreams.dot.localtopics.BoardActivity"
+    android:background="@color/color1">
 
     <ListView
         android:id="@+id/localtopic_list"

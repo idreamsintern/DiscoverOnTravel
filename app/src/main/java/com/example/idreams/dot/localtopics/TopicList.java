@@ -37,9 +37,10 @@ public class TopicList extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_topic_list);
-
+        Log.e(LOG_TAG, "onCreate()");
         Intent intent = getIntent();
         board_string = intent.getStringExtra("BoardName");
         ArrayList<Topic> arrayOfUsers = new ArrayList<Topic>();
@@ -77,7 +78,7 @@ public class TopicList extends AppCompatActivity {
         Log.e(LOG_TAG, "getdata()");
         RequestParams params = new RequestParams();
         params.put("period", 10);
-        params.put("limit", 10);
+        params.put("limit", 50);
         params.put("board", board_string);
         params.put("token", MainActivity.tokenstring);
         RestClient.post(url, params, new JsonHttpResponseHandler() {
@@ -92,7 +93,7 @@ public class TopicList extends AppCompatActivity {
                         String url = j.getString("url");
                         String push = j.getString("push");
                         String time = j.getString("time");
-                        // Log.e(LOG_TAG, "onSuccess" + board + title + url + push + time);
+                        Log.e(LOG_TAG, "onSuccess" + board + title + url + push + time);
                         adapter.add(new Topic(board, title, url, push, time));
                     }
 
