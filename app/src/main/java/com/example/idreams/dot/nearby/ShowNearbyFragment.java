@@ -88,11 +88,13 @@ public class ShowNearbyFragment extends Fragment {
 
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 Log.e(LOG_TAG, "Fail json! " + throwable.getMessage());
+                progressbar.dismiss();
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 Log.e(LOG_TAG, "Fail! " + throwable.getMessage());
+                progressbar.dismiss();
             }
         });
     }
