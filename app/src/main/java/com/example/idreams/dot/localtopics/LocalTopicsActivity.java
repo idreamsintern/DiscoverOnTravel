@@ -1,38 +1,36 @@
-package com.example.idreams.dot;
+package com.example.idreams.dot.localtopics;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
-import com.example.idreams.dot.localtopics.LocalTopicsActivity;
-import com.example.idreams.dot.nearby.NearbyActivity;
+import com.example.idreams.dot.R;
 
+public class LocalTopicsActivity extends AppCompatActivity {
 
-public class MainActivity extends AppCompatActivity {
+    private final static String LOG = "LocalTopicsActivity";
+    private ListView boardList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-    }
+        setContentView(R.layout.activity_local_topics);
 
-    public void nearbyBtn(View view) {
-        Intent intent = new Intent(this, NearbyActivity.class);
-        startActivity(intent);
-    }
+        String[] boardStringArray = getResources().getStringArray(R.array.board);
 
-    public void localBtn(View view) {
-        Intent intent = new Intent(this, LocalTopicsActivity.class);
-        startActivity(intent);
+        boardList = (ListView) findViewById(R.id.localtopic_list);
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, boardStringArray);
+        boardList.setAdapter(adapter);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_local_topics, menu);
         return true;
     }
 

@@ -43,6 +43,10 @@
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" >
         </activity>
+        <activity
+            android:name=".localtopics.LocalTopicsActivity"
+            android:label="@string/title_activity_local_topics" >
+        </activity>
     </application>
 
 </manifest>

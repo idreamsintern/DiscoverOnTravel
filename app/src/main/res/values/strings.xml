@@ -34,4 +34,7 @@
     <!-- MapActivity-->
     <string name="title_activity_maps">Map</string>
 
+    <!-- LocalTopics-->
+    <string name="title_activity_local_topics">LocalTopicsActivity</string>
+
 </resources>
