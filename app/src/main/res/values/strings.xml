@@ -12,25 +12,6 @@
 
     <!-- NearbyActivity-->
     <string name="nearby_settings">Setting</string>
-    <string-array name="category_arrays">
-        <item>Category</item>
-        <item>Food</item>
-        <item>Travel</item>
-    </string-array>
-
-    <string-array name="Food">
-        <item>肉</item>
-        <item>魚</item>
-        <item>茶</item>
-        <item>湯</item>
-    </string-array>
-    <string-array name="Travel">
-        <item>公園</item>
-        <item>牧場</item>
-        <item>酒店</item>
-        <item>會館</item>
-    </string-array>
-
 
     <!-- MapActivity-->
     <string name="title_activity_maps">Map</string>
