@@ -1,18 +1,16 @@
 package com.example.idreams.dot.nearby;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.idreams.dot.R;
 import com.example.idreams.dot.utils.RestClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -30,6 +28,7 @@ public class ShowNearbyFragment extends Fragment {
 
     private ShowNearbyAdapter adapter;
     private ArrayList<CheckIn> checkInsArray;
+    ProgressDialog progressbar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,6 +50,7 @@ public class ShowNearbyFragment extends Fragment {
 
     public void changeValue(String category, String keyword) {
         adapter.clear();
+        progressbar = ProgressDialog.show(getActivity(), "下載資料", "請稍待片刻...", true);
         getData(category, keyword);
     }
 
@@ -83,7 +83,7 @@ public class ShowNearbyFragment extends Fragment {
                     Log.e(LOG_TAG, err.getMessage());
                 }
 
-
+                progressbar.dismiss();
             }
 
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
