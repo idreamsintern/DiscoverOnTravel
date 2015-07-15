@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.idreams.dot.chat.ChatActivity;
 import com.example.idreams.dot.nearby.NearbyActivity;
 
 
@@ -25,6 +26,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void localBtn(View view) {
         Intent intent = new Intent(this, MapsActivity.class);
+        startActivity(intent);
+    }
+
+    public void chatBtn(View view) {
+        Intent intent = new Intent(this, ChatActivity.class);
         startActivity(intent);
     }
 
