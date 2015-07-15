@@ -1,5 +1,4 @@
 package com.example.idreams.dot.chat;
-import android.app.ListActivity;
 import android.content.SharedPreferences;
 import android.database.DataSetObserver;
 import android.os.Bundle;
@@ -67,7 +66,6 @@ public class ChatActivity  extends AppCompatActivity {
                 sendMessage();
             }
         });
-
     }
 
     @Override
