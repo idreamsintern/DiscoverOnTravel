@@ -1,9 +1,5 @@
 package com.example.idreams.dot.chat;
 
-/**
- * @author greg
- * @since 6/21/13
- */
 public class Chat {
 
     private String message;
