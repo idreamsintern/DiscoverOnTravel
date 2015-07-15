@@ -48,7 +48,7 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".localtopics.LocalTopicsActivity"
+            android:name=".localtopics.BoardActivity"
             android:label="@string/app_name" >
         </activity>
         <activity

@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.idreams.dot.chat.ChatActivity;
-import com.example.idreams.dot.localtopics.LocalTopicsActivity;
+import com.example.idreams.dot.localtopics.BoardActivity;
 import com.example.idreams.dot.nearby.NearbyActivity;
 import com.example.idreams.dot.utils.RestClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void localBtn(View view) {
-        Intent intent = new Intent(this, LocalTopicsActivity.class);
+        Intent intent = new Intent(this, BoardActivity.class);
         startActivity(intent);
     }
 

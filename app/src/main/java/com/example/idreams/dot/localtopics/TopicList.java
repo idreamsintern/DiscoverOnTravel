@@ -31,7 +31,7 @@ public class TopicList extends AppCompatActivity {
     private String url = "top_article/ptt";
     private static String board_string;
     TopicAdapter adapter;
-    //ProgressDialog progressbar;
+    ProgressDialog progressbar;
 
     ListView listView;
 
@@ -47,7 +47,7 @@ public class TopicList extends AppCompatActivity {
 
         listView = (ListView) findViewById(R.id.topic_listview);
         listView.setAdapter(adapter);
-        //progressbar = ProgressDialog.show(getApplicationContext(), "下載資料", "請稍待片刻...", true);
+        progressbar = ProgressDialog.show(this, "下載資料", "請稍待片刻...", true);
         getData();
     }
 
@@ -77,7 +77,7 @@ public class TopicList extends AppCompatActivity {
         Log.e(LOG_TAG, "getdata()");
         RequestParams params = new RequestParams();
         params.put("period", 10);
-        params.put("limit", 50);
+        params.put("limit", 10);
         params.put("board", board_string);
         params.put("token", MainActivity.tokenstring);
         RestClient.post(url, params, new JsonHttpResponseHandler() {
@@ -92,7 +92,7 @@ public class TopicList extends AppCompatActivity {
                         String url = j.getString("url");
                         String push = j.getString("push");
                         String time = j.getString("time");
-                        Log.e(LOG_TAG, "onSuccess" + board + title + url + push + time);
+                        // Log.e(LOG_TAG, "onSuccess" + board + title + url + push + time);
                         adapter.add(new Topic(board, title, url, push, time));
                     }
 
@@ -101,18 +101,18 @@ public class TopicList extends AppCompatActivity {
                     Log.e(LOG_TAG, err.getMessage());
                 }
 
-                //progressbar.dismiss();
+                progressbar.dismiss();
             }
 
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 Log.e(LOG_TAG, "Fail json! " + throwable.getMessage());
-                //progressbar.dismiss();
+                progressbar.dismiss();
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 Log.e(LOG_TAG, "Fail! " + throwable.getMessage());
-                //progressbar.dismiss();
+                progressbar.dismiss();
             }
         });
     }
