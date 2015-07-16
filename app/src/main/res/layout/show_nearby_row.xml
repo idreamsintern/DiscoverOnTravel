@@ -1,23 +1,43 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="70dp"
+    android:orientation="horizontal">
+    c
+    <!--<ImageView-->
+    <!--android:id="@+id/facebookimage"-->
+    <!--android:layout_width="0px"-->
+    <!--android:layout_height="50dp"-->
+    <!--android:src="@drawable/fbiconlike"-->
+    <!--android:layout_weight="0.1"/>-->
 
     <TextView
         android:id="@+id/show_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="name" />
+        android:layout_width="0px"
+        android:layout_height="70dp"
+        android:text="name"
+        android:layout_weight="0.3"
+        android:textColor="@color/color5"
+        android:textSize="15dp"
+        android:paddingLeft="4dp" />
 
-    <TextView
-        android:id="@+id/show_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="id" />
+    <ImageView
+        android:id="@+id/likeimage"
+        android:layout_width="0px"
+        android:layout_height="70dp"
+        android:src="@drawable/fbiconlike"
+        android:paddingLeft="4dp"
+        android:layout_weight="0.1" />
 
     <TextView
         android:id="@+id/show_checkins"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="checkins" />
+        android:layout_width="0px"
+        android:layout_height="70dp"
+        android:text="checkins"
+        android:layout_weight="0.1" />
 
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="0px"
+        android:layout_height="70dp"
+        android:layout_weight="0.1" />
 </LinearLayout>

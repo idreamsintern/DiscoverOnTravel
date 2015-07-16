@@ -32,6 +32,7 @@ public class ChatActivity  extends AppCompatActivity {
     // TODO: change this to your own Firebase URL
     private static final String FIREBASE_URL = "https://torrid-inferno-6846.firebaseio.com/";
 
+
     private String mUsername;
     private Firebase mFirebaseRef;
     private ValueEventListener mConnectedListener;
@@ -141,9 +142,8 @@ public class ChatActivity  extends AppCompatActivity {
         SharedPreferences prefs = getApplication().getSharedPreferences("ChatPrefs", 0);
         mUsername = prefs.getString("username", null);
         if (mUsername == null) {
-            Random r = new Random();
-            // Assign a random user name if we don't have one saved.
-            mUsername = "JavaUser" + r.nextInt(100000);
+            Bundle bundle = getIntent().getExtras();
+            mUsername = bundle.getString("etLogin");
             prefs.edit().putString("username", mUsername).commit();
         }
     }

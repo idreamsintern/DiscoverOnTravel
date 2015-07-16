@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.example.idreams.dot.MainActivity;
 import com.example.idreams.dot.R;
 import com.example.idreams.dot.utils.RestClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -25,7 +26,7 @@ public class ShowNearbyFragment extends Fragment {
     private static final String url = "fb_checkin_search";
     private ListView nearbyListView;
     private static final String LOG_TAG = "ShowNearbyFragment";
-
+    private String tokenstring;
     private ShowNearbyAdapter adapter;
     private ArrayList<CheckIn> checkInsArray;
     ProgressDialog progressbar;
@@ -38,7 +39,6 @@ public class ShowNearbyFragment extends Fragment {
         // Construct the data source
         ArrayList<CheckIn> arrayOfCheckins = new ArrayList<CheckIn>();
         // Create the adapter to convert the array to views
-
         adapter = new ShowNearbyAdapter(getActivity(), arrayOfCheckins);
 
         // Attach the adapter to a ListView
@@ -63,8 +63,7 @@ public class ShowNearbyFragment extends Fragment {
         params.put("limit", 20);     // limit = 20
         params.put("period", "month");
         params.put("sort", "upcount");
-        params.put("token", "api_doc_token");
-
+        params.put("token", MainActivity.tokenstring);
         RestClient.post(url, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -75,7 +74,7 @@ public class ShowNearbyFragment extends Fragment {
                         String name = j.getString("name");
                         String id = j.getString("id");
                         String checkins = j.getString("checkins");
-
+                        Log.e("LOG_TAG", "onSuccess");
                         adapter.add(new CheckIn(name, id, checkins));
                     }
 
@@ -98,4 +97,7 @@ public class ShowNearbyFragment extends Fragment {
             }
         });
     }
+
+
+
 }

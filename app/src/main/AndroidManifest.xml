@@ -29,7 +29,7 @@
         </activity>
         <activity
             android:name=".nearby.NearbyActivity"
-            android:label="@string/title_activity_nearby" >
+            android:label="@string/app_name" >
         </activity>
 
         <meta-data
@@ -41,16 +41,27 @@
 
         <activity
             android:name=".MapsActivity"
-            android:label="@string/title_activity_maps" >
+            android:label="@string/app_name" >
         </activity>
-
+        <activity
+            android:name=".chat.ChatLogin"
+            android:label="@string/app_name" >
+        </activity>
         <activity
             android:name=".chat.ChatActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".localtopics.LocalTopicsActivity"
-            android:label="@string/title_activity_local_topics" >
+            android:name=".localtopics.BoardActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name=".localtopics.TopicListActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name=".localtopics.TopicContentActivity"
+            android:label="@string/app_name" >
         </activity>
         <activity
             android:name=".SettingsActivity"

@@ -24,15 +24,18 @@
     <string name="title_activity_tab">TabActivity</string>
 
     <!-- NearbyActivity-->
-    <string name="nearby_settings">Setting</string>
+    <string name="nearby_settings">我的設定</string>
 
     <!-- MapActivity-->
     <string name="title_activity_maps">Map</string>
 
     <!--ChatActivity-->
     <string name="title_activity_chat">Chat</string>
+    <string name="txt_loginname">登入名稱</string>
 
     <!-- LocalTopics-->
     <string name="title_activity_local_topics">LocalTopicsActivity</string>
+    <string name="title_activity_topic_list">TopicList</string>
+    <string name="title_activity_topic_content">TopicContentActivity</string>
 
 </resources>
