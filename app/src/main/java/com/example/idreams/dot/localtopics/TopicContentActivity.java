@@ -19,7 +19,6 @@ import com.example.idreams.dot.SettingsActivity;
 public class TopicContentActivity extends AppCompatActivity {
 
     private final static String LOG_TAG = "TopicContentActivity";
-    private String translateHead = "http://translate.google.com.tw/translate?hl=en&sl=zh-TW&u=";
     private String targetLanguage;
     private String contentUrl;
     private WebView pttWebView;
@@ -42,10 +41,12 @@ public class TopicContentActivity extends AppCompatActivity {
 
     private void viewSetting() {
         pttWebView = (WebView) findViewById(R.id.ptt_webview);
-
         pttWebView.getSettings().setJavaScriptEnabled(true);
         pttWebView.getSettings().setLoadWithOverviewMode(true);
         pttWebView.getSettings().setAllowFileAccess(true);
+        // Disable zooming and fit web content to screen size.
+        pttWebView.getSettings().setUseWideViewPort(true);
+
         pttWebView.setWebViewClient(new WebViewClient() {
             ProgressDialog progressDialog;
 
