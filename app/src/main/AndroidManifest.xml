@@ -52,6 +52,14 @@
             android:name=".localtopics.LocalTopicsActivity"
             android:label="@string/title_activity_local_topics" >
         </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.idreams.dot.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
