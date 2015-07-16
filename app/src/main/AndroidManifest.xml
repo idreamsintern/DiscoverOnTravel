@@ -60,7 +60,8 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".localtopics.TopicContentActivity" >
+            android:name=".localtopics.TopicContentActivity"
+            android:label="@string/app_name" >
         </activity>
     </application>
 

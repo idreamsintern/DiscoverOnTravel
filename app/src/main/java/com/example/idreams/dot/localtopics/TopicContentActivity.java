@@ -1,6 +1,5 @@
 package com.example.idreams.dot.localtopics;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
@@ -14,9 +13,10 @@ import android.webkit.WebViewClient;
 
 import com.example.idreams.dot.R;
 
-public class TopicContentActivity extends Activity {
+public class TopicContentActivity extends AppCompatActivity {
 
     private final static String LOG_TAG = "TopicContentActivity";
+    private String translateHead = "http://translate.google.com.tw/translate?hl=en&sl=zh-TW&u=";
     private String contentUrl;
     private WebView pttWebView;
 
@@ -70,5 +70,27 @@ public class TopicContentActivity extends Activity {
             }
         });
         pttWebView.loadUrl(contentUrl);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_topic_content, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
