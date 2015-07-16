@@ -28,9 +28,6 @@ public class TopicContentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_topic_content);
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        targetLanguage = prefs.getString(getResources().getString(R.string.pref_language_key), null);
-
         // Get board name from BoardActivity.
         Intent intent = getIntent();
         contentUrl = intent.getStringExtra("ContentURL");
@@ -39,7 +36,17 @@ public class TopicContentActivity extends AppCompatActivity {
         viewSetting();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();  // Always call the superclass method first
+
+        viewSetting();
+    }
+
     private void viewSetting() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        targetLanguage = prefs.getString(getResources().getString(R.string.pref_language_key), null);
+
         pttWebView = (WebView) findViewById(R.id.ptt_webview);
         pttWebView.getSettings().setJavaScriptEnabled(true);
         pttWebView.getSettings().setLoadWithOverviewMode(true);

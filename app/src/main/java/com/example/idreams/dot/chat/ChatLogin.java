@@ -9,8 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-
-
 /**
  * Created by dengli on 2015/7/16.
  */
@@ -39,13 +37,4 @@ public class ChatLogin extends AppCompatActivity{
             }
         });
     }
-
-
-
-
-
-
-
-
-
 }
