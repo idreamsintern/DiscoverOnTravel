@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.idreams.dot.MainActivity;
 import com.example.idreams.dot.R;
+import com.example.idreams.dot.SettingsActivity;
 import com.example.idreams.dot.nearby.CheckIn;
 import com.example.idreams.dot.utils.RestClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -87,6 +88,7 @@ public class TopicListActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
 

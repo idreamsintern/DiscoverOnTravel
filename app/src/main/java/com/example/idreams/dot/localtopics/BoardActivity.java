@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.idreams.dot.R;
+import com.example.idreams.dot.SettingsActivity;
 
 public class BoardActivity extends AppCompatActivity {
 
@@ -57,6 +58,7 @@ public class BoardActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
 
