@@ -2,6 +2,8 @@ package com.example.idreams.dot.localtopics;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +20,7 @@ public class TopicContentActivity extends AppCompatActivity {
 
     private final static String LOG_TAG = "TopicContentActivity";
     private String translateHead = "http://translate.google.com.tw/translate?hl=en&sl=zh-TW&u=";
+    private String targetLanguage;
     private String contentUrl;
     private WebView pttWebView;
 
@@ -25,6 +28,9 @@ public class TopicContentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_topic_content);
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        targetLanguage = prefs.getString(getResources().getString(R.string.pref_language_key), null);
 
         // Get board name from BoardActivity.
         Intent intent = getIntent();
@@ -70,6 +76,12 @@ public class TopicContentActivity extends AppCompatActivity {
                 }
             }
         });
+
+        if(!targetLanguage.equals("zh-TW")) {
+            contentUrl = "http://translate.google.com.tw/translate?hl=" + targetLanguage +
+                    "&sl=zh-TW&u=" + contentUrl;
+            Log.e(LOG_TAG, contentUrl);
+        }
         pttWebView.loadUrl(contentUrl);
     }
 
