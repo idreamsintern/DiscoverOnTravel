@@ -31,7 +31,7 @@ public class BoardActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                        Intent intent = new Intent(getApplicationContext(), TopicList.class);
+                        Intent intent = new Intent(getApplicationContext(), TopicListActivity.class);
                         String board_name = boardStringArray[position];
                         intent.putExtra("BoardName", board_name);
                         startActivity(intent);

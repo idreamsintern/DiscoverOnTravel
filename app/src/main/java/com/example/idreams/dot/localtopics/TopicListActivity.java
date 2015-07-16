@@ -8,9 +8,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.idreams.dot.MainActivity;
 import com.example.idreams.dot.R;
@@ -25,13 +28,14 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class TopicList extends AppCompatActivity {
+public class TopicListActivity extends AppCompatActivity {
 
-    private static final String LOG_TAG = "TopicList";
+    private static final String LOG_TAG = "TopicListActivity";
     private String url = "top_article/ptt";
     private static String board_string;
     TopicAdapter adapter;
     ProgressDialog progressbar;
+    ArrayList<Topic> topicArrayList;
 
     ListView listView;
 
@@ -40,14 +44,29 @@ public class TopicList extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_topic_list);
-        Log.e(LOG_TAG, "onCreate()");
+
+        // Get board name from BoardActivity.
         Intent intent = getIntent();
         board_string = intent.getStringExtra("BoardName");
-        ArrayList<Topic> arrayOfUsers = new ArrayList<Topic>();
-        adapter = new TopicAdapter(getApplicationContext(), arrayOfUsers);
 
+        // Bind model with Listview.
+        topicArrayList = new ArrayList<Topic>();
+        adapter = new TopicAdapter(getApplicationContext(), topicArrayList);
         listView = (ListView) findViewById(R.id.topic_listview);
+        listView.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent = new Intent(getApplicationContext(), TopicContentActivity.class);
+                        String content_url = topicArrayList.get(position).url;
+                        Log.e(LOG_TAG, content_url);
+                        intent.putExtra("ContentURL", content_url);
+                        startActivity(intent);
+                    }
+                }
+        );
         listView.setAdapter(adapter);
+
         progressbar = ProgressDialog.show(this, "下載資料", "請稍待片刻...", true);
         getData();
     }
@@ -93,7 +112,7 @@ public class TopicList extends AppCompatActivity {
                         String url = j.getString("url");
                         String push = j.getString("push");
                         String time = j.getString("time");
-                        Log.e(LOG_TAG, "onSuccess" + board + title + url + push + time);
+//                        Log.e(LOG_TAG, "onSuccess" + board + title + url + push + time);
                         adapter.add(new Topic(board, title, url, push, time));
                     }
 

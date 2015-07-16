@@ -27,7 +27,7 @@ public class TopicAdapter extends ArrayAdapter<Topic> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
-        Log.e(LOG_TAG, "getView()");
+//        Log.e(LOG_TAG, "getView()");
         Topic topic = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {

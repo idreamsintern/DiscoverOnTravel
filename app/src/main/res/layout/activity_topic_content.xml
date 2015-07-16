@@ -2,10 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.idreams.dot.localtopics.TopicListActivity">
+    tools:context="com.example.idreams.dot.localtopics.TopicContentActivity">
 
-    <ListView
-        android:id="@+id/topic_listview"
+    <WebView
+        android:id="@+id/ptt_webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
