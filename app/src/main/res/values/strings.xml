@@ -18,6 +18,7 @@
 
     <!--ChatActivity-->
     <string name="title_activity_chat">Chat</string>
+    <string name="txt_loginname">登入名稱</string>
 
     <!-- LocalTopics-->
     <string name="title_activity_local_topics">LocalTopicsActivity</string>

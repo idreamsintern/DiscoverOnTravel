@@ -1,6 +1,7 @@
 package com.example.idreams.dot;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.idreams.dot.chat.ChatActivity;
+import com.example.idreams.dot.chat.ChatLogin;
 import com.example.idreams.dot.localtopics.BoardActivity;
 import com.example.idreams.dot.nearby.NearbyActivity;
 import com.example.idreams.dot.utils.RestClient;
@@ -41,8 +43,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void chatBtn(View view) {
-        Intent intent = new Intent(this, ChatActivity.class);
-        startActivity(intent);
+            SharedPreferences prefs = getApplication().getSharedPreferences("ChatPrefs", 0);
+            String mUsername = prefs.getString("username", null);
+            if (mUsername == null) {
+                Intent intent = new Intent(this, ChatLogin.class);
+                startActivity(intent);
+            }
+            else {
+                Intent intent = new Intent(this, ChatActivity.class);
+                startActivity(intent);
+            }
+
     }
 
     @Override
