@@ -9,16 +9,9 @@ import android.view.MenuItem;
 
 import com.example.idreams.dot.MainActivity;
 import com.example.idreams.dot.R;
-import com.example.idreams.dot.utils.RestClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-
-import org.apache.http.Header;
-import org.json.JSONObject;
 
 
 public class NearbyActivity extends AppCompatActivity implements NearbyCategoryFragment.CategoryListener {
-
 
     private static final String urllogin = "user/get_token";
     private static final String LOG_TAG = "NearbyActivity";
@@ -57,5 +50,4 @@ public class NearbyActivity extends AppCompatActivity implements NearbyCategoryF
         ShowNearbyFragment showNearbyFragment = (ShowNearbyFragment) fm.findFragmentById(R.id.show_nearby_fragment);
         showNearbyFragment.changeValue(category, keyword);
     }
-
 }

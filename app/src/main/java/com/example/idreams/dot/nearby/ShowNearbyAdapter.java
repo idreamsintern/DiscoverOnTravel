@@ -41,7 +41,6 @@ public class ShowNearbyAdapter extends ArrayAdapter<CheckIn> {
         super(context, 0, checkins);
     }
 
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
@@ -59,10 +58,10 @@ public class ShowNearbyAdapter extends ArrayAdapter<CheckIn> {
         tvName.setFilters(namefilter);
         TextView tvCheckins = (TextView) convertView.findViewById(R.id.show_checkins);
         // Populate the data into the template view using the data object
-        //tvId.setText(checkins.id);
-//        MY_URL_STRING = "https://graph.facebook.com/v2.4/"+checkins.id+"picture/";
-//        new DownloadImageTask((ImageView) convertView.findViewById(R.id.facebookimage))
-//                .execute(MY_URL_STRING);
+        // tvId.setText(checkins.id);
+        // MY_URL_STRING = "https://graph.facebook.com/v2.4/"+checkins.id+"picture/";
+        // new DownloadImageTask((ImageView) convertView.findViewById(R.id.facebookimage))
+        // .execute(MY_URL_STRING);
 
         ckCheck.setOnClickListener(new View.OnClickListener() {
 
@@ -70,10 +69,9 @@ public class ShowNearbyAdapter extends ArrayAdapter<CheckIn> {
             public void onClick(View v) {
                 //is chkIos checked?
                 if (((CheckBox) v).isChecked()) {
-                    Toast.makeText(getContext(),
-                            "Check", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Check", Toast.LENGTH_LONG).show();
+                    // TODO pass checkin to schedule.
                 }
-
             }
         });
         tvName.setText(checkins.name);
@@ -82,28 +80,28 @@ public class ShowNearbyAdapter extends ArrayAdapter<CheckIn> {
         return convertView;
     }
 
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
-
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
-    }
+//    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+//        ImageView bmImage;
+//
+//        public DownloadImageTask(ImageView bmImage) {
+//            this.bmImage = bmImage;
+//        }
+//
+//        protected Bitmap doInBackground(String... urls) {
+//            String urldisplay = urls[0];
+//            Bitmap mIcon11 = null;
+//            try {
+//                InputStream in = new java.net.URL(urldisplay).openStream();
+//                mIcon11 = BitmapFactory.decodeStream(in);
+//            } catch (Exception e) {
+//                Log.e("Error", e.getMessage());
+//                e.printStackTrace();
+//            }
+//            return mIcon11;
+//        }
+//
+//        protected void onPostExecute(Bitmap result) {
+//            bmImage.setImageBitmap(result);
+//        }
+//    }
 }

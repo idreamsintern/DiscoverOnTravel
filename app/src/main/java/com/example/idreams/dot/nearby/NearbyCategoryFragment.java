@@ -144,10 +144,6 @@ public class NearbyCategoryFragment extends Fragment {
         return view;
     }
 
-    private void setView(View view) {
-
-    }
-
     public interface CategoryListener {
         void sendCategory(String category, String keyword);
     }

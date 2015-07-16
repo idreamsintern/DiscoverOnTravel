@@ -1,5 +1,6 @@
 package com.example.idreams.dot.nearby;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -23,9 +24,10 @@ import java.util.ArrayList;
 
 public class ShowNearbyFragment extends Fragment {
 
-    private static final String url = "fb_checkin_search";
-    private ListView nearbyListView;
     private static final String LOG_TAG = "ShowNearbyFragment";
+    private static final String url = "fb_checkin_search";
+
+    private ListView nearbyListView;
     private String tokenstring;
     private ShowNearbyAdapter adapter;
     private ArrayList<CheckIn> checkInsArray;
@@ -97,7 +99,4 @@ public class ShowNearbyFragment extends Fragment {
             }
         });
     }
-
-
-
 }

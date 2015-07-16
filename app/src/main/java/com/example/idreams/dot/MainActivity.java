@@ -22,9 +22,11 @@ import org.json.JSONObject;
 
 
 public class MainActivity extends AppCompatActivity {
+
     private static final String urllogin = "user/get_token";
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     public static String tokenstring = "api_doc_token";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,24 +92,20 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     Log.e(LOG_TAG, "getToken()" + response.toString());
                     MainActivity.tokenstring = response.getJSONObject("result").getString("token");
-                    Log.e(LOG_TAG, "getToken()" + tokenstring);
+//                    Log.e(LOG_TAG, "getToken()" + tokenstring);
 
                 } catch (Exception err) {
                     Log.e(LOG_TAG, err.getMessage());
                 }
-
-                //progressbar.dismiss();
             }
 
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 Log.e(LOG_TAG, "Fail json! " + throwable.getMessage());
-                //progressbar.dismiss();
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 Log.e(LOG_TAG, "Fail! " + throwable.getMessage());
-                //progressbar.dismiss();
             }
         });
     }
