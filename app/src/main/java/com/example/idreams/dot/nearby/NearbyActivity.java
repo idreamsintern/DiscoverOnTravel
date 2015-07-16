@@ -1,5 +1,6 @@
 package com.example.idreams.dot.nearby;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.FragmentManager;
@@ -9,6 +10,7 @@ import android.view.MenuItem;
 
 import com.example.idreams.dot.MainActivity;
 import com.example.idreams.dot.R;
+import com.example.idreams.dot.SettingsActivity;
 
 
 public class NearbyActivity extends AppCompatActivity implements NearbyCategoryFragment.CategoryListener {
@@ -38,6 +40,7 @@ public class NearbyActivity extends AppCompatActivity implements NearbyCategoryF
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
 

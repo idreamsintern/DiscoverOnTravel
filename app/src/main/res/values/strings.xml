@@ -2,6 +2,19 @@
     <!-- Settings -->
     <string name="app_name">DOT</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Preference -->
+    <string name="pref_username_key">username</string>
+    <string name="pref_username_title">User Name</string>
+    <string name="pref_summary_username">Enter the name you want to use as you chat</string>
+    <string name="pref_username_default">Traveller</string>
+    <string name="pref_language_key">language</string>
+    <string name="pref_language_label">Preferred Language</string>
+    <string name="pref_language_zhTW">zh-TW</string>
+    <string name="pref_language_en">en</string>
+    <string name="pref_language_label_zhTW">繁體中文</string>
+    <string name="pref_language_label_en">English</string>
 
     <!-- MainActivity-->
     <string name="title_activity_nearby">NearbyActivity</string>

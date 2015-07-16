@@ -12,6 +12,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.example.idreams.dot.R;
+import com.example.idreams.dot.SettingsActivity;
 
 public class TopicContentActivity extends AppCompatActivity {
 
@@ -88,6 +89,7 @@ public class TopicContentActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
 
