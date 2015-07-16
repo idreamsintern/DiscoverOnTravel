@@ -44,9 +44,7 @@ public class NearbyCategoryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final String[] stringDefualt = {};
-        ArrayAdapter<String> itemsAdapter =
-                new ArrayAdapter<>(getActivity(), R.layout.fragment_nearby_category_listview,stringDefualt);
+
         View view = inflater.inflate(R.layout.fragment_nearby_category, container, false);
 
         categorySpinner = (Spinner) view.findViewById(R.id.categorySpinner);
@@ -79,30 +77,8 @@ public class NearbyCategoryFragment extends Fragment {
         };
 
 
-
         final String[] food = getResources().getStringArray(R.array.Food);
         final String[] travel = getResources().getStringArray(R.array.Travel);
-        categoryList = (ListView) view.findViewById(R.id.category_list);
-        categoryList.setAdapter(itemsAdapter);
-
-        categoryList.setOnItemClickListener(
-                new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        int index = position;
-                        Log.e(LOG_TAG, categoryIndex + "");
-                        if (categoryIndex == 1) {
-                            currentKeyword = getResources().getStringArray(R.array.Food)[index];
-                            Log.e(LOG_TAG, currentCategory + " 1: " + currentKeyword);
-                            activityCallBack.sendCategory(currentCategory, currentKeyword);
-                        } else if (categoryIndex == 2) {
-                            currentKeyword = getResources().getStringArray(R.array.Travel)[index];
-                            activityCallBack.sendCategory(currentCategory, currentKeyword);
-                            Log.e(LOG_TAG, currentCategory + " 2: " + currentKeyword);
-                        }
-                    }
-                }
-        );
         categorySpinner.setAdapter(adapter);
         categorySpinner.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
@@ -110,7 +86,6 @@ public class NearbyCategoryFragment extends Fragment {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         categoryIndex = parent.getSelectedItemPosition();
-
                         if (categoryIndex == 1) {
                             currentCategory = categories[categoryIndex];
                             ArrayAdapter<String> itemsAdapter =
@@ -130,6 +105,32 @@ public class NearbyCategoryFragment extends Fragment {
                     }
                 }
         );
+        final String[] stringDefualt = {};
+        ArrayAdapter<String> itemsAdapter =
+                new ArrayAdapter<>(getActivity(), R.layout.fragment_nearby_category_listview,stringDefualt);
+        categoryList = (ListView) view.findViewById(R.id.category_list);
+        categoryList.setAdapter(itemsAdapter);
+
+        categoryList.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        int index = position;
+                        Log.e(LOG_TAG, categoryIndex + "");
+                        if (categoryIndex == 1) {
+                            currentKeyword = getResources().getStringArray(R.array.Food)[index];
+                            Log.e(LOG_TAG, currentCategory + " 1: " + currentKeyword);
+                            activityCallBack.sendCategory(currentCategory, currentKeyword);
+
+                        } else if (categoryIndex == 2) {
+                            currentKeyword = getResources().getStringArray(R.array.Travel)[index];
+                            activityCallBack.sendCategory(currentCategory, currentKeyword);
+                            Log.e(LOG_TAG, currentCategory + " 2: " + currentKeyword);
+                        }
+                    }
+                }
+        );
+
 
         settingTextview = (TextView) view.findViewById(R.id.setting_textview);
         settingTextview.setOnClickListener(new View.OnClickListener() {
