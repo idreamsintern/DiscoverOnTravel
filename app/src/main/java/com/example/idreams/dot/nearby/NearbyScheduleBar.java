@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.idreams.dot.NavigateActivity;
+import com.example.idreams.dot.Navigate.NavigateActivity;
 import com.example.idreams.dot.R;
 
 public class NearbyScheduleBar extends Fragment implements View.OnClickListener {

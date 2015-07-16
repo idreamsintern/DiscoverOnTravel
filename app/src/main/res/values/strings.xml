@@ -37,5 +37,6 @@
     <string name="title_activity_local_topics">LocalTopicsActivity</string>
     <string name="title_activity_topic_list">TopicList</string>
     <string name="title_activity_topic_content">TopicContentActivity</string>
+    <string name="title_activity_navigate">導航</string>
 
 </resources>
