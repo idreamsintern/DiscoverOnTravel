@@ -74,17 +74,8 @@ public class MainActivity extends ActionBarActivity implements FragmentSimpleLog
     }
 
     public void chatBtn(View view) {
-            SharedPreferences prefs = getApplication().getSharedPreferences("ChatPrefs", 0);
-            String mUsername = prefs.getString("username", null);
-            if (mUsername == null) {
-                Intent intent = new Intent(this, ChatLogin.class);
-                startActivity(intent);
-            }
-            else {
-                Intent intent = new Intent(this, ChatActivity.class);
-                startActivity(intent);
-            }
-
+        Intent intent = new Intent(this, ChatActivity.class);
+        startActivity(intent);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

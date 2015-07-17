@@ -3,6 +3,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.DataSetObserver;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -67,11 +68,6 @@ public class ChatActivity  extends AppCompatActivity {
         Firebase.setAndroidContext(this);
         setContentView(R.layout.activity_chat);
 
-        // Make sure we have a mUsername
-        setupUsername();
-
-        setTitle("Chatting as " + mUsername);
-
         // Setup our Firebase mFirebaseRef
 
         mFirebaseRef = new Firebase(FIREBASE_URL).child("chat");
@@ -99,6 +95,9 @@ public class ChatActivity  extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
+        // Make sure we have a mUsername
+        setupUsername();
+        setTitle("Chatting as " + mUsername);
         // Setup our view and list adapter. Ensure it scrolls to the bottom as data changes
         final ListView listView = (ListView) findViewById(R.id.chatroom_list);
         // Tell our list adapter that we only want 50 messages at a time
@@ -139,13 +138,8 @@ public class ChatActivity  extends AppCompatActivity {
     }
 
     private void setupUsername() {
-        SharedPreferences prefs = getApplication().getSharedPreferences("ChatPrefs", 0);
-        mUsername = prefs.getString("username", null);
-        if (mUsername == null) {
-            Bundle bundle = getIntent().getExtras();
-            mUsername = bundle.getString("etLogin");
-            prefs.edit().putString("username", mUsername).commit();
-        }
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        mUsername = prefs.getString("username", "traveller");
     }
 
     private void sendMessage() {

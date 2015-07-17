@@ -21,7 +21,7 @@ import com.example.idreams.dot.R;
  */
 public class NearbyCategoryFragment extends Fragment {
 
-    private static final String LOG_TAG = "NearbyCategoryFragment";
+    private static final String LOG_TAG = NearbyCategoryFragment.class.getSimpleName();
     private CategoryListener activityCallBack;
     private Spinner categorySpinner;
     private TextView settingTextview;
@@ -46,7 +46,6 @@ public class NearbyCategoryFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_nearby_category, container, false);
-
         categorySpinner = (Spinner) view.findViewById(R.id.categorySpinner);
         final String[] categories = getResources().getStringArray(R.array.category_arrays);
         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, categories){

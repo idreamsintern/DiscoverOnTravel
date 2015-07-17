@@ -45,7 +45,7 @@ public class TopicContentActivity extends AppCompatActivity {
 
     private void viewSetting() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        targetLanguage = prefs.getString(getResources().getString(R.string.pref_language_key), null);
+        targetLanguage = prefs.getString(getResources().getString(R.string.pref_language_key), getResources().getString(R.string.pref_language_zhTW));
 
         pttWebView = (WebView) findViewById(R.id.ptt_webview);
         pttWebView.getSettings().setJavaScriptEnabled(true);
