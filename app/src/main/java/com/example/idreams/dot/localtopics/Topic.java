@@ -11,7 +11,7 @@ public class Topic {
     public String time;
     // private String details;
 
-    public Topic(String board, String title,String url, String push,String time) {
+    public Topic(String board, String title, String url, String push, String time) {
         this.board = board;
         this.title = title;
         this.url = url;

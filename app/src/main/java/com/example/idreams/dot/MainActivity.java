@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -25,7 +26,7 @@ import org.apache.http.Header;
 import org.json.JSONObject;
 
 
-public class MainActivity extends ActionBarActivity implements FragmentSimpleLoginButton.MyInterface {
+public class MainActivity extends BaseActivity implements FragmentSimpleLoginButton.MyInterface {
 
     TextView tv;
     public static final int INDEX_SIMPLE_LOGIN = 0;
@@ -76,12 +77,6 @@ public class MainActivity extends ActionBarActivity implements FragmentSimpleLog
     public void chatBtn(View view) {
         Intent intent = new Intent(this, ChatActivity.class);
         startActivity(intent);
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
     }
 
     private void toggleFragment(int index) {

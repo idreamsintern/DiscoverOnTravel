@@ -1,6 +1,5 @@
 package com.example.idreams.dot.nearby;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -26,12 +25,11 @@ public class ShowNearbyFragment extends Fragment {
 
     private static final String LOG_TAG = "ShowNearbyFragment";
     private static final String url = "fb_checkin_search";
-
+    ProgressDialog progressbar;
     private ListView nearbyListView;
     private String tokenstring;
     private ShowNearbyAdapter adapter;
     private ArrayList<CheckIn> checkInsArray;
-    ProgressDialog progressbar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -1,8 +1,8 @@
 package com.example.idreams.dot.nearby;
 
 import android.app.Activity;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -48,7 +48,7 @@ public class NearbyCategoryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_nearby_category, container, false);
         categorySpinner = (Spinner) view.findViewById(R.id.categorySpinner);
         final String[] categories = getResources().getStringArray(R.array.category_arrays);
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, categories){
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, categories) {
 
             public View getView(int position, View convertView,
                                 ViewGroup parent) {
@@ -106,7 +106,7 @@ public class NearbyCategoryFragment extends Fragment {
         );
         final String[] stringDefualt = {};
         ArrayAdapter<String> itemsAdapter =
-                new ArrayAdapter<>(getActivity(), R.layout.fragment_nearby_category_listview,stringDefualt);
+                new ArrayAdapter<>(getActivity(), R.layout.fragment_nearby_category_listview, stringDefualt);
         categoryList = (ListView) view.findViewById(R.id.category_list);
         categoryList.setAdapter(itemsAdapter);
 

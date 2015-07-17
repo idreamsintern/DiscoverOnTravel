@@ -26,12 +26,8 @@ import com.facebook.login.widget.LoginButton;
  */
 public class FragmentSimpleLoginButton extends Fragment {
 
-    private String data = "傳Fragment傳送到Activity的字串";
     public MyInterface myInterface;
-    public interface MyInterface{
-        public void getMessage(String msg);
-    }
-
+    private String data = "傳Fragment傳送到Activity的字串";
     private CallbackManager mCallbackManager;
     private AccessTokenTracker mTokenTracker;
     private ProfileTracker mProfileTracker;
@@ -41,11 +37,9 @@ public class FragmentSimpleLoginButton extends Fragment {
             Log.d("VIVZ", "onSuccess");
             AccessToken accessToken = loginResult.getAccessToken();
             Profile profile = Profile.getCurrentProfile();
-            data=getUserFromFb(profile);
+            data = getUserFromFb(profile);
             myInterface.getMessage(data);
-
         }
-
 
         @Override
         public void onCancel() {
@@ -57,6 +51,9 @@ public class FragmentSimpleLoginButton extends Fragment {
             Log.d("VIVZ", "onError " + e);
         }
     };
+    public FragmentSimpleLoginButton() {
+    }
+
     public void onAttach(Activity activity) {//當這Fragment加入Activity時，會被callback的方法，僅執行一次。
         myInterface = (MyInterface) activity;  //這樣可以取到實作MyInterface的Activity
         super.onAttach(activity);
@@ -65,13 +62,9 @@ public class FragmentSimpleLoginButton extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_fragment_simple_login_button,container,false);
+        View view = inflater.inflate(R.layout.fragment_fragment_simple_login_button, container, false);
         myInterface.getMessage(data);//將我們要傳送的data，傳到Activity
         return view;
-    }
-
-
-    public FragmentSimpleLoginButton() {
     }
 
     @Override
@@ -85,10 +78,6 @@ public class FragmentSimpleLoginButton extends Fragment {
         mTokenTracker.startTracking();
         mProfileTracker.startTracking();
     }
-
-
-
-
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -113,8 +102,6 @@ public class FragmentSimpleLoginButton extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         mCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
-
-
 
     private void setupTokenTracker() {
         mTokenTracker = new AccessTokenTracker() {
@@ -149,4 +136,7 @@ public class FragmentSimpleLoginButton extends Fragment {
         return stringBuffer.toString();
     }
 
+    public interface MyInterface {
+        public void getMessage(String msg);
+    }
 }

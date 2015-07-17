@@ -1,7 +1,5 @@
 package com.example.idreams.dot.chat;
 
-import com.example.idreams.dot.R;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,10 +7,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.idreams.dot.R;
+
 /**
  * Created by dengli on 2015/7/16.
  */
-public class ChatLogin extends AppCompatActivity{
+public class ChatLogin extends AppCompatActivity {
     EditText etLogin;
     Button btnLogin;
 

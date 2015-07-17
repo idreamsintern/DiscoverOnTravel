@@ -10,10 +10,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.idreams.dot.BaseActivity;
 import com.example.idreams.dot.R;
 import com.example.idreams.dot.SettingsActivity;
 
-public class BoardActivity extends AppCompatActivity {
+public class BoardActivity extends BaseActivity {
 
     private final static String LOG_TAG = "BoardActivity";
     private ListView boardList;
@@ -40,28 +41,5 @@ public class BoardActivity extends AppCompatActivity {
                 }
         );
         boardList.setAdapter(adapter);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_local_topics, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            startActivity(new Intent(this, SettingsActivity.class));
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }

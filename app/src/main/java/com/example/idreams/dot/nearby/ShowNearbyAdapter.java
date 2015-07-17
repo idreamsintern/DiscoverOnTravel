@@ -1,11 +1,7 @@
 package com.example.idreams.dot.nearby;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.text.InputFilter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,20 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.idreams.dot.MainActivity;
 import com.example.idreams.dot.R;
-import com.example.idreams.dot.utils.RestClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 
-import org.apache.http.Header;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -37,6 +21,7 @@ import java.util.ArrayList;
 public class ShowNearbyAdapter extends ArrayAdapter<CheckIn> {
     ImageView fbimage;
     String MY_URL_STRING;
+
     public ShowNearbyAdapter(Context context, ArrayList<CheckIn> checkins) {
         super(context, 0, checkins);
     }

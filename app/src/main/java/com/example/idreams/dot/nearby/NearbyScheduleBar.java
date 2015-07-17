@@ -1,15 +1,15 @@
 package com.example.idreams.dot.nearby;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.idreams.dot.Navigate.NavigateActivity;
 import com.example.idreams.dot.R;
+import com.example.idreams.dot.navigate.NavigateActivity;
 
 public class NearbyScheduleBar extends Fragment implements View.OnClickListener {
 

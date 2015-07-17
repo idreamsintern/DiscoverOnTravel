@@ -1,4 +1,4 @@
-package com.example.idreams.dot.Navigate;
+package com.example.idreams.dot.navigate;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

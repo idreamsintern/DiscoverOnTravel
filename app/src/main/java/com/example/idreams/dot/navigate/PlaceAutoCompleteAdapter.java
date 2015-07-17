@@ -1,4 +1,4 @@
-package com.example.idreams.dot.Navigate;
+package com.example.idreams.dot.navigate;
 
 /**
  * Created by Joel on 28/06/2015.

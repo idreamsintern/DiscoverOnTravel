@@ -1,11 +1,10 @@
-package com.example.idreams.dot.Navigate;
+package com.example.idreams.dot.navigate;
 
 import android.app.ProgressDialog;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -18,6 +17,7 @@ import android.widget.Toast;
 import com.directions.route.Route;
 import com.directions.route.Routing;
 import com.directions.route.RoutingListener;
+import com.example.idreams.dot.BaseActivity;
 import com.example.idreams.dot.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -25,8 +25,6 @@ import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceBuffer;
-import com.google.android.gms.location.places.PlaceLikelihood;
-import com.google.android.gms.location.places.PlaceLikelihoodBuffer;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -45,10 +43,13 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 
-public class NavigateActivity extends AppCompatActivity implements RoutingListener, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
+public class NavigateActivity extends BaseActivity implements RoutingListener, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
+    private static final LatLngBounds BOUNDS_JAMAICA = new LatLngBounds(new LatLng(-57.965341647205726, 144.9987719580531),
+            new LatLng(72.77492067739843, -9.998857788741589));
     protected GoogleMap map;
     protected LatLng start;
     protected LatLng end;
+    protected GoogleApiClient mGoogleApiClient;
     @InjectView(R.id.start)
     AutoCompleteTextView starting;
     @InjectView(R.id.destination)
@@ -56,14 +57,9 @@ public class NavigateActivity extends AppCompatActivity implements RoutingListen
     @InjectView(R.id.send)
     ImageView send;
     private String LOG_TAG = "NavigateActivity";
-    protected GoogleApiClient mGoogleApiClient;
     private PlaceAutoCompleteAdapter mAdapter;
     private ProgressDialog progressDialog;
     private Polyline polyline;
-
-
-    private static final LatLngBounds BOUNDS_JAMAICA= new LatLngBounds(new LatLng(-57.965341647205726, 144.9987719580531),
-            new LatLng(72.77492067739843, -9.998857788741589));
 
     /**
      * This activity loads a map and then displays the route and pushpins on it.
@@ -122,7 +118,7 @@ public class NavigateActivity extends AppCompatActivity implements RoutingListen
                     @Override
                     public void onLocationChanged(Location location) {
 
-                        CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(),location.getLongitude()));
+                        CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude()));
                         CameraUpdate zoom = CameraUpdateFactory.zoomTo(16);
 
                         map.moveCamera(center);
@@ -150,7 +146,7 @@ public class NavigateActivity extends AppCompatActivity implements RoutingListen
                 3000, 0, new LocationListener() {
                     @Override
                     public void onLocationChanged(Location location) {
-                        CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(),location.getLongitude()));
+                        CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude()));
                         CameraUpdate zoom = CameraUpdateFactory.zoomTo(16);
 
                         map.moveCamera(center);
@@ -215,7 +211,7 @@ public class NavigateActivity extends AppCompatActivity implements RoutingListen
                         // Get the Place object from the buffer.
                         final Place place = places.get(0);
 
-                        start=place.getLatLng();
+                        start = place.getLatLng();
                     }
                 });
 
@@ -247,7 +243,7 @@ public class NavigateActivity extends AppCompatActivity implements RoutingListen
                         // Get the Place object from the buffer.
                         final Place place = places.get(0);
 
-                        end=place.getLatLng();
+                        end = place.getLatLng();
                     }
                 });
 
@@ -289,9 +285,8 @@ public class NavigateActivity extends AppCompatActivity implements RoutingListen
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
 
-                if(end!=null)
-                {
-                    end=null;
+                if (end != null) {
+                    end = null;
                 }
             }
 
@@ -304,47 +299,31 @@ public class NavigateActivity extends AppCompatActivity implements RoutingListen
     }
 
     @OnClick(R.id.send)
-    public void sendRequest()
-    {
-        if(Util.Operations.isOnline(this))
-        {
+    public void sendRequest() {
+        if (Util.Operations.isOnline(this)) {
             route();
-        }
-        else
-        {
-            Toast.makeText(this,"No internet connectivity",Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "No internet connectivity", Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void route()
-    {
-        if(start==null || end==null)
-        {
-            if(start==null)
-            {
-                if(starting.getText().length()>0)
-                {
+    public void route() {
+        if (start == null || end == null) {
+            if (start == null) {
+                if (starting.getText().length() > 0) {
                     starting.setError("Choose location from dropdown.");
-                }
-                else
-                {
-                    Toast.makeText(this,"Please choose a starting point.",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Please choose a starting point.", Toast.LENGTH_SHORT).show();
                 }
             }
-            if(end==null)
-            {
-                if(destination.getText().length()>0)
-                {
+            if (end == null) {
+                if (destination.getText().length() > 0) {
                     destination.setError("Choose location from dropdown.");
-                }
-                else
-                {
-                    Toast.makeText(this,"Please choose a destination.",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Please choose a destination.", Toast.LENGTH_SHORT).show();
                 }
             }
-        }
-        else
-        {
+        } else {
             progressDialog = ProgressDialog.show(this, "Please wait.",
                     "Fetching route information.", true);
             Routing routing = new Routing(Routing.TravelMode.WALKING);
@@ -358,7 +337,7 @@ public class NavigateActivity extends AppCompatActivity implements RoutingListen
     public void onRoutingFailure() {
         // The Routing request failed
         progressDialog.dismiss();
-        Toast.makeText(this,"Something went wrong, Try again", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Something went wrong, Try again", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -367,8 +346,7 @@ public class NavigateActivity extends AppCompatActivity implements RoutingListen
     }
 
     @Override
-    public void onRoutingSuccess(PolylineOptions mPolyOptions, Route route)
-    {
+    public void onRoutingSuccess(PolylineOptions mPolyOptions, Route route) {
         progressDialog.dismiss();
         CameraUpdate center = CameraUpdateFactory.newLatLng(start);
         CameraUpdate zoom = CameraUpdateFactory.zoomTo(16);
@@ -376,16 +354,16 @@ public class NavigateActivity extends AppCompatActivity implements RoutingListen
         map.moveCamera(center);
 
 
-        if(polyline!=null)
+        if (polyline != null)
             polyline.remove();
 
-        polyline=null;
+        polyline = null;
         //adds route to the map.
         PolylineOptions polyOptions = new PolylineOptions();
         polyOptions.color(getResources().getColor(R.color.primary_dark));
         polyOptions.width(10);
         polyOptions.addAll(mPolyOptions.getPoints());
-        polyline=map.addPolyline(polyOptions);
+        polyline = map.addPolyline(polyOptions);
 
         // Start marker
         MarkerOptions options = new MarkerOptions();
@@ -403,7 +381,7 @@ public class NavigateActivity extends AppCompatActivity implements RoutingListen
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
-        Log.v(LOG_TAG,connectionResult.toString());
+        Log.v(LOG_TAG, connectionResult.toString());
     }
 
     @Override
