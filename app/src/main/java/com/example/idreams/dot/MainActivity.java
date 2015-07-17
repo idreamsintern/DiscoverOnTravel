@@ -3,6 +3,7 @@ package com.example.idreams.dot;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -48,7 +49,11 @@ public class MainActivity extends ActionBarActivity implements FragmentSimpleLog
 
     }
     public void getMessage(String msg) {
+        String mUsername="";
         tv.setText(msg);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        //mUsername = prefs.getString("username", "traveller");
+        prefs.edit().putString("username", msg).commit();
     }
 
     @Override

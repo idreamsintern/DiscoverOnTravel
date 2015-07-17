@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -33,7 +32,6 @@ public class FragmentSimpleLoginButton extends Fragment {
         public void getMessage(String msg);
     }
 
-    private TextView mTextDetails;
     private CallbackManager mCallbackManager;
     private AccessTokenTracker mTokenTracker;
     private ProfileTracker mProfileTracker;
@@ -43,8 +41,8 @@ public class FragmentSimpleLoginButton extends Fragment {
             Log.d("VIVZ", "onSuccess");
             AccessToken accessToken = loginResult.getAccessToken();
             Profile profile = Profile.getCurrentProfile();
-            mTextDetails.setText(constructWelcomeMessage(profile));
-            data=constructWelcomeMessage(profile);
+            data=getUserFromFb(profile);
+            myInterface.getMessage(data);
 
         }
 
@@ -94,7 +92,6 @@ public class FragmentSimpleLoginButton extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        setupTextDetails(view);
         setupLoginButton(view);
     }
 
@@ -102,7 +99,6 @@ public class FragmentSimpleLoginButton extends Fragment {
     public void onResume() {
         super.onResume();
         Profile profile = Profile.getCurrentProfile();
-        mTextDetails.setText(constructWelcomeMessage(profile));
     }
 
     @Override
@@ -118,9 +114,7 @@ public class FragmentSimpleLoginButton extends Fragment {
         mCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
-    private void setupTextDetails(View view) {
-        mTextDetails = (TextView) view.findViewById(R.id.text_details);
-    }
+
 
     private void setupTokenTracker() {
         mTokenTracker = new AccessTokenTracker() {
@@ -136,7 +130,6 @@ public class FragmentSimpleLoginButton extends Fragment {
             @Override
             protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
                 Log.d("VIVZ", "" + currentProfile);
-                mTextDetails.setText(constructWelcomeMessage(currentProfile));
             }
         };
     }
@@ -148,10 +141,10 @@ public class FragmentSimpleLoginButton extends Fragment {
         mButtonLogin.registerCallback(mCallbackManager, mFacebookCallback);
     }
 
-    private String constructWelcomeMessage(Profile profile) {
+    private String getUserFromFb(Profile profile) {
         StringBuffer stringBuffer = new StringBuffer();
         if (profile != null) {
-            stringBuffer.append("Welcome " + profile.getName());
+            stringBuffer.append(profile.getName());
         }
         return stringBuffer.toString();
     }
