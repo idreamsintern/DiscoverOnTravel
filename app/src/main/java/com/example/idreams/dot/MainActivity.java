@@ -43,7 +43,7 @@ public class MainActivity extends BaseActivity implements FragmentSimpleLoginBut
         FragmentSimpleLoginButton fragment=new FragmentSimpleLoginButton();
         mFragmentManager = getSupportFragmentManager();
         toggleFragment(INDEX_SIMPLE_LOGIN);
-
+        getToken();
     }
     public void getMessage(String msg) {
         String mUsername="";
