@@ -35,7 +35,7 @@ public class ShowNearbyAdapter extends ArrayAdapter<CheckIn> {
         CheckBox ckCheck = (CheckBox) convertView.findViewById(R.id.checkbox);
         TextView tvName = (TextView) convertView.findViewById(R.id.show_name);
         InputFilter[] namefilter = new InputFilter[1];
-        namefilter[0] = new InputFilter.LengthFilter(15);
+        namefilter[0] = new InputFilter.LengthFilter(11);
         tvName.setFilters(namefilter);
         TextView tvCheckins = (TextView) convertView.findViewById(R.id.show_checkins);
 

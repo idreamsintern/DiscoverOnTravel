@@ -57,7 +57,7 @@ public class PlaceholderFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        Log.e(LOG_TAG, "onCreateView");
+        Log.e(LOG_TAG, "onAttach");
         ((NearbyActivity) activity).onSectionAttached(
                 getArguments().getInt(ARG_SECTION_NUMBER));
     }
@@ -104,7 +104,7 @@ public class PlaceholderFragment extends Fragment {
                     }
 
                 } catch (Exception err) {
-                    Log.e(LOG_TAG, err.getMessage());
+                    Log.e(LOG_TAG,"onFail :" + err.getMessage());
                 }
 
                 progressbar.dismiss();

@@ -12,8 +12,9 @@ public class CheckIn {
         this.name = name;
         this.id = id;
         if (Integer.valueOf(checkins) >= 1000) {
-            int temp = Integer.valueOf(checkins) / 1000;
-            this.checkins = String.valueOf(temp) + "k";
+            int tempk = Integer.valueOf(checkins)/1000;
+            int tempn = (Integer.valueOf(checkins)%1000)/100;
+            this.checkins = String.valueOf(tempk) + "," + tempn + "k";
         } else
             this.checkins = checkins;
     }
