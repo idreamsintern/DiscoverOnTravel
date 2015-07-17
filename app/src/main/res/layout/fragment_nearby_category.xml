@@ -2,30 +2,36 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/color2">
 
     <TextView
         android:id="@+id/setting_textview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_height="0px"
         android:text="@string/nearby_settings"
-        android:textSize="40dp"
+        android:textSize="20dp"
         android:layout_weight="1.0"
-        android:clickable="true"/>
+        android:clickable="true"
+        android:background="@color/color5"
+        android:textColor="@color/color1" />
 
     <Spinner
         android:id="@+id/categorySpinner"
         android:background="@color/color4"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_height="0px"
         android:layout_weight="1.0"
-        android:entries="@array/category_arrays" />
+        android:entries="@array/category_arrays"
+        android:textColor="@color/color1" />
 
     <ListView
         android:id="@+id/category_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="7.0" />
+        android:layout_height="0px"
+        android:layout_weight="11.0"
+        android:background="@color/color5"/>
 
 </LinearLayout>
