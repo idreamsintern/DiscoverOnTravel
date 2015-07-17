@@ -55,7 +55,7 @@ public class NavigateActivity extends AppCompatActivity implements RoutingListen
     AutoCompleteTextView destination;
     @InjectView(R.id.send)
     ImageView send;
-    private String LOG_TAG = "MyActivity";
+    private String LOG_TAG = "NavigateActivity";
     protected GoogleApiClient mGoogleApiClient;
     private PlaceAutoCompleteAdapter mAdapter;
     private ProgressDialog progressDialog;
