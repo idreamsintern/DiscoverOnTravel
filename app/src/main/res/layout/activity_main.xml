@@ -3,7 +3,8 @@
     android:layout_height="match_parent"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:id="@+id/layout">
 
     <Button
         android:layout_width="match_parent"
@@ -22,5 +23,13 @@
         android:layout_height="wrap_content"
         android:text="@string/chat"
         android:onClick="chatBtn" />
+
+
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="收到的文字"/>
 
 </LinearLayout>
