@@ -31,14 +31,13 @@ public class ShowNearbyAdapter extends ArrayAdapter<CheckIn> {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.show_nearby_row, parent, false);
         }
-
+        convertView.setBackgroundColor();
         CheckBox ckCheck = (CheckBox) convertView.findViewById(R.id.checkbox);
         TextView tvName = (TextView) convertView.findViewById(R.id.show_name);
         InputFilter[] namefilter = new InputFilter[1];
         namefilter[0] = new InputFilter.LengthFilter(11);
         tvName.setFilters(namefilter);
         TextView tvCheckins = (TextView) convertView.findViewById(R.id.show_checkins);
-
         ckCheck.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -50,9 +49,11 @@ public class ShowNearbyAdapter extends ArrayAdapter<CheckIn> {
                 }
             }
         });
+
         tvName.setText(checkins.name);
         tvCheckins.setText(checkins.checkins);
         // Return the completed view to render on screen
         return convertView;
     }
+
 }
