@@ -30,6 +30,7 @@ public class TopicAdapter extends ArrayAdapter<Topic> {
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.topic_item, parent, false);
         }
+
         TextView tvTopicCategory = (TextView) convertView.findViewById(R.id.tv_topic_category);
         String line = topic.title;
         tvTopicCategory.setText(line);

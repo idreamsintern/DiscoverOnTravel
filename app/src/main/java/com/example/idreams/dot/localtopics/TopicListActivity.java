@@ -3,6 +3,7 @@ package com.example.idreams.dot.localtopics;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -41,6 +42,10 @@ public class TopicListActivity extends BaseActivity {
         // Get board name from BoardActivity.
         Intent intent = getIntent();
         board_string = intent.getStringExtra("BoardName");
+
+        //Change Actionbar title
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(board_string);
 
         // Bind model with Listview.
         topicArrayList = new ArrayList<Topic>();
