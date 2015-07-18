@@ -12,22 +12,22 @@
     <!--android:layout_weight="0.1"/>-->
 
     <TextView
-        android:padding="4dp"
         android:id="@+id/show_name"
         android:layout_width="0px"
         android:layout_height="50dp"
         android:layout_weight="0.5"
-        android:textSize="18dp"
-        android:textColor="@color/color5" />
+        android:padding="4dp"
+        android:textColor="@color/color5"
+        android:textSize="18dp" />
 
     <ImageView
         android:id="@+id/likeimage"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
         android:layout_width="0px"
         android:layout_height="50dp"
-        android:src="@drawable/fbiconlike"
-        android:layout_weight="0.1" />
+        android:layout_weight="0.1"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:src="@drawable/fbiconlike" />
 
     <TextView
         android:id="@+id/show_checkins"
