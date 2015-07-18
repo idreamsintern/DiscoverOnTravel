@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.idreams.dot.chat.ChatActivity;
 import com.example.idreams.dot.localtopics.BoardActivity;
 import com.example.idreams.dot.nearby.NearbyActivity;
+import com.example.idreams.dot.utils.GetToken;
 import com.example.idreams.dot.utils.RestClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -31,7 +32,6 @@ public class MainActivity extends BaseActivity implements FragmentSimpleLoginBut
     public static final String FRAGMENT_TAG = "fragment_tag";
     private FragmentManager mFragmentManager;
 
-    private static final String urllogin = "user/get_token";
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     public static String tokenstring = "api_doc_token";
 
@@ -43,7 +43,7 @@ public class MainActivity extends BaseActivity implements FragmentSimpleLoginBut
         FragmentSimpleLoginButton fragment=new FragmentSimpleLoginButton();
         mFragmentManager = getSupportFragmentManager();
         toggleFragment(INDEX_SIMPLE_LOGIN);
-        getToken();
+        GetToken.getToken();
     }
     public void getMessage(String msg) {
         String mUsername="";
@@ -56,7 +56,7 @@ public class MainActivity extends BaseActivity implements FragmentSimpleLoginBut
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        getToken();
+        GetToken.getToken();
     }
 
 
@@ -85,35 +85,5 @@ public class MainActivity extends BaseActivity implements FragmentSimpleLoginBut
 
         }
         transaction.commit();
-    }
-
-    public void getToken()
-    {
-        RequestParams params = new RequestParams();
-        params.put("id","a1411f06f306e17dad9956dc6ba86cdb");
-        params.put("secret_key", "1369ac51fd6fc95db2e9dde7b74cc3b8");
-
-        RestClient.post(urllogin, params, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    Log.e(LOG_TAG, "getToken()" + response.toString());
-                    MainActivity.tokenstring = response.getJSONObject("result").getString("token");
-//                    Log.e(LOG_TAG, "getToken()" + tokenstring);
-
-                } catch (Exception err) {
-                    Log.e(LOG_TAG, err.getMessage());
-                }
-            }
-
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.e(LOG_TAG, "Fail json! " + throwable.getMessage());
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.e(LOG_TAG, "Fail! " + throwable.getMessage());
-            }
-        });
     }
 }
