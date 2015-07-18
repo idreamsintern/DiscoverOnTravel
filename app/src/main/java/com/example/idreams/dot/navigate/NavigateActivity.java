@@ -13,6 +13,7 @@ import com.directions.route.Routing;
 import com.directions.route.RoutingListener;
 import com.example.idreams.dot.BaseActivity;
 import com.example.idreams.dot.R;
+import com.example.idreams.dot.nearby.NearbyActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.Places;
@@ -30,11 +31,10 @@ import com.google.android.gms.maps.model.PolylineOptions;
 public class NavigateActivity extends BaseActivity implements RoutingListener, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
 
     protected GoogleMap map;
-    protected LatLng start;
-    protected LatLng end;
     protected GoogleApiClient mGoogleApiClient;
     private String LOG_TAG = "NavigateActivity";
     private Polyline polyline;
+    private LatLng[] destinations;
 
     /**
      * This activity loads a map and then displays the route and pushpins on it.
@@ -131,12 +131,16 @@ public class NavigateActivity extends BaseActivity implements RoutingListener, G
 
     private void sendRequest() {
         if (Util.Operations.isOnline(this)) {
-            start = new LatLng(24.898189, 121.037966);
-            end = new LatLng(24.905468, 121.043717);
+            destinations = new LatLng[NearbyActivity.mSelectedLocations.size()];
+            int i = 0;
+            for (String key: NearbyActivity.mSelectedLocations.keySet()) {
+                destinations[i] = NearbyActivity.mSelectedLocations.get(key);
+                i++;
+            }
 
             Routing routing = new Routing(Routing.TravelMode.WALKING);
             routing.registerListener(this);
-            routing.execute(start, end);
+            routing.execute(destinations);
         } else {
             Toast.makeText(this, "No internet connectivity", Toast.LENGTH_SHORT).show();
         }
@@ -155,7 +159,7 @@ public class NavigateActivity extends BaseActivity implements RoutingListener, G
 
     @Override
     public void onRoutingSuccess(PolylineOptions mPolyOptions, Route route) {
-        CameraUpdate center = CameraUpdateFactory.newLatLng(start);
+        CameraUpdate center = CameraUpdateFactory.newLatLng(destinations[0]);
         CameraUpdate zoom = CameraUpdateFactory.zoomTo(16);
 
         map.moveCamera(center);
@@ -173,13 +177,13 @@ public class NavigateActivity extends BaseActivity implements RoutingListener, G
 
         // Start marker
         MarkerOptions options = new MarkerOptions();
-        options.position(start);
+        options.position(destinations[0]);
         options.icon(BitmapDescriptorFactory.fromResource(R.drawable.start_blue));
         map.addMarker(options);
 
         // End marker
         options = new MarkerOptions();
-        options.position(end);
+        options.position(destinations[0]);
         options.icon(BitmapDescriptorFactory.fromResource(R.drawable.end_green));
         map.addMarker(options);
     }

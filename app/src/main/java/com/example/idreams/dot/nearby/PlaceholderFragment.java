@@ -104,8 +104,10 @@ public class PlaceholderFragment extends Fragment {
                         String name = j.getString("name");
                         String id = j.getString("id");
                         String checkins = j.getString("checkins");
+                        String lat = j.getString("latitude");
+                        String lng = j.getString("longitude");
                         Log.e("LOG_TAG", "onSuccess\n" + "name : " + name + "\nid" + id);
-                        itemsAdapter.add(new CheckIn(name, id, checkins));
+                        itemsAdapter.add(new CheckIn(name, id, checkins, lat, lng));
                     }
 
                 } catch (Exception err) {
