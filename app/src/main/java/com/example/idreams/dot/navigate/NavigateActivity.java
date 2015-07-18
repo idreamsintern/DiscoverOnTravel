@@ -5,6 +5,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.directions.route.Route;
@@ -60,7 +61,7 @@ public class NavigateActivity extends BaseActivity implements RoutingListener, G
         }
         map = mapFragment.getMap();
 
-        CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(18.013610, -77.498803));
+        CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(24, 121));
         CameraUpdate zoom = CameraUpdateFactory.zoomTo(16);
 
         map.moveCamera(center);
@@ -130,8 +131,8 @@ public class NavigateActivity extends BaseActivity implements RoutingListener, G
 
     private void sendRequest() {
         if (Util.Operations.isOnline(this)) {
-            start = new LatLng(18.015365, -77.499382);
-            end = new LatLng(18.012590, -77.500659);
+            start = new LatLng(24.898189, 121.037966);
+            end = new LatLng(24.905468, 121.043717);
 
             Routing routing = new Routing(Routing.TravelMode.WALKING);
             routing.registerListener(this);
@@ -195,6 +196,14 @@ public class NavigateActivity extends BaseActivity implements RoutingListener, G
 
     @Override
     public void onConnectionSuspended(int i) {
+
+    }
+
+    public void nextSite(View view) {
+        Toast.makeText(getApplicationContext(), "next site", Toast.LENGTH_LONG);
+    }
+
+    public void shareInfo(View view) {
 
     }
 }
