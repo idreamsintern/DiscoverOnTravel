@@ -61,7 +61,8 @@ public class NavigationDrawerFragment extends Fragment {
     private ExpandableListView mDrawerListView;
     private View mFragmentContainerView;
 
-    int mCurrentSelectedPosition = 0;
+    private int mCurrentSelectedPosition = 0;
+    private String mKey, mCategory;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
 
@@ -90,7 +91,7 @@ public class NavigationDrawerFragment extends Fragment {
         listDataChild.put("Travel", Arrays.asList(getResources().getStringArray(R.array.Travel)));
 
         // Select either the default item (0) or the last selected item.
-        selectItem(mCurrentSelectedPosition);
+        selectItem(mKey, mCategory);
     }
 
     @Override
@@ -110,11 +111,9 @@ public class NavigationDrawerFragment extends Fragment {
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 int selectedPosition = mDrawerListView.getFlatListPosition(
                         mDrawerListView.getPackedPositionForChild(groupPosition, childPosition));
-                NearbyActivity.itemTitle = listDataHeader
-                        .get(groupPosition) + " : " + listDataChild
-                        .get(listDataHeader.get(groupPosition))
-                        .get(childPosition);
-                selectItem(selectedPosition);
+                mKey = listDataHeader.get(groupPosition);
+                mCategory = listDataChild.get(mKey).get(childPosition);
+                selectItem(mKey, mCategory);
                 return false;
             }
         });
@@ -208,20 +207,12 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
-    private void selectItem(int position) {
-        mCurrentSelectedPosition = position;
-        if (mDrawerListView != null) {
-            int positionGroup = mDrawerListView.getPackedPositionGroup(
-                    mDrawerListView.getExpandableListPosition(mCurrentSelectedPosition));
-            int positionChild = mDrawerListView.getPackedPositionChild(
-                    mDrawerListView.getExpandableListPosition(mCurrentSelectedPosition));
-            mDrawerListView.setSelectedChild(positionGroup, positionChild, true);
-        }
+    private void selectItem(String mKey, String mCategory) {
         if (mDrawerLayout != null) {
             mDrawerLayout.closeDrawer(mFragmentContainerView);
         }
         if (mCallbacks != null) {
-            mCallbacks.onNavigationDrawerItemSelected(position);
+            mCallbacks.onNavigationDrawerItemSelected(mKey, mCategory);
         }
     }
 
@@ -303,6 +294,6 @@ public class NavigationDrawerFragment extends Fragment {
         /**
          * Called when an item in the navigation drawer is selected.
          */
-        void onNavigationDrawerItemSelected(int position);
+        void onNavigationDrawerItemSelected(String mKey, String mCategory);
     }
 }
