@@ -1,6 +1,7 @@
 package com.example.idreams.dot.nearby;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import android.widget.ExpandableListView;
 import android.widget.Toast;
 
 import com.example.idreams.dot.R;
+import com.example.idreams.dot.navigate.NavigateActivity;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -270,7 +272,9 @@ public class NavigationDrawerFragment extends Fragment {
         }
 
         if (item.getItemId() == R.id.action_example) {
-            Toast.makeText(getActivity(), "Example action.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Start Navigate", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getActivity(), NavigateActivity.class);
+            startActivity(intent);
             return true;
         }
 
