@@ -32,12 +32,13 @@ import java.util.ArrayList;
 public class PlaceholderFragment extends Fragment {
     private final static String LOG_TAG = "PlacehloderFragment";
     private final static String url = "fb_checkin_search";
-    private static final String ARG_SECTION_NUMBER = "section_number";
+    private static final String ARG_KEYWORD = "arg_keyword";
+    private static final String ARG_CATEGORY = "arg_category";
     ProgressDialog progressbar;
     ShowNearbyAdapter itemsAdapter;
     private ListView nearbyListView;
-    private String currentCategory = "food";
-    private String currentKeyword = "燒肉";
+    private String currentCategory;
+    private String currentKeyword;
 
     public PlaceholderFragment() {
     }
@@ -46,10 +47,11 @@ public class PlaceholderFragment extends Fragment {
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static PlaceholderFragment newInstance(int position) {
+    public static PlaceholderFragment newInstance(String mCategory, String mKey) {
         PlaceholderFragment fragment = new PlaceholderFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_SECTION_NUMBER, position);
+        args.putString(ARG_CATEGORY, mCategory);
+        args.putString(ARG_KEYWORD, mKey);
         fragment.setArguments(args);
         return fragment;
     }
@@ -59,7 +61,7 @@ public class PlaceholderFragment extends Fragment {
         super.onAttach(activity);
         Log.e(LOG_TAG, "onAttach");
         ((NearbyActivity) activity).onSectionAttached(
-                getArguments().getInt(ARG_SECTION_NUMBER));
+                getArguments().getString(ARG_CATEGORY), getArguments().getString(ARG_KEYWORD));
     }
 
     @Override
@@ -67,10 +69,12 @@ public class PlaceholderFragment extends Fragment {
                              Bundle savedInstanceState) {
         Log.e(LOG_TAG, "onCreateView");
         View rootView = inflater.inflate(R.layout.fragment_nearby, container, false);
-
+        Bundle arg = getArguments();
+        currentCategory = arg.getString(ARG_CATEGORY);
+        currentKeyword  = arg.getString(ARG_KEYWORD);
         ArrayList<CheckIn> arrayOfCheckins = new ArrayList<CheckIn>();
         itemsAdapter = new ShowNearbyAdapter(getActivity(), arrayOfCheckins);
-        getdatafromapi(currentCategory, currentKeyword);
+        getdatafromapi();
         progressbar = ProgressDialog.show(getActivity(), "下載資料", "請稍待片刻...", true);
         nearbyListView = (ListView) rootView.findViewById(R.id.nearby_list);
         nearbyListView.setAdapter(itemsAdapter);
@@ -79,10 +83,11 @@ public class PlaceholderFragment extends Fragment {
     }
 
 
-    public void getdatafromapi(String category, String keyword) {
+    public void getdatafromapi() {
+
         RequestParams params = new RequestParams();
-        params.put("category", category);
-        params.put("keyword", keyword);
+        params.put("category", currentCategory);
+        params.put("keyword", currentKeyword);
         params.put("coordinates", "25.041399,121.554233");
         params.put("radius", 100);   // radius = 100km
         params.put("limit", 20);     // limit = 20

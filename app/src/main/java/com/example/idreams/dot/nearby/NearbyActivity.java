@@ -7,7 +7,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.idreams.dot.R;
 
@@ -29,6 +28,7 @@ public class NearbyActivity extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nearby);
+        mTitle = "DOT: Nearby Place";
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -41,16 +41,20 @@ public class NearbyActivity extends ActionBarActivity
     }
 
     @Override
-    public void onNavigationDrawerItemSelected(int position) {
+    public void onNavigationDrawerItemSelected(String mCategory, String mKey) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position+1))
+                .replace(R.id.container, PlaceholderFragment.newInstance(mCategory, mKey))
                 .commit();
     }
 
-    public void onSectionAttached(int onSectionAttached) {
-        mTitle = itemTitle;
+    public void onSectionAttached(String mCategory, String mKey) {
+        if (mCategory != null && mKey != null)
+            mTitle = mCategory + ": " + mKey;
+        else
+            mTitle = "Start Exploring... ";
+
     }
 
     public void restoreActionBar() {
