@@ -261,7 +261,7 @@ public class NavigationDrawerFragment extends Fragment {
         }
 
         if (item.getItemId() == R.id.action_example) {
-            Toast.makeText(getActivity(), "Example action.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), String.valueOf(NearbyActivity.mSelectedLocations), Toast.LENGTH_SHORT).show();
             return true;
         }
 

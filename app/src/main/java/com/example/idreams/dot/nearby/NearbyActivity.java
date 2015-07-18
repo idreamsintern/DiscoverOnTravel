@@ -9,11 +9,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.idreams.dot.R;
+import com.google.android.gms.maps.model.LatLng;
+
+import java.util.HashMap;
+import java.util.List;
 
 public class NearbyActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
-    public static String itemTitle;
-
+    public static HashMap<String, LatLng> mSelectedLocations;
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -29,7 +32,7 @@ public class NearbyActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nearby);
         mTitle = "DOT: Nearby Place";
-
+        mSelectedLocations = new HashMap<>();
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();

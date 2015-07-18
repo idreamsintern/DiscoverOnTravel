@@ -12,46 +12,58 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.idreams.dot.R;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Vector;
 
 public class ShowNearbyAdapter extends ArrayAdapter<CheckIn> {
-    ImageView fbimage;
-    String MY_URL_STRING;
+    private CheckIn currentCheckIn;
 
     public ShowNearbyAdapter(Context context, ArrayList<CheckIn> checkins) {
         super(context, 0, checkins);
     }
 
+    public HashMap<String, LatLng> getSelectedLocations () {
+        return NearbyActivity.mSelectedLocations;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
-        CheckIn checkins = getItem(position);
+        currentCheckIn = getItem(position);
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.show_nearby_row, parent, false);
         }
 
         CheckBox ckCheck = (CheckBox) convertView.findViewById(R.id.checkbox);
+        ckCheck.setTag(position);
         TextView tvName = (TextView) convertView.findViewById(R.id.show_name);
+
         InputFilter[] namefilter = new InputFilter[1];
         namefilter[0] = new InputFilter.LengthFilter(11);
         tvName.setFilters(namefilter);
+
         TextView tvCheckins = (TextView) convertView.findViewById(R.id.show_checkins);
 
         ckCheck.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 //is chkIos checked?
-                if (((CheckBox) v).isChecked()) {
+                currentCheckIn = getItem((Integer)view.getTag());
+                if (((CheckBox) view).isChecked()) {
                     Toast.makeText(getContext(), "Check", Toast.LENGTH_LONG).show();
-                    // TODO pass checkin to schedule.
+                    NearbyActivity.mSelectedLocations.put (currentCheckIn.id, currentCheckIn.location);
+                } else {
+                    NearbyActivity.mSelectedLocations.remove (currentCheckIn.id);
                 }
             }
         });
-        tvName.setText(checkins.name);
-        tvCheckins.setText(checkins.checkins);
+        tvName.setText(currentCheckIn.name);
+        tvCheckins.setText(currentCheckIn.like);
         // Return the completed view to render on screen
         return convertView;
     }
