@@ -56,8 +56,10 @@ public class ShowNearbyAdapter extends ArrayAdapter<CheckIn> {
                 if (((CheckBox) view).isChecked()) {
                     Toast.makeText(getContext(), "Check", Toast.LENGTH_LONG).show();
                     NearbyActivity.mSelectedLocations.put(currentCheckIn.id, currentCheckIn.location);
+                    NearbyActivity.mSelectedLocationsName.add(currentCheckIn.name);
                 } else {
                     NearbyActivity.mSelectedLocations.remove(currentCheckIn.id);
+                    NearbyActivity.mSelectedLocationsName.remove(currentCheckIn.name);
                 }
             }
         });

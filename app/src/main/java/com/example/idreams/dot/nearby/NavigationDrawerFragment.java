@@ -1,9 +1,12 @@
 package com.example.idreams.dot.nearby;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -13,17 +16,21 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.idreams.dot.R;
 import com.example.idreams.dot.navigate.NavigateActivity;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -46,29 +53,25 @@ public class NavigationDrawerFragment extends Fragment {
      * expands it. This shared preference tracks this.
      */
     private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
-
+    private final static String LOG_TAG = "NDF";
+    public List<String> listDataHeader;
+    public HashMap<String, List<String>> listDataChild;
     /**
      * A pointer to the current callbacks instance (the Activity).
      */
     private NavigationDrawerCallbacks mCallbacks;
-
     /**
      * Helper component that ties the action bar to the navigation drawer.
      */
     private ActionBarDrawerToggle mDrawerToggle;
-
     private DrawerLayout mDrawerLayout;
     private ExpandableListView mDrawerListView;
     private View mFragmentContainerView;
-
     private int mCurrentSelectedPosition = 0;
     private String mKey, mCategory;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
 
-    public List<String> listDataHeader;
-    public HashMap<String, List<String>> listDataChild;
-    private final static String LOG_TAG = "NavigationDrawerFragment";
     public NavigationDrawerFragment() {
     }
 
@@ -85,9 +88,9 @@ public class NavigationDrawerFragment extends Fragment {
             mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION);
             mFromSavedInstanceState = true;
         }
-        listDataHeader = Arrays.asList( new String[] {"Food", "Travel"} );
+        listDataHeader = Arrays.asList(new String[]{"Food", "Travel"});
         listDataChild = new HashMap<String, List<String>>();
-        listDataChild.put("Food", Arrays.asList (getResources().getStringArray(R.array.Food)));
+        listDataChild.put("Food", Arrays.asList(getResources().getStringArray(R.array.Food)));
         listDataChild.put("Travel", Arrays.asList(getResources().getStringArray(R.array.Travel)));
 
         // Select either the default item (0) or the last selected item.
@@ -264,12 +267,42 @@ public class NavigationDrawerFragment extends Fragment {
 
         if (item.getItemId() == R.id.action_example) {
             Toast.makeText(getActivity(), "Start Navigate", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getActivity(), NavigateActivity.class);
-            startActivity(intent);
+            showicheckdialog();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showicheckdialog() {
+
+        String[] ListStr = new String[NearbyActivity.mSelectedLocationsName.size()];
+        for(int i=0;i<NearbyActivity.mSelectedLocationsName.size();i++)
+        {
+            ListStr[i]=NearbyActivity.mSelectedLocationsName.get(i);
+        }
+        final AlertDialog.Builder MyListAlertDialog = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AlertDialogCustom));
+        MyListAlertDialog.setTitle("確認您要去的地點");
+                // 建立List的事件
+        DialogInterface.OnClickListener ListClick = new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        };
+        MyListAlertDialog.setItems(ListStr, ListClick);
+        MyListAlertDialog.setPositiveButton("開始導航", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                Intent intent = new Intent(getActivity(), NavigateActivity.class);
+                startActivity(intent);
+            }
+        });
+        MyListAlertDialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+        MyListAlertDialog.show();
+
     }
 
     /**
