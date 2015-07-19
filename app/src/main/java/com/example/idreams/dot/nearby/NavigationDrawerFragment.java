@@ -266,8 +266,21 @@ public class NavigationDrawerFragment extends Fragment {
         }
 
         if (item.getItemId() == R.id.action_example) {
-            Toast.makeText(getActivity(), "Start Navigate", Toast.LENGTH_SHORT).show();
-            showicheckdialog();
+            Log.e(LOG_TAG, NearbyActivity.mSelectedLocations.size() + "");
+            if(NearbyActivity.mSelectedLocations.size()==0) {
+                new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AlertDialogCustom))
+                        .setTitle("Warning")
+                        .setMessage("Choose at least one location.")
+                        .setNeutralButton("確認", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .show();
+            }
+            else
+                showicheckdialog();
             return true;
         }
 
@@ -292,6 +305,7 @@ public class NavigationDrawerFragment extends Fragment {
         MyListAlertDialog.setItems(ListStr, ListClick);
         MyListAlertDialog.setPositiveButton("開始導航", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
+                Toast.makeText(getActivity(), "Start Navigate", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getActivity(), NavigateActivity.class);
                 startActivity(intent);
             }
