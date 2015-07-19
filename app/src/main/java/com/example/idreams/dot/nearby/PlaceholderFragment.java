@@ -39,6 +39,8 @@ public class PlaceholderFragment extends Fragment {
     private ListView nearbyListView;
     private String currentCategory;
     private String currentKeyword;
+    private String emptystring;
+
 
     public PlaceholderFragment() {
     }
@@ -87,7 +89,7 @@ public class PlaceholderFragment extends Fragment {
 
         RequestParams params = new RequestParams();
         params.put("category", currentCategory);
-        params.put("keyword", currentKeyword);
+        params.put("keyword",currentKeyword);
         params.put("coordinates", "25.041399,121.554233");
         params.put("radius", 100);   // radius = 100km
         params.put("limit", 20);     // limit = 20
@@ -111,7 +113,7 @@ public class PlaceholderFragment extends Fragment {
                     }
 
                 } catch (Exception err) {
-                    Log.e(LOG_TAG,"onFail :" + err.getMessage());
+                    Log.e(LOG_TAG, "onFail :" + err.getMessage());
                 }
 
                 progressbar.dismiss();

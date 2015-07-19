@@ -1,6 +1,7 @@
 package com.example.idreams.dot.nearby;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,19 +52,27 @@ public class ShowNearbyAdapter extends ArrayAdapter<CheckIn> {
             @Override
             public void onClick(View view) {
                 //is chkIos checked?
-                currentCheckIn = getItem((Integer)view.getTag());
+                currentCheckIn = getItem((Integer) view.getTag());
                 if (((CheckBox) view).isChecked()) {
                     Toast.makeText(getContext(), "Check", Toast.LENGTH_LONG).show();
-                    NearbyActivity.mSelectedLocations.put (currentCheckIn.id, currentCheckIn.location);
+                    NearbyActivity.mSelectedLocations.put(currentCheckIn.id, currentCheckIn.location);
                 } else {
-                    NearbyActivity.mSelectedLocations.remove (currentCheckIn.id);
+                    NearbyActivity.mSelectedLocations.remove(currentCheckIn.id);
                 }
             }
         });
+
+        //**change color with number of checkins. */
+            if(Integer.valueOf(currentCheckIn.likenum) >= 50000)
+                convertView.setBackgroundColor(getContext().getResources().getColor(R.color.color3));
+            else if(Integer.valueOf(currentCheckIn.likenum) >= 10000)
+                convertView.setBackgroundColor(getContext().getResources().getColor(R.color.color2));
+
+        //**change color with number of checkins. */
+
         tvName.setText(currentCheckIn.name);
         tvCheckins.setText(currentCheckIn.like);
         // Return the completed view to render on screen
         return convertView;
     }
-
 }

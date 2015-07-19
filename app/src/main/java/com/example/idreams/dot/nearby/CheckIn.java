@@ -9,6 +9,7 @@ public class CheckIn {
     public String name;
     public String id;
     public String like;
+    public String likenum;
     public LatLng location;
     public int tag;
 
@@ -19,8 +20,8 @@ public class CheckIn {
             int tempk = Integer.valueOf(like)/1000;
             int tempn = (Integer.valueOf(like)%1000)/100;
             this.like = String.valueOf(tempk) + "," + tempn + "k";
-        } else
-            this.like = like;
+        }
+        likenum = like;
         location = new LatLng(Double.valueOf(lat), Double.valueOf(lng));
     }
 }
