@@ -1,5 +1,6 @@
 package com.example.idreams.dot.utils;
 
+import android.app.Activity;
 import android.util.Log;
 
 import com.example.idreams.dot.MainActivity;
@@ -16,6 +17,11 @@ public class GetToken {
 
     private static String LOG_TAG = "GetToken";
     private static final String urllogin = "user/get_token";
+    private static Activity mContext;
+
+    public GetToken(Activity context) {
+        mContext = context;
+    }
 
 
     public static void getToken() {
@@ -29,7 +35,9 @@ public class GetToken {
                 try {
                     Log.e(LOG_TAG, "getToken()" + response.toString());
                     MainActivity.tokenstring = response.getJSONObject("result").getString("token");
-//                    Log.e(LOG_TAG, "getToken()" + tokenstring);
+                    Log.e(LOG_TAG, "getToken(): " + MainActivity.tokenstring);
+                    FetchContentTask fetchContentTask = new FetchContentTask(GetToken.mContext);
+                    fetchContentTask.execute(MainActivity.tokenstring);
 
                 } catch (Exception err) {
                     Log.e(LOG_TAG, err.getMessage());

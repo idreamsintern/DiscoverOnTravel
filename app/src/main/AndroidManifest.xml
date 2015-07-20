@@ -87,6 +87,9 @@
             android:name=".chat.ChatListActivity"
             android:label="@string/title_activity_chat_list" >
         </activity>
+        <provider
+            android:name=".data.DotContentProvider"
+            android:authorities="com.example.idreams.dot" />
     </application>
 
 </manifest>

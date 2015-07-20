@@ -14,6 +14,7 @@ import com.example.idreams.dot.chat.ChatActivity;
 import com.example.idreams.dot.chat.ChatListActivity;
 import com.example.idreams.dot.localtopics.BoardActivity;
 import com.example.idreams.dot.nearby.NearbyActivity;
+import com.example.idreams.dot.utils.FetchContentTask;
 import com.example.idreams.dot.utils.GetToken;
 
 
@@ -35,7 +36,7 @@ public class MainActivity extends BaseActivity implements FragmentSimpleLoginBut
         FragmentSimpleLoginButton fragment = new FragmentSimpleLoginButton();
         mFragmentManager = getSupportFragmentManager();
         toggleFragment(INDEX_SIMPLE_LOGIN);
-        GetToken.getToken();
+        (new GetToken(this)).getToken();
     }
 
     public void getMessage(String msg) {
@@ -75,7 +76,6 @@ public class MainActivity extends BaseActivity implements FragmentSimpleLoginBut
             case INDEX_SIMPLE_LOGIN:
                 transaction.replace(android.R.id.content, new FragmentSimpleLoginButton(), FRAGMENT_TAG);
                 break;
-
         }
         transaction.commit();
     }
