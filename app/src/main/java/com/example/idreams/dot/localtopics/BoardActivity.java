@@ -26,7 +26,6 @@ public class BoardActivity extends BaseActivity {
 
         BoardRecyclerViewAdapter adapter = new BoardRecyclerViewAdapter(this, getBoards());
         boardRecyclerView.setAdapter(adapter);
-        boardRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Optimizations if all item views are of the same height and width
         // for significantly smoother scrolling.
@@ -50,23 +49,5 @@ public class BoardActivity extends BaseActivity {
         }
 
         return boardArrayList;
-    }
-
-    private void setListenter() {
-        //        ArrayAdapter<String> adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, boardStringArray);
-
-        //        boardRecyclerView.setOnItemClickListener(
-//                new AdapterView.OnItemClickListener() {
-//                    @Override
-//                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//                        Intent intent = new Intent(getApplicationContext(), TopicListActivity.class);
-//                        String board_name = boardStringArray[position];
-//                        intent.putExtra("BoardName", board_name);
-//                        startActivity(intent);
-//                    }
-//                }
-//        );
-//        boardRecyclerView.setAdapter(adapter);
     }
 }
