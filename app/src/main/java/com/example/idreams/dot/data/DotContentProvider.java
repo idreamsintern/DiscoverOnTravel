@@ -35,10 +35,10 @@ public class DotContentProvider  extends ContentProvider {
     private static final String sCategorySelection =
             FbCheckinEntry.TABLE_NAME + "." + FbCheckinEntry.COLUMN_CATEGORY + " = ? ";
     private static final String sKeywordSelection =
-            FbCheckinEntry.TABLE_NAME + "." + FbCheckinEntry.COLUMN_KEYWORD + " = ? ";
+            FbCheckinEntry.TABLE_NAME + "." + FbCheckinEntry.COLUMN_NAME + " LIKE '%?%' ";
     private static final String sCategoryKeywordSelection =
             FbCheckinEntry.TABLE_NAME + "." + FbCheckinEntry.COLUMN_CATEGORY + " = ? AND " +
-            FbCheckinEntry.COLUMN_KEYWORD + " = ? ";
+            FbCheckinEntry.COLUMN_NAME + " LIKE '%?%' ";
     private static final String sSourceSelection =
             TopArticleEntry.TABLE_NAME + "." + TopArticleEntry.COLUMN_SOURCE + " = ? ";
 
@@ -99,6 +99,7 @@ public class DotContentProvider  extends ContentProvider {
         matcher.addURI(authority, DotDbContract.PATH_TOP_ARTICLE + "/*", TOP_ARTICLE_SEARCH_SOURCE);
         return matcher;
     }
+
 
     @Override
     public boolean onCreate() {

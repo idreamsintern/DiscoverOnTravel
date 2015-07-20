@@ -12,7 +12,7 @@ import com.example.idreams.dot.data.DotDbContract.TopArticleEntry;
 public class DotDbHelper extends SQLiteOpenHelper {
 
     // If you change the database schema, you must increment the database version.
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
 
     static final String DATABASE_NAME = "dot.db";
 
@@ -27,13 +27,12 @@ public class DotDbHelper extends SQLiteOpenHelper {
                 FbCheckinEntry._ID              + " INTEGER PRIMARY KEY," +
                 FbCheckinEntry.COLUMN_ID        + " TEXT UNIQUE NOT NULL, " +
                 FbCheckinEntry.COLUMN_NAME      + " TEXT NOT NULL, " +
-                FbCheckinEntry.COLUMN_CATEGORY  + " REAL NOT NULL, " +
-                FbCheckinEntry.COLUMN_KEYWORD   + " REAL NOT NULL, " +
-                FbCheckinEntry.COLUMN_LAT       + " REAL NOT NULL, " +
-                FbCheckinEntry.COLUMN_LNG       + " REAL NOT NULL, " +
-                FbCheckinEntry.COLUMN_CHECKINS  + " REAL NOT NULL, " +
-                FbCheckinEntry.COLUMN_CHECKINS_UPCOUNT + " REAL NOT NULL, " +
-                FbCheckinEntry.COLUMN_STARTDATE + " REAL NOT NULL" +
+                FbCheckinEntry.COLUMN_CATEGORY  + " TEXT NOT NULL, " +
+                FbCheckinEntry.COLUMN_LAT       + " TEXT NOT NULL, " +
+                FbCheckinEntry.COLUMN_LNG       + " TEXT NOT NULL, " +
+                FbCheckinEntry.COLUMN_CHECKINS  + " INT  NOT NULL, " +
+                FbCheckinEntry.COLUMN_CHECKINS_UPCOUNT + " INT NOT NULL, " +
+                FbCheckinEntry.COLUMN_STARTDATE + " TEXT NOT NULL" +
                 " );";
         final String SQL_CREATE_WEATHER_TABLE = "CREATE TABLE " + TopArticleEntry.TABLE_NAME + " (" +
                 // Why AutoIncrement here, and not above?
@@ -42,11 +41,11 @@ public class DotDbHelper extends SQLiteOpenHelper {
                 // for a certain date and all dates *following*, so the forecast data
                 // should be sorted accordingly.
                 TopArticleEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                TopArticleEntry.COLUMN_TIME + " INTEGER NOT NULL, " +
-                TopArticleEntry.COLUMN_TITLE + " INTEGER NOT NULL, " +
+                TopArticleEntry.COLUMN_TIME + " TEXT NOT NULL, " +
+                TopArticleEntry.COLUMN_TITLE + " TEXT NOT NULL, " +
                 TopArticleEntry.COLUMN_URL + " TEXT NOT NULL, " +
                 TopArticleEntry.COLUMN_PUSH + " INTEGER NOT NULL," +
-                TopArticleEntry.COLUMN_SOURCE + " REAL NOT NULL " +
+                TopArticleEntry.COLUMN_SOURCE + " TEXT NOT NULL " +
                 ");";
 
         sqLiteDatabase.execSQL(SQL_CREATE_FB_CHECKIN_TABLE);

@@ -26,7 +26,6 @@ public class DotDbContract {
         public static final String COLUMN_ID = "id";
         public static final String COLUMN_NAME = "name";
         public static final String COLUMN_CATEGORY = "category";
-        public static final String COLUMN_KEYWORD = "category";
         public static final String COLUMN_LAT = "latitude";
         public static final String COLUMN_LNG = "longitude";
         public static final String COLUMN_CHECKINS = "checkins";
