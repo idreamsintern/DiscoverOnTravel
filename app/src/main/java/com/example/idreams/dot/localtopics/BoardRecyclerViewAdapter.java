@@ -1,11 +1,13 @@
 package com.example.idreams.dot.localtopics;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.idreams.dot.R;
 
@@ -22,15 +24,29 @@ public class BoardRecyclerViewAdapter extends
         this.context = context;
     }
 
-    private ArrayList<Board> boards;
+    private static ArrayList<Board> boards;
     private Context context;
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView tvName;
+        public Context context;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(View itemView, Context context) {
             super(itemView);
             this.tvName = (TextView) itemView.findViewById(R.id.tvName);
+            this.context = context;
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int position = getLayoutPosition(); // gets item position
+            Board board = boards.get(position);
+
+            Intent intent = new Intent(context, TopicListActivity.class);
+            intent.putExtra("BoardName", board.getName());
+            context.startActivity(intent);
         }
     }
 
@@ -40,7 +56,7 @@ public class BoardRecyclerViewAdapter extends
         View itemView = LayoutInflater.from(context).
                 inflate(R.layout.item_board, parent, false);
 
-        return new BoardRecyclerViewAdapter.ViewHolder(itemView);
+        return new BoardRecyclerViewAdapter.ViewHolder(itemView, context);
     }
 
     @Override
