@@ -54,7 +54,7 @@ public class ShowNearbyAdapter extends ArrayAdapter<CheckIn> {
                 //is chkIos checked?
                 currentCheckIn = getItem((Integer) view.getTag());
                 if (((CheckBox) view).isChecked()) {
-                    Toast.makeText(getContext(), "Check", Toast.LENGTH_LONG).show();
+                    // Toast.makeText(getContext(), "Check", Toast.LENGTH_LONG).show();
                     NearbyActivity.mSelectedLocations.put(currentCheckIn.id, currentCheckIn.location);
                     NearbyActivity.mSelectedLocationsName.add(currentCheckIn.name);
                 } else {
@@ -65,16 +65,15 @@ public class ShowNearbyAdapter extends ArrayAdapter<CheckIn> {
         });
 
         //**change color with number of checkins. */
-            if(Integer.valueOf(currentCheckIn.likenum) >= 50000)
-                convertView.setBackgroundColor(getContext().getResources().getColor(R.color.color3));
-            else if(Integer.valueOf(currentCheckIn.likenum) >= 10000)
-                convertView.setBackgroundColor(getContext().getResources().getColor(R.color.color2));
-
+        if(Integer.valueOf(currentCheckIn.likenum) >= 50000)
+            convertView.setBackgroundColor(getContext().getResources().getColor(R.color.color3));
+        else if(Integer.valueOf(currentCheckIn.likenum) >= 10000)
+            convertView.setBackgroundColor(getContext().getResources().getColor(R.color.color2));
         //**change color with number of checkins. */
 
         tvName.setText(currentCheckIn.name);
         tvCheckins.setText(currentCheckIn.like);
-        // Return the completed view to render on screen
+
         return convertView;
     }
 }

@@ -130,7 +130,7 @@ public class NavigateActivity extends BaseActivity implements RoutingListener, G
     }
 
     private void sendRequest() {
-        if (Util.Operations.isOnline(this)) {
+        if (Util.Operations.isNetworkAvailable(this)) {
             destinations = new LatLng[NearbyActivity.mSelectedLocations.size()];
             int i = 0;
             for (String key : NearbyActivity.mSelectedLocations.keySet()) {

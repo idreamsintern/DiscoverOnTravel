@@ -76,7 +76,7 @@ public class PlaceholderFragment extends Fragment {
         currentKeyword  = arg.getString(ARG_KEYWORD);
         ArrayList<CheckIn> arrayOfCheckins = new ArrayList<CheckIn>();
         itemsAdapter = new ShowNearbyAdapter(getActivity(), arrayOfCheckins);
-        getdatafromapi();
+        getNearbyApi();
         progressbar = ProgressDialog.show(getActivity(), "下載資料", "請稍待片刻...", true);
         nearbyListView = (ListView) rootView.findViewById(R.id.nearby_list);
         nearbyListView.setAdapter(itemsAdapter);
@@ -85,7 +85,7 @@ public class PlaceholderFragment extends Fragment {
     }
 
 
-    public void getdatafromapi() {
+    public void getNearbyApi() {
 
         RequestParams params = new RequestParams();
         params.put("category", currentCategory);
