@@ -24,9 +24,8 @@ import com.firebase.client.ValueEventListener;
  */
 public class ChatActivity extends BaseActivity {
 
-    // TODO: change this to your own Firebase URL
+    // TODO: change this to your own Fi-rebase URL
     private static final String FIREBASE_URL = "https://torrid-inferno-6846.firebaseio.com/";
-
 
     private String mUsername;
     private Firebase mFirebaseRef;

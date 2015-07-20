@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.idreams.dot.chat.ChatActivity;
+import com.example.idreams.dot.chat.ChatListActivity;
 import com.example.idreams.dot.localtopics.BoardActivity;
 import com.example.idreams.dot.nearby.NearbyActivity;
 import com.example.idreams.dot.utils.GetToken;
@@ -63,7 +64,7 @@ public class MainActivity extends BaseActivity implements FragmentSimpleLoginBut
     }
 
     public void chatBtn(View view) {
-        Intent intent = new Intent(this, ChatActivity.class);
+        Intent intent = new Intent(this, ChatListActivity.class);
         startActivity(intent);
     }
 

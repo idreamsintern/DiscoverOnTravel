@@ -83,6 +83,10 @@
             android:name=".nearby.NearbyActivity"
             android:label="@string/title_activity_nearby" >
         </activity>
+        <activity
+            android:name=".chat.ChatListActivity"
+            android:label="@string/title_activity_chat_list" >
+        </activity>
     </application>
 
 </manifest>
