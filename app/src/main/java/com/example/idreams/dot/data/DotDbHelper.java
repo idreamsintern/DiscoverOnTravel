@@ -12,7 +12,7 @@ import com.example.idreams.dot.data.DotDbContract.TopArticleEntry;
 public class DotDbHelper extends SQLiteOpenHelper {
 
     // If you change the database schema, you must increment the database version.
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
 
     static final String DATABASE_NAME = "dot.db";
 
@@ -32,8 +32,8 @@ public class DotDbHelper extends SQLiteOpenHelper {
                 FbCheckinEntry.COLUMN_LNG       + " TEXT NOT NULL, " +
                 FbCheckinEntry.COLUMN_CHECKINS  + " INT  NOT NULL, " +
                 FbCheckinEntry.COLUMN_CHECKINS_UPCOUNT + " INT NOT NULL, " +
-                FbCheckinEntry.COLUMN_STARTDATE + " TEXT NOT NULL" +
-                "UNIQUE " + FbCheckinEntry.COLUMN_ID + "ON CONFLICT REPLACE );";
+                FbCheckinEntry.COLUMN_STARTDATE + " TEXT NOT NULL, " +
+                "UNIQUE (" + FbCheckinEntry.COLUMN_ID + ") ON CONFLICT REPLACE );";
         final String SQL_CREATE_WEATHER_TABLE = "CREATE TABLE " + TopArticleEntry.TABLE_NAME + " (" +
                 // Why AutoIncrement here, and not above?
                 // Unique keys will be auto-generated in either case.  But for weather

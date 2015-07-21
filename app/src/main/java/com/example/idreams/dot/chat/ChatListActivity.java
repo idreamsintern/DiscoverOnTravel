@@ -36,27 +36,11 @@ public class ChatListActivity extends BaseActivity {
         chatListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
-//    @Override
-//    public View createViewFromResource(int position, View convertView, ViewGroup parent, int resource) {
-//        View view;
-//        ChatroomItem chatroomItem = mAdapter.getItem(position);
-//
-//        if(convertView == null) {
-//            view = mAdapter.getLayoutInflater().inflate(resource, parent, false);
-//        }
-//        else {
-//            view = convertView;
-//        }
-//        ((TextView)view.findViewById(R.id.tv_chatroomtitle)).setText(chatroomItem.getTitle());
-//        ((TextView)view.findViewById(R.id.tv_chatroomusers)).setText(chatroomItem.getUsers());
-//        return view;
-//    }
-
     private ArrayList<Chatroom> getChatroomLists() {
         ArrayList<Chatroom> chatroomArrayList = new ArrayList<>();
         chatroomArrayList.add(new Chatroom("title1", "desp1"));
-        chatroomArrayList.add(new Chatroom("title1", "desp1"));
-        chatroomArrayList.add(new Chatroom("title1", "desp1"));
+        chatroomArrayList.add(new Chatroom("title2", "desp1"));
+        chatroomArrayList.add(new Chatroom("title3", "desp1"));
 
         return chatroomArrayList;
     }

@@ -43,7 +43,7 @@ public class ChatListRecyclerAdapter extends RecyclerView.Adapter<ChatListRecycl
             Chatroom chatroom = chatrooms.get(position);
 
             Intent intent = new Intent(context, ChatActivity.class);
-            intent.putExtra("ChatName", chatroom.getTitle());
+            // intent.putExtra("ChatName", chatroom.getTitle());
             context.startActivity(intent);
         }
     }
