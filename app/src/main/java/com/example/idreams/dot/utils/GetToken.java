@@ -21,7 +21,7 @@ public class GetToken {
     }
 
 
-    public static void getToken() {
+    public void getToken() {
         RequestParams params = new RequestParams();
         params.put("id", "a1411f06f306e17dad9956dc6ba86cdb");
         params.put("secret_key", "1369ac51fd6fc95db2e9dde7b74cc3b8");

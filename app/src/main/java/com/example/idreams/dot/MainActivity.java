@@ -36,7 +36,7 @@ public class MainActivity extends BaseActivity implements FragmentSimpleLoginBut
         FragmentSimpleLoginButton fragment = new FragmentSimpleLoginButton();
         mFragmentManager = getSupportFragmentManager();
         toggleFragment(INDEX_SIMPLE_LOGIN);
-        (new GetToken(this)).getToken();
+        //(new GetToken(this)).getToken();
     }
 
     public void getMessage(String msg) {

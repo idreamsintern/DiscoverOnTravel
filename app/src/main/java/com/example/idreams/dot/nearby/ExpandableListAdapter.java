@@ -1,8 +1,5 @@
 package com.example.idreams.dot.nearby;
 
-import java.util.HashMap;
-import java.util.List;
-
 import android.content.Context;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
@@ -12,6 +9,9 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.example.idreams.dot.R;
+
+import java.util.HashMap;
+import java.util.List;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 

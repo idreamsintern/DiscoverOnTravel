@@ -12,8 +12,6 @@ import com.example.idreams.dot.R;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Vector;
 
 public class NearbyActivity extends ActionBarActivity
