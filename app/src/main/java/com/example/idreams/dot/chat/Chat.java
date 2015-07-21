@@ -5,6 +5,10 @@ public class Chat {
     private String message;
     private String author;
 
+    // Used by firebase. Don't remove it.
+    Chat() {
+    }
+
     Chat(String message, String author) {
         this.message = message;
         this.author = author;
