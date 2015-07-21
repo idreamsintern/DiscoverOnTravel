@@ -44,7 +44,11 @@ public class NearbyCursorAdapter extends CursorAdapter {
         InputFilter[] namefilter = new InputFilter[] {new InputFilter.LengthFilter(11)};
         tvName.setFilters(namefilter);
         ckCheck.setTag(getName(cursor) + "," + getLat(cursor) + "," + getLng(cursor));
-
+        if (NearbyActivity.mSelectedLocations.containsKey(getName(cursor))) {
+            ckCheck.setChecked(true);
+        } else {
+            ckCheck.setChecked(false);
+        }
         //**change color with number of checkins. */
         tvName.setText(cursor.getString(PlaceholderFragment.COLUMN_FB_CHECKIN_NAME));
         tvCheckins.setText(cursor.getString(PlaceholderFragment.COLUMN_FB_CHECKIN_CHECKINS));

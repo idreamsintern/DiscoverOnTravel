@@ -18,8 +18,6 @@ public class NearbyActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
     public static HashMap<String, LatLng> mSelectedLocations;
     public static Vector<String> mSelectedLocationsName;
-    private static final String ARG_KEYWORD = "arg_keyword";
-    private static final String ARG_CATEGORY = "arg_category";
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
