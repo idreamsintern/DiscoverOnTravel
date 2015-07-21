@@ -34,7 +34,7 @@ public class ChatListRecyclerAdapter extends RecyclerView.Adapter<ChatListRecycl
 
         public ViewHolder(View itemView, Context context) {
             super(itemView);
-            this.tvTitle = (TextView) itemView.findViewById(R.id.tv_chatroomtitle);
+            this.tvTitle = (TextView) itemView.findViewById(R.id.tv_chat_room_title);
             this.chatCardView = (CardView) itemView.findViewById(R.id.card_view);
             this.context = context;
 
