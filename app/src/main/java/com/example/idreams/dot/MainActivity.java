@@ -55,7 +55,6 @@ public class MainActivity extends BaseActivity implements FragmentSimpleLoginBut
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        GetToken.getToken();
     }
 
     public void nearbyBtn(View view) {

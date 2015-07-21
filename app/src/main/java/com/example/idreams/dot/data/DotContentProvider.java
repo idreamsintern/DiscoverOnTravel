@@ -8,10 +8,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+
 import com.example.idreams.dot.data.DotDbContract.FbCheckinEntry;
 import com.example.idreams.dot.data.DotDbContract.TopArticleEntry;
 
-public class DotContentProvider  extends ContentProvider {
+public class DotContentProvider extends ContentProvider {
     // The URI Matcher used by this content provider.
     private DotDbHelper mDotDbHelper;
     private static final SQLiteQueryBuilder sQueryBuilder;
@@ -35,12 +36,17 @@ public class DotContentProvider  extends ContentProvider {
     private static final String sCategorySelection =
             FbCheckinEntry.TABLE_NAME + "." + FbCheckinEntry.COLUMN_CATEGORY + " = ? ";
     private static final String sKeywordSelection =
-            FbCheckinEntry.TABLE_NAME + "." + FbCheckinEntry.COLUMN_NAME + " LIKE '%?%' ";
+            FbCheckinEntry.TABLE_NAME + "." + FbCheckinEntry.COLUMN_NAME;
     private static final String sCategoryKeywordSelection =
             FbCheckinEntry.TABLE_NAME + "." + FbCheckinEntry.COLUMN_CATEGORY + " = ? AND " +
-            FbCheckinEntry.COLUMN_NAME + " LIKE '%?%' ";
+                    FbCheckinEntry.COLUMN_NAME;
     private static final String sSourceSelection =
             TopArticleEntry.TABLE_NAME + "." + TopArticleEntry.COLUMN_SOURCE + " = ? ";
+
+    private Cursor getFbCheckin(Uri uri, String[] projection, String sortOrder) {
+        return sQueryBuilder.query(mDotDbHelper.getReadableDatabase(),
+                projection, null, null, null, null, sortOrder );
+    }
 
     private Cursor getFbCheckinByCategory(Uri uri, String[] projection, String sortOrder) {
         String categorySetting = FbCheckinEntry.getCategoryFromUri(uri);
@@ -54,11 +60,11 @@ public class DotContentProvider  extends ContentProvider {
     }
 
     private Cursor getFbCheckinByKeyword(Uri uri, String[] projection, String sortOrder) {
-        String keywordSetting  = FbCheckinEntry.getKeywordFromUri(uri);
+        String keywordSetting = FbCheckinEntry.getKeywordFromUri(uri);
 
         return sQueryBuilder.query(mDotDbHelper.getReadableDatabase(),
                 projection,
-                sKeywordSelection,
+                sKeywordSelection + " LIKE '%" + keywordSetting + "%' ",
                 new String[]{keywordSetting},
                 null, null, sortOrder
         );
@@ -66,18 +72,18 @@ public class DotContentProvider  extends ContentProvider {
 
     private Cursor getFbCheckinByCategoryKeyword(Uri uri, String[] projection, String sortOrder) {
         String categorySetting = FbCheckinEntry.getCategoryFromUri(uri);
-        String keywordSetting  = FbCheckinEntry.getKeywordFromUri(uri);
+        String keywordSetting = FbCheckinEntry.getKeywordFromUri(uri);
 
         return sQueryBuilder.query(mDotDbHelper.getReadableDatabase(),
                 projection,
-                sCategoryKeywordSelection,
-                new String[]{categorySetting, keywordSetting},
+                sCategoryKeywordSelection + " LIKE '%" + keywordSetting + "%' ",
+                new String[]{categorySetting},
                 null, null, sortOrder
         );
     }
 
     private Cursor getTopArticleByKeyword(Uri uri, String[] projection, String sortOrder) {
-        String sourceSetting  = TopArticleEntry.getSourceSettingFromUri(uri);
+        String sourceSetting = TopArticleEntry.getSourceSettingFromUri(uri);
 
         return sQueryBuilder.query(mDotDbHelper.getReadableDatabase(),
                 projection,
@@ -136,25 +142,26 @@ public class DotContentProvider  extends ContentProvider {
         switch (sUriMatcher.match(uri)) {
             // "fb_checkin"
             case FB_CHECKIN: {
-                retCursor = mDotDbHelper.getReadableDatabase().query(
-                        FbCheckinEntry.TABLE_NAME, projection,
-                        selection, selectionArgs, null, null, sortOrder);
+                retCursor = getFbCheckin(uri, projection, sortOrder);
                 break;
             }
             // "fb_checkin/category/*"
             case FB_CHECKIN_SEARCH_CATEGORY: {
-                retCursor = getFbCheckinByCategory(uri, projection, sortOrder);        break;
+                retCursor = getFbCheckinByCategory(uri, projection, sortOrder);
+                break;
             }
             // "fb_checkin/keyword/*"
             case FB_CHECKIN_SEARCH_KEYWORD: {
-                retCursor = getFbCheckinByKeyword(uri, projection, sortOrder);         break;
+                retCursor = getFbCheckinByKeyword(uri, projection, sortOrder);
+                break;
             }
             // "fb_checkin/*/*"
             case FB_CHECKIN_SEARCH_CATEGORY_KEYWORD: {
-                retCursor = getFbCheckinByCategoryKeyword(uri, projection, sortOrder); break;
+                retCursor = getFbCheckinByCategoryKeyword(uri, projection, sortOrder);
+                break;
             }
             // "top_article"
-            case TOP_ARTICLE:  {
+            case TOP_ARTICLE: {
                 retCursor = mDotDbHelper.getReadableDatabase().query(
                         FbCheckinEntry.TABLE_NAME, projection,
                         selection, selectionArgs, null, null, sortOrder);
@@ -162,7 +169,8 @@ public class DotContentProvider  extends ContentProvider {
             }
             // "top_article/*"
             case TOP_ARTICLE_SEARCH_SOURCE: {
-                retCursor =  getTopArticleByKeyword(uri, projection, sortOrder);       break;
+                retCursor = getTopArticleByKeyword(uri, projection, sortOrder);
+                break;
             }
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -180,7 +188,7 @@ public class DotContentProvider  extends ContentProvider {
         switch (match) {
             case FB_CHECKIN: {
                 long _id = db.insert(FbCheckinEntry.TABLE_NAME, null, values);
-                if ( _id > 0 )
+                if (_id > 0)
                     returnUri = FbCheckinEntry.buildUri(_id);
                 else
                     throw new android.database.SQLException("Failed to insert row into " + uri);
@@ -206,7 +214,7 @@ public class DotContentProvider  extends ContentProvider {
         final SQLiteDatabase db = mDotDbHelper.getWritableDatabase();
         final int match = sUriMatcher.match(uri);
         int rowsDeleted;
-        if ( null == selection ) selection = "1";
+        if (null == selection) selection = "1";
         switch (match) {
             case FB_CHECKIN:
                 rowsDeleted = db.delete(FbCheckinEntry.TABLE_NAME, selection, selectionArgs);

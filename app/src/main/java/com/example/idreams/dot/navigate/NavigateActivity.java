@@ -44,6 +44,7 @@ public class NavigateActivity extends BaseActivity implements RoutingListener, G
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigate);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        MapsInitializer.initialize(this);
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(Places.GEO_DATA_API)
@@ -131,10 +132,10 @@ public class NavigateActivity extends BaseActivity implements RoutingListener, G
 
     private void sendRequest() {
         if (Util.Operations.isNetworkAvailable(this)) {
-            destinations = new LatLng[NearbyActivity.mSelectedLocations.size()];
+            destinations = new LatLng[NearbyActivity.sSelectedLocations.size()];
             int i = 0;
-            for (String key : NearbyActivity.mSelectedLocations.keySet()) {
-                destinations[i] = NearbyActivity.mSelectedLocations.get(key);
+            for (String key : NearbyActivity.sSelectedLocations.keySet()) {
+                destinations[i] = NearbyActivity.sSelectedLocations.get(key);
                 i++;
             }
 

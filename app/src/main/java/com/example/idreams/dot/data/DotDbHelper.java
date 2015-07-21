@@ -3,18 +3,15 @@ package com.example.idreams.dot.data;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
 import com.example.idreams.dot.data.DotDbContract.FbCheckinEntry;
 import com.example.idreams.dot.data.DotDbContract.TopArticleEntry;
 
-/**
- * Created by schwannden on 2015/7/20.
- */
 public class DotDbHelper extends SQLiteOpenHelper {
 
+    static final String DATABASE_NAME = "dot.db";
     // If you change the database schema, you must increment the database version.
     private static final int DATABASE_VERSION = 4;
-
-    static final String DATABASE_NAME = "dot.db";
 
     public DotDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -22,18 +19,18 @@ public class DotDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        final String SQL_CREATE_FB_CHECKIN_TABLE =
-                "CREATE TABLE " + FbCheckinEntry.TABLE_NAME + " (" +
-                FbCheckinEntry._ID              + " INTEGER PRIMARY KEY," +
-                FbCheckinEntry.COLUMN_ID        + " TEXT NOT NULL, " +
-                FbCheckinEntry.COLUMN_NAME      + " TEXT NOT NULL, " +
-                FbCheckinEntry.COLUMN_CATEGORY  + " TEXT NOT NULL, " +
-                FbCheckinEntry.COLUMN_LAT       + " TEXT NOT NULL, " +
-                FbCheckinEntry.COLUMN_LNG       + " TEXT NOT NULL, " +
-                FbCheckinEntry.COLUMN_CHECKINS  + " INT  NOT NULL, " +
+        final String SQL_CREATE_FB_CHECKIN_TABLE = "CREATE TABLE " + FbCheckinEntry.TABLE_NAME + " (" +
+                FbCheckinEntry._ID + " INTEGER PRIMARY KEY," +
+                FbCheckinEntry.COLUMN_ID + " TEXT NOT NULL, " +
+                FbCheckinEntry.COLUMN_NAME + " TEXT NOT NULL, " +
+                FbCheckinEntry.COLUMN_CATEGORY + " TEXT NOT NULL, " +
+                FbCheckinEntry.COLUMN_LAT + " TEXT NOT NULL, " +
+                FbCheckinEntry.COLUMN_LNG + " TEXT NOT NULL, " +
+                FbCheckinEntry.COLUMN_CHECKINS + " INT  NOT NULL, " +
                 FbCheckinEntry.COLUMN_CHECKINS_UPCOUNT + " INT NOT NULL, " +
                 FbCheckinEntry.COLUMN_STARTDATE + " TEXT NOT NULL, " +
-                "UNIQUE (" + FbCheckinEntry.COLUMN_ID + ") ON CONFLICT REPLACE );";
+                "UNIQUE (" + FbCheckinEntry.COLUMN_ID + ") ON CONFLICT REPLACE);";
+
         final String SQL_CREATE_WEATHER_TABLE = "CREATE TABLE " + TopArticleEntry.TABLE_NAME + " (" +
                 // Why AutoIncrement here, and not above?
                 // Unique keys will be auto-generated in either case.  But for weather

@@ -13,14 +13,15 @@ import com.example.idreams.dot.R;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Vector;
 
 public class NearbyActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
-    public static HashMap<String, LatLng> mSelectedLocations;
-    public static Vector<String> mSelectedLocationsName;
+    public static HashMap<String, LatLng>  sSelectedLocations;
+    public static Vector<String>           sSelectedLocationsName;
+    public static HashMap<String, Integer> sCategoryStatistics;
+    public static Vector<String>           sCategories;
+
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -37,11 +38,16 @@ public class NearbyActivity extends ActionBarActivity
         setContentView(R.layout.activity_nearby);
 
         mTitle = "DOT: Nearby Place";
-        mSelectedLocations = new HashMap<>();
-        mSelectedLocationsName = new Vector<>();
+        if (sSelectedLocations == null)
+            sSelectedLocations = new HashMap<>();
+        if (sSelectedLocationsName == null)
+            sSelectedLocationsName = new Vector<>();
+        if (NearbyActivity.sCategories == null)
+            NearbyActivity.sCategories = new Vector<>();
+        if (NearbyActivity.sCategoryStatistics == null)
+            NearbyActivity.sCategoryStatistics = new HashMap<>();
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mTitle = getTitle();
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
@@ -50,20 +56,16 @@ public class NearbyActivity extends ActionBarActivity
     }
 
     @Override
-    public void onNavigationDrawerItemSelected(String mCategory, String mKey) {
+    public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(mCategory, mKey))
+                .replace(R.id.container, PlaceholderFragment.newInstance(position))
                 .commit();
     }
 
-    public void onSectionAttached(String mCategory, String mKey) {
-        if (mCategory != null && mKey != null)
-            mTitle = mCategory + ": " + mKey;
-        else
-            mTitle = "Start Exploring... ";
-
+    public void onSectionAttached(int position) {
+        mTitle = sCategories.get(position);
     }
 
     public void restoreActionBar() {
