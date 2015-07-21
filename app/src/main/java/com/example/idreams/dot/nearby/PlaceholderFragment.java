@@ -5,41 +5,55 @@ package com.example.idreams.dot.nearby;
  */
 
 import android.app.Activity;
-import android.app.ProgressDialog;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.example.idreams.dot.MainActivity;
 import com.example.idreams.dot.R;
-import com.example.idreams.dot.utils.RestClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-
-import org.apache.http.Header;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
+import com.example.idreams.dot.data.DotDbContract.FbCheckinEntry;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class PlaceholderFragment extends Fragment {
-    private final static String LOG_TAG = "PlacehloderFragment";
-    private final static String url = "fb_checkin_search";
+public class PlaceholderFragment extends Fragment
+        implements LoaderManager.LoaderCallbacks<Cursor> {
+    private static final int FB_CHECKIN_LOADER = 0;
     private static final String ARG_KEYWORD = "arg_keyword";
     private static final String ARG_CATEGORY = "arg_category";
-    ProgressDialog progressbar;
-    ShowNearbyAdapter itemsAdapter;
-    private ListView nearbyListView;
-    private String currentCategory;
-    private String currentKeyword;
-    private String emptystring;
+    private NearbyCursorAdapter mNearbyAdapter;
+    private String mCurrentCategory;
+    private String mCurrentKeyword;
+    private final String LOG_TAG = this.getClass().getSimpleName();
+
+    private static final String[] PROJECTION = {
+            FbCheckinEntry.TABLE_NAME + "." + FbCheckinEntry._ID,
+            FbCheckinEntry.COLUMN_ID,
+            FbCheckinEntry.COLUMN_NAME,
+            FbCheckinEntry.COLUMN_CATEGORY,
+            FbCheckinEntry.COLUMN_LAT,
+            FbCheckinEntry.COLUMN_LNG,
+            FbCheckinEntry.COLUMN_CHECKINS,
+            FbCheckinEntry.COLUMN_CHECKINS_UPCOUNT
+    };
+
+    static final int COLUMN_FB_CHECKIN_ID_ = 0;
+    static final int COLUMN_FB_CHECKIN_ID = 1;
+    static final int COLUMN_FB_CHECKIN_NAME = 2;
+    static final int COLUMN_FB_CHECKIN_CATEGORY = 3;
+    static final int COLUMN_FB_CHECKIN_LAT = 4;
+    static final int COLUMN_FB_CHECKIN_LNG = 5;
+    static final int COLUMN_FB_CHECKIN_CHECKINS = 6;
+    static final int COLUMN_FB_CHECKIN_CHECKINS_UPCOUNT = 7;
+    static final int COLUMN_FB_CHECKIN_STARTDATE = 8;
 
 
     public PlaceholderFragment() {
@@ -49,11 +63,11 @@ public class PlaceholderFragment extends Fragment {
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static PlaceholderFragment newInstance(String mCategory, String mKey) {
+    public static PlaceholderFragment newInstance(String category, String key) {
         PlaceholderFragment fragment = new PlaceholderFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_CATEGORY, mCategory);
-        args.putString(ARG_KEYWORD, mKey);
+        args.putString(ARG_CATEGORY, category);
+        args.putString(ARG_KEYWORD, key);
         fragment.setArguments(args);
         return fragment;
     }
@@ -61,75 +75,102 @@ public class PlaceholderFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        Log.e(LOG_TAG, "onAttach");
         ((NearbyActivity) activity).onSectionAttached(
                 getArguments().getString(ARG_CATEGORY), getArguments().getString(ARG_KEYWORD));
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mCurrentCategory = getArguments().getString(ARG_CATEGORY);
+        mCurrentKeyword  = getArguments().getString(ARG_KEYWORD);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.e(LOG_TAG, "onCreateView");
         View rootView = inflater.inflate(R.layout.fragment_nearby, container, false);
-        Bundle arg = getArguments();
-        currentCategory = arg.getString(ARG_CATEGORY);
-        currentKeyword  = arg.getString(ARG_KEYWORD);
-        ArrayList<CheckIn> arrayOfCheckins = new ArrayList<CheckIn>();
-        itemsAdapter = new ShowNearbyAdapter(getActivity(), arrayOfCheckins);
-        getdatafromapi();
-        progressbar = ProgressDialog.show(getActivity(), "下載資料", "請稍待片刻...", true);
-        nearbyListView = (ListView) rootView.findViewById(R.id.nearby_list);
-        nearbyListView.setAdapter(itemsAdapter);
+
+        String sortOrder = FbCheckinEntry.COLUMN_CHECKINS + " ASC";
+        mNearbyAdapter = new NearbyCursorAdapter(getActivity(), null, 0);
+        ListView listView = (ListView) rootView.findViewById(R.id.nearby_list);
+        listView.setAdapter(mNearbyAdapter);
 
         return rootView;
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        getLoaderManager().initLoader(FB_CHECKIN_LOADER, null, this);
+    }
 
-    public void getdatafromapi() {
+    @Override
+    public void onStart () {
+        super.onStart();
+        Log.v(LOG_TAG, "onStart");
+    }
 
-        RequestParams params = new RequestParams();
-        params.put("category", currentCategory);
-        params.put("keyword",currentKeyword);
-        params.put("coordinates", "25.041399,121.554233");
-        params.put("radius", 100);   // radius = 100km
-        params.put("limit", 20);     // limit = 20
-        params.put("period", "month");
-        params.put("sort", "upcount");
-        params.put("token", MainActivity.tokenstring);
-        RestClient.post(url, params, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    JSONArray resultJsonArray = response.getJSONArray("result");
-                    for (int i = 0; i < resultJsonArray.length(); i++) {
-                        JSONObject j = resultJsonArray.getJSONObject(i);
-                        String name = j.getString("name");
-                        String id = j.getString("id");
-                        String checkins = j.getString("checkins");
-                        String lat = j.getString("latitude");
-                        String lng = j.getString("longitude");
-                        Log.e("LOG_TAG", "onSuccess\n" + "name : " + name + "\nid" + id);
-                        itemsAdapter.add(new CheckIn(name, id, checkins, lat, lng));
-                    }
+    @Override
+    public void onResume () {
+        super.onResume();
+        Log.v(LOG_TAG, "onResume");
+    }
 
-                } catch (Exception err) {
-                    Log.e(LOG_TAG, "onFail :" + err.getMessage());
-                }
+    @Override
+    public void onPause () {
+        super.onPause();
+        Log.v(LOG_TAG, "onPause");
+    }
 
-                progressbar.dismiss();
+    @Override
+    public void onStop () {
+        super.onStop();
+        Log.v(LOG_TAG, "onStop");
+    }
+
+    @Override
+    public void onDestroy () {
+        super.onDestroy();
+        Log.v(LOG_TAG, "onDestroy");
+    }
+
+    @Override
+    public void onDetach () {
+        super.onDetach();
+        Log.v(LOG_TAG, "onDetach");
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+        Uri searchUri = buildQueryUri();
+        String sortOrder = FbCheckinEntry.COLUMN_CHECKINS + " ASC";
+        return new CursorLoader(getActivity(), searchUri, PROJECTION, null, null, sortOrder);
+    }
+
+    private Uri buildQueryUri() {
+        if (mCurrentCategory == null) {
+            if(mCurrentKeyword == null) {
+                return FbCheckinEntry.builSearch();
+            } else {
+                return FbCheckinEntry.builKeywordSearch(mCurrentKeyword);
             }
-
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.e(LOG_TAG, "Fail json! " + throwable.getMessage());
-                progressbar.dismiss();
+        } else {
+            if(mCurrentKeyword == null) {
+                return FbCheckinEntry.builCategorySearch(mCurrentCategory);
+            } else {
+                return FbCheckinEntry.buildCategoryKeyworkSearch(mCurrentCategory, mCurrentKeyword);
             }
+        }
+    }
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.e(LOG_TAG, "Fail! " + throwable.getMessage());
-                progressbar.dismiss();
-            }
-        });
+    @Override
+    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+        mNearbyAdapter.swapCursor(cursor);
+    }
 
+    @Override
+    public void onLoaderReset(Loader<Cursor> cursorLoader) {
+        mNearbyAdapter.swapCursor(null);
     }
 }

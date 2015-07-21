@@ -5,9 +5,6 @@ import android.content.ContentUris;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
-/**
- * Created by schwannden on 2015/7/20.
- */
 public class DotDbContract {
     public static final String CONTENT_AUTHORITY = "com.example.idreams.dot";
     public static final String REMOTE_CONTENT_AUTHORITY = "api.ser.ideas.iii.org.tw:80/api";
@@ -37,6 +34,10 @@ public class DotDbContract {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
 
+        public static Uri builSearch() {
+            return CONTENT_URI.buildUpon().build();
+        }
+
         public static Uri builCategorySearch(String category) {
             return CONTENT_URI.buildUpon().appendPath("category").appendPath(category).build();
         }
@@ -44,7 +45,6 @@ public class DotDbContract {
         public static Uri builKeywordSearch(String keyword) {
             return CONTENT_URI.buildUpon().appendPath("keyword").appendPath(keyword).build();
         }
-
 
         public static Uri buildCategoryKeyworkSearch(String category, String keyword) {
             return CONTENT_URI.buildUpon().appendPath(category).appendPath(keyword).build();
@@ -74,16 +74,16 @@ public class DotDbContract {
         public static final String CONTENT_ITEM_TYPE =
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_TOP_ARTICLE;
 
-        public static final String TABLE_NAME    = "top_article";
-        public static final String COLUMN_TIME   = "time";
-        public static final String COLUMN_TITLE  = "title";
-        public static final String COLUMN_URL    = "url";
-        public static final String COLUMN_PUSH   = "push";
+        public static final String TABLE_NAME = "top_article";
+        public static final String COLUMN_TIME = "time";
+        public static final String COLUMN_TITLE = "title";
+        public static final String COLUMN_URL = "url";
+        public static final String COLUMN_PUSH = "push";
         public static final String COLUMN_SOURCE = "ptt";
-        public static final String SOURCE_PTT      = "ptt";
+        public static final String SOURCE_PTT = "ptt";
         public static final String SOURCE_FACEBOOK = "facebook";
-        public static final String SOURCE_FORUM    = "forum";
-        public static final String SOURCE_news     = "news";
+        public static final String SOURCE_FORUM = "forum";
+        public static final String SOURCE_news = "news";
 
         public static Uri buildUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);

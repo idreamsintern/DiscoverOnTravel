@@ -10,9 +10,6 @@ import com.loopj.android.http.RequestParams;
 import org.apache.http.Header;
 import org.json.JSONObject;
 
-/**
- * Created by idreams on 2015/7/18.
- */
 public class GetToken {
 
     private static String LOG_TAG = "GetToken";

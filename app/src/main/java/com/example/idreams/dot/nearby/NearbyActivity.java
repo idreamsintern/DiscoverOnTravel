@@ -20,6 +20,8 @@ public class NearbyActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
     public static HashMap<String, LatLng> mSelectedLocations;
     public static Vector<String> mSelectedLocationsName;
+    private static final String ARG_KEYWORD = "arg_keyword";
+    private static final String ARG_CATEGORY = "arg_category";
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -39,7 +41,6 @@ public class NearbyActivity extends ActionBarActivity
         mSelectedLocationsName = new Vector<>();
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mTitle = getTitle();
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
@@ -48,20 +49,19 @@ public class NearbyActivity extends ActionBarActivity
     }
 
     @Override
-    public void onNavigationDrawerItemSelected(String mCategory, String mKey) {
+    public void onNavigationDrawerItemSelected(String category, String key) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(mCategory, mKey))
+                .replace(R.id.container, PlaceholderFragment.newInstance(category, key))
                 .commit();
     }
 
-    public void onSectionAttached(String mCategory, String mKey) {
-        if (mCategory != null && mKey != null)
-            mTitle = mCategory + ": " + mKey;
+    public void onSectionAttached(String category, String key) {
+        if (category != null && key != null)
+            mTitle = category + ": " + key;
         else
             mTitle = "Start Exploring... ";
-
     }
 
     public void restoreActionBar() {
