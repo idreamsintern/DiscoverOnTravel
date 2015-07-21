@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.transition.Explode;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -34,6 +35,8 @@ public class NearbyActivity extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nearby);
+        setupWindowAnimations();
+
         mTitle = "DOT: Nearby Place";
         mSelectedLocations = new HashMap<>();
         mSelectedLocationsName = new Vector<>();
@@ -98,5 +101,11 @@ public class NearbyActivity extends ActionBarActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setupWindowAnimations() {
+        Explode explode = new Explode();
+        explode.setDuration(2000);
+        getWindow().setEnterTransition(explode);
     }
 }

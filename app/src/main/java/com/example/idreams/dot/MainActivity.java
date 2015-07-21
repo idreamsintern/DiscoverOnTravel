@@ -1,5 +1,6 @@
 package com.example.idreams.dot;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,7 +8,11 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.transition.Explode;
+import android.transition.Fade;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.idreams.dot.chat.ChatActivity;
@@ -27,11 +32,15 @@ public class MainActivity extends BaseActivity implements FragmentSimpleLoginBut
     public static String tokenstring = "api_doc_token";
     TextView tv;
     private FragmentManager mFragmentManager;
+    private ViewGroup sceneRoot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setupWindowAnimations();
+        setLayout();
+
         tv = (TextView) findViewById(R.id.tv);
         FragmentSimpleLoginButton fragment = new FragmentSimpleLoginButton();
         mFragmentManager = getSupportFragmentManager();
@@ -56,7 +65,8 @@ public class MainActivity extends BaseActivity implements FragmentSimpleLoginBut
 
     public void nearbyBtn(View view) {
         Intent intent = new Intent(this, NearbyActivity.class);
-        startActivity(intent);
+        ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this);
+        startActivity(intent, transitionActivityOptions.toBundle());
     }
 
     public void localBtn(View view) {
@@ -78,5 +88,18 @@ public class MainActivity extends BaseActivity implements FragmentSimpleLoginBut
                 break;
         }
         transaction.commit();
+    }
+
+    private void setupWindowAnimations() {
+        Explode explode = new Explode();
+        explode.setDuration(2000);
+        getWindow().setExitTransition(explode);
+
+        Fade fade = new Fade();
+        getWindow().setReenterTransition(fade);
+    }
+
+    private void setLayout() {
+        sceneRoot = (LinearLayout) findViewById(R.id.main_activity_layout);
     }
 }

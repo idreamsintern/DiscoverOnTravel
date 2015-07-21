@@ -4,7 +4,7 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:orientation="vertical"
-    android:id="@+id/layout">
+    android:id="@+id/main_activity_layout">
 
     <Button
         android:layout_width="match_parent"
