@@ -1,5 +1,7 @@
 package com.example.idreams.dot.chat;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
@@ -7,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.idreams.dot.R;
@@ -25,6 +26,27 @@ public class ChatListRecyclerAdapter extends RecyclerView.Adapter<ChatListRecycl
     public ChatListRecyclerAdapter(Context context, ArrayList<Chatroom> chatrooms) {
         this.chatrooms = chatrooms;
         this.context = context;
+    }
+
+    // Usually involves inflating a layout from XML and returning the holder
+    @Override
+    public ChatListRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(context).
+                inflate(R.layout.chat_list_item, parent, false);
+
+        return new ChatListRecyclerAdapter.ViewHolder(itemView, context);
+    }
+
+    @Override
+    public void onBindViewHolder(ChatListRecyclerAdapter.ViewHolder holder, int position) {
+        Chatroom chatroom = chatrooms.get(position);
+        holder.tvTitle.setText(chatroom.getTitle());
+        holder.chatCardView.setBackground(chatroom.getBackground());
+    }
+
+    @Override
+    public int getItemCount() {
+        return chatrooms.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -47,29 +69,13 @@ public class ChatListRecyclerAdapter extends RecyclerView.Adapter<ChatListRecycl
             Chatroom chatroom = chatrooms.get(position);
 
             Intent intent = new Intent(context, ChatActivity.class);
-            // intent.putExtra("ChatName", chatroom.getTitle());
-            context.startActivity(intent);
+
+            View sharedView = this.chatCardView;
+            String transitionName = v.getResources().getString(R.string.chatroom_icon);
+
+            ActivityOptions transitionActivityOptions =
+                    ActivityOptions.makeSceneTransitionAnimation((Activity) context, sharedView, transitionName);
+            context.startActivity(intent, transitionActivityOptions.toBundle());
         }
-    }
-
-    // Usually involves inflating a layout from XML and returning the holder
-    @Override
-    public ChatListRecyclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(context).
-                inflate(R.layout.chat_list_item, parent, false);
-
-        return new ChatListRecyclerAdapter.ViewHolder(itemView, context);
-    }
-
-    @Override
-    public void onBindViewHolder(ChatListRecyclerAdapter.ViewHolder holder, int position) {
-        Chatroom chatroom = chatrooms.get(position);
-        holder.tvTitle.setText(chatroom.getTitle());
-        holder.chatCardView.setBackground(chatroom.getBackground());
-    }
-
-    @Override
-    public int getItemCount() {
-        return chatrooms.size();
     }
 }

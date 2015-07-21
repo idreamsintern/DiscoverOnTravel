@@ -1,12 +1,16 @@
 package com.example.idreams.dot.chat;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.SharedPreferences;
 import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.transition.Explode;
+import android.transition.Transition;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -32,11 +36,15 @@ public class ChatActivity extends BaseActivity {
     private ValueEventListener mConnectedListener;
     private ChatListAdapter mChatListAdapter;
 
+    private static final long ANIM_DURATION = 1000;
+    private View bgViewGroup;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Firebase.setAndroidContext(this);
         setContentView(R.layout.activity_chat);
+        bgViewGroup = findViewById(R.id.chat_view_group);
         setupWindowAnimations();
 
         // Setup our Firebase mFirebaseRef
@@ -126,8 +134,88 @@ public class ChatActivity extends BaseActivity {
     }
 
     private void setupWindowAnimations() {
-        Explode explode = new Explode();
-        explode.setDuration(2000);
-        getWindow().setEnterTransition(explode);
+//        setupEnterAnimations();
+//        setupExitAnimations();
+    }
+
+    private void setupEnterAnimations() {
+        Transition enterTransition = getWindow().getSharedElementEnterTransition();
+        enterTransition.addListener(new Transition.TransitionListener() {
+            @Override
+            public void onTransitionStart(Transition transition) {
+            }
+
+            @Override
+            public void onTransitionEnd(Transition transition) {
+                animateRevealShow(bgViewGroup);
+            }
+
+            @Override
+            public void onTransitionCancel(Transition transition) {
+            }
+
+            @Override
+            public void onTransitionPause(Transition transition) {
+            }
+
+            @Override
+            public void onTransitionResume(Transition transition) {
+            }
+        });
+    }
+
+    private void setupExitAnimations() {
+        Transition sharedElementReturnTransition = getWindow().getSharedElementReturnTransition();
+        sharedElementReturnTransition.setStartDelay(ANIM_DURATION);
+
+
+        Transition returnTransition = getWindow().getReturnTransition();
+        returnTransition.setDuration(ANIM_DURATION);
+        returnTransition.addListener(new Transition.TransitionListener() {
+            @Override
+            public void onTransitionStart(Transition transition) {
+                animateRevealHide(bgViewGroup);
+            }
+
+            @Override
+            public void onTransitionEnd(Transition transition) {}
+
+            @Override
+            public void onTransitionCancel(Transition transition) {}
+
+            @Override
+            public void onTransitionPause(Transition transition) {}
+
+            @Override
+            public void onTransitionResume(Transition transition) {}
+        });
+    }
+
+    private void animateRevealShow(View viewRoot) {
+        int cx = (viewRoot.getLeft() + viewRoot.getRight()) / 2;
+        int cy = (viewRoot.getTop() + viewRoot.getBottom()) / 2;
+        int finalRadius = Math.max(viewRoot.getWidth(), viewRoot.getHeight());
+
+        Animator anim = ViewAnimationUtils.createCircularReveal(viewRoot, cx, cy, 0, finalRadius);
+        viewRoot.setVisibility(View.VISIBLE);
+        anim.setDuration(ANIM_DURATION);
+        anim.start();
+    }
+
+    private void animateRevealHide(final View viewRoot) {
+        int cx = (viewRoot.getLeft() + viewRoot.getRight()) / 2;
+        int cy = (viewRoot.getTop() + viewRoot.getBottom()) / 2;
+        int initialRadius = viewRoot.getWidth();
+
+        Animator anim = ViewAnimationUtils.createCircularReveal(viewRoot, cx, cy, initialRadius, 0);
+        anim.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                viewRoot.setVisibility(View.INVISIBLE);
+            }
+        });
+        anim.setDuration(ANIM_DURATION);
+        anim.start();
     }
 }

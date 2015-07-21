@@ -2,6 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:id="@+id/chat_view_group"
+    android:transitionName="@string/chatroom_icon"
+    android:background="@color/color3"
     tools:context=".ChatActivity">
 
     <ListView

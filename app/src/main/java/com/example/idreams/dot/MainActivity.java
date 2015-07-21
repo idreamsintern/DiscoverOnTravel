@@ -30,14 +30,12 @@ public class MainActivity extends BaseActivity implements FragmentSimpleLoginBut
     public static String tokenstring = "api_doc_token";
     TextView fbTextView;
     private FragmentManager mFragmentManager;
-    private ViewGroup sceneRoot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupWindowAnimations();
-        sceneRoot = (LinearLayout) findViewById(R.id.main_activity_layout);
 
         fbTextView = (TextView) findViewById(R.id.tv);
         FragmentSimpleLoginButton fragment = new FragmentSimpleLoginButton();
@@ -59,7 +57,6 @@ public class MainActivity extends BaseActivity implements FragmentSimpleLoginBut
         super.onSaveInstanceState(outState);
         GetToken.getToken();
     }
-
 
     public void nearbyBtn(View view) {
         Intent intent = new Intent(this, NearbyActivity.class);
