@@ -11,6 +11,7 @@ import android.util.Log;
 import com.example.idreams.dot.data.DotDbContract;
 import com.example.idreams.dot.data.DotDbContract.FbCheckinEntry;
 import com.example.idreams.dot.data.DotDbContract.TopArticleEntry;
+import com.example.idreams.dot.nearby.NearbyActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,6 +24,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Vector;
 
 /**
@@ -94,6 +96,13 @@ public class FetchContentTask extends AsyncTask<String, Void, Void> {
                 name      = checkinItem.getString(OWM_NAME);
                 category  = checkinItem.getString(OWM_CATEGORY);
                 startdate = checkinItem.getString(OWM_STARTDATE);
+                if (NearbyActivity.sCategoryStatistics == null)
+                    NearbyActivity.sCategoryStatistics = new HashMap<>();
+                Integer count = NearbyActivity.sCategoryStatistics.get(category);
+                if (count == null)
+                    NearbyActivity.sCategoryStatistics.put(category, 1);
+                else
+                    NearbyActivity.sCategoryStatistics.put(category, count + 1);
 
                 ContentValues checkinItemValue = new ContentValues();
 

@@ -22,7 +22,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.idreams.dot.R;
@@ -31,6 +34,7 @@ import com.example.idreams.dot.navigate.NavigateActivity;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -61,12 +65,11 @@ public class NavigationDrawerFragment extends Fragment {
      */
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
-    private ExpandableListView mDrawerListView;
     private View mFragmentContainerView;
     private int mCurrentSelectedPosition = 0;
-    private String mKey, mCategory;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
+    private ListView mDrawerListView;
 
     public NavigationDrawerFragment() {
     }
@@ -76,6 +79,10 @@ public class NavigationDrawerFragment extends Fragment {
         super.onAttach(activity);
         try {
             mCallbacks = (NavigationDrawerCallbacks) activity;
+            if (NearbyActivity.sCategories == null)
+                NearbyActivity.sCategories = new Vector<>();
+            if (NearbyActivity.sCategoryStatistics == null)
+                NearbyActivity.sCategoryStatistics = new HashMap<>();
         } catch (ClassCastException e) {
             throw new ClassCastException("Activity must implement NavigationDrawerCallbacks.");
         }
@@ -94,13 +101,16 @@ public class NavigationDrawerFragment extends Fragment {
             mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION);
             mFromSavedInstanceState = true;
         }
-        listDataHeader = Arrays.asList(new String[]{"Food", "Travel"});
-        listDataChild = new HashMap<String, List<String>>();
-        listDataChild.put("Food", Arrays.asList(getResources().getStringArray(R.array.Food)));
-        listDataChild.put("Travel", Arrays.asList(getResources().getStringArray(R.array.Travel)));
+
+        if (NearbyActivity.sCategories.size() == 0);
+            NearbyActivity.sCategories.add("all");
+        for (String category: NearbyActivity.sCategoryStatistics.keySet()) {
+            if (NearbyActivity.sCategoryStatistics.get(category) > 1)
+                NearbyActivity.sCategories.add(category);
+        }
 
         // Select either the default item (0) or the last selected item.
-        selectItem(mKey, mCategory);
+        selectItem(0);
     }
 
     @Override
@@ -113,28 +123,19 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mDrawerListView = (ExpandableListView) inflater.inflate(
+        mDrawerListView = (ListView) inflater.inflate(
                 R.layout.fragment_navigation_drawer, container, false);
-        mDrawerListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+        mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                int selectedPosition = mDrawerListView.getFlatListPosition(
-                        mDrawerListView.getPackedPositionForChild(groupPosition, childPosition));
-                mKey = listDataHeader.get(groupPosition);
-                mCategory = listDataChild.get(mKey).get(childPosition);
-                selectItem(mKey, mCategory);
-                return false;
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selectItem(position);
             }
         });
-
-        ExpandableListAdapter listAdapter = new ExpandableListAdapter(getActivity()
-                , listDataHeader, listDataChild);
-        mDrawerListView.setAdapter(listAdapter);
-        int positionGroup = mDrawerListView.getPackedPositionGroup(
-                mDrawerListView.getExpandableListPosition(mCurrentSelectedPosition));
-        int positionChild = mDrawerListView.getPackedPositionChild(
-                mDrawerListView.getExpandableListPosition(mCurrentSelectedPosition));
-        mDrawerListView.setSelectedChild(positionGroup, positionChild, false);
+        mDrawerListView.setAdapter(new ArrayAdapter<String>(
+                getActionBar().getThemedContext(),
+                android.R.layout.simple_list_item_1,
+                android.R.id.text1,
+                NearbyActivity.sCategories));
         return mDrawerListView;
     }
 
@@ -216,12 +217,12 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
-    private void selectItem(String key, String category) {
+    private void selectItem(int position) {
         if (mDrawerLayout != null) {
             mDrawerLayout.closeDrawer(mFragmentContainerView);
         }
         if (mCallbacks != null) {
-            mCallbacks.onNavigationDrawerItemSelected(key, category);
+            mCallbacks.onNavigationDrawerItemSelected(position);
         }
     }
 
@@ -262,8 +263,8 @@ public class NavigationDrawerFragment extends Fragment {
         }
 
         if (item.getItemId() == R.id.action_example) {
-            Log.e(LOG_TAG, NearbyActivity.mSelectedLocations.size() + "");
-            if(NearbyActivity.mSelectedLocations.size()==0) {
+            Log.e(LOG_TAG, NearbyActivity.sSelectedLocations.size() + "");
+            if(NearbyActivity.sSelectedLocations.size()==0) {
                 new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AlertDialogCustom))
                         .setTitle("Warning")
                         .setMessage("Choose at least one location.")
@@ -285,10 +286,10 @@ public class NavigationDrawerFragment extends Fragment {
 
     private void showicheckdialog() {
 
-        String[] ListStr = new String[NearbyActivity.mSelectedLocationsName.size()];
-        for(int i=0;i<NearbyActivity.mSelectedLocationsName.size();i++)
+        String[] ListStr = new String[NearbyActivity.sSelectedLocationsName.size()];
+        for(int i=0;i<NearbyActivity.sSelectedLocationsName.size();i++)
         {
-            ListStr[i]=NearbyActivity.mSelectedLocationsName.get(i);
+            ListStr[i]=NearbyActivity.sSelectedLocationsName.get(i);
         }
         final AlertDialog.Builder MyListAlertDialog = new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AlertDialogCustom));
         MyListAlertDialog.setTitle("確認您要去的地點");
@@ -337,6 +338,6 @@ public class NavigationDrawerFragment extends Fragment {
         /**
          * Called when an item in the navigation drawer is selected.
          */
-        void onNavigationDrawerItemSelected(String mKey, String mCategory);
+        void onNavigationDrawerItemSelected(int position);
     }
 }

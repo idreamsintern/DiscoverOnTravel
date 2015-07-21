@@ -9,13 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import com.example.idreams.dot.data.DotDbContract;
-import com.example.idreams.dot.data.DotDbContract.FbCheckinEntry;
-import com.example.idreams.dot.data.DotDbContract.TopArticleEntry;
-import android.widget.Toast;
 
 import com.example.idreams.dot.R;
-import com.example.idreams.dot.data.DotDbContract;
 import com.google.android.gms.maps.model.LatLng;
 
 /**
@@ -44,7 +39,7 @@ public class NearbyCursorAdapter extends CursorAdapter {
         InputFilter[] namefilter = new InputFilter[] {new InputFilter.LengthFilter(11)};
         tvName.setFilters(namefilter);
         ckCheck.setTag(getName(cursor) + "," + getLat(cursor) + "," + getLng(cursor));
-        if (NearbyActivity.mSelectedLocations.containsKey(getName(cursor))) {
+        if (NearbyActivity.sSelectedLocations.containsKey(getName(cursor))) {
             ckCheck.setChecked(true);
         } else {
             ckCheck.setChecked(false);
@@ -59,11 +54,11 @@ public class NearbyCursorAdapter extends CursorAdapter {
                 final String[] tags = view.getTag().toString().split(",");
                 final LatLng latLng = new LatLng(Double.valueOf(tags[1]), Double.valueOf(tags[2]));
                 if (((CheckBox) view).isChecked()) {
-                    NearbyActivity.mSelectedLocations.put(tags[0], latLng) ;
-                    NearbyActivity.mSelectedLocationsName.add(tags[0]);
+                    NearbyActivity.sSelectedLocations.put(tags[0], latLng) ;
+                    NearbyActivity.sSelectedLocationsName.add(tags[0]);
                 } else {
-                    NearbyActivity.mSelectedLocations.remove(tags[0]);
-                    NearbyActivity.mSelectedLocationsName.remove(tags[0]);
+                    NearbyActivity.sSelectedLocations.remove(tags[0]);
+                    NearbyActivity.sSelectedLocationsName.remove(tags[0]);
                 }
             }
         });

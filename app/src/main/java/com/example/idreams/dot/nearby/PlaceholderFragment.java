@@ -27,8 +27,7 @@ import com.example.idreams.dot.data.DotDbContract.FbCheckinEntry;
 public class PlaceholderFragment extends Fragment
         implements LoaderManager.LoaderCallbacks<Cursor> {
     private static final int FB_CHECKIN_LOADER = 0;
-    private static final String ARG_KEYWORD = "arg_keyword";
-    private static final String ARG_CATEGORY = "arg_category";
+    private static final String ARG_POSITION = "arg_position";
     private NearbyCursorAdapter mNearbyAdapter;
     private String mCurrentCategory;
     private String mCurrentKeyword;
@@ -63,11 +62,10 @@ public class PlaceholderFragment extends Fragment
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static PlaceholderFragment newInstance(String category, String key) {
+    public static PlaceholderFragment newInstance(int position) {
         PlaceholderFragment fragment = new PlaceholderFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_CATEGORY, category);
-        args.putString(ARG_KEYWORD, key);
+        args.putInt(ARG_POSITION, position);
         fragment.setArguments(args);
         return fragment;
     }
@@ -75,23 +73,21 @@ public class PlaceholderFragment extends Fragment
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        ((NearbyActivity) activity).onSectionAttached(
-                getArguments().getString(ARG_CATEGORY), getArguments().getString(ARG_KEYWORD));
+        ((NearbyActivity) activity).onSectionAttached(getArguments().getInt(ARG_POSITION));
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        mCurrentCategory = NearbyActivity.sCategories.get(
+                getArguments().getInt(ARG_POSITION));
+        mCurrentKeyword = null;
         super.onCreate(savedInstanceState);
-        mCurrentCategory = getArguments().getString(ARG_CATEGORY);
-        mCurrentKeyword  = getArguments().getString(ARG_KEYWORD);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_nearby, container, false);
-
-        String sortOrder = FbCheckinEntry.COLUMN_CHECKINS + " ASC";
         mNearbyAdapter = new NearbyCursorAdapter(getActivity(), null, 0);
         ListView listView = (ListView) rootView.findViewById(R.id.nearby_list);
         listView.setAdapter(mNearbyAdapter);
@@ -149,7 +145,7 @@ public class PlaceholderFragment extends Fragment
     }
 
     private Uri buildQueryUri() {
-        if (mCurrentCategory == null) {
+        if (mCurrentCategory == "all") {
             if(mCurrentKeyword == null) {
                 return FbCheckinEntry.builSearch();
             } else {

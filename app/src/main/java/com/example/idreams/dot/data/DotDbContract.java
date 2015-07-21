@@ -51,15 +51,15 @@ public class DotDbContract {
         }
 
         public static String getCategoryFromUri(Uri uri) {
-            if (uri.getPathSegments().get(1) == "category")
+            if (uri.getPathSegments().get(1).equals("category"))
                 return uri.getPathSegments().get(2);
-            else if (uri.getPathSegments().get(1) != "keyword")
+            else if (!uri.getPathSegments().get(1).equals("keyword"))
                 return uri.getPathSegments().get(1);
             return null;
         }
 
         public static String getKeywordFromUri(Uri uri) {
-            if (uri.getPathSegments().get(1) == "category")
+            if (uri.getPathSegments().get(1).equals("category"))
                 return null;
             return uri.getPathSegments().get(2);
         }

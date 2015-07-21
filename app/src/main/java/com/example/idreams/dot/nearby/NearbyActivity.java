@@ -16,8 +16,11 @@ import java.util.Vector;
 
 public class NearbyActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
-    public static HashMap<String, LatLng> mSelectedLocations;
-    public static Vector<String> mSelectedLocationsName;
+    public static HashMap<String, LatLng>  sSelectedLocations;
+    public static Vector<String>           sSelectedLocationsName;
+    public static HashMap<String, Integer> sCategoryStatistics;
+    public static Vector<String>           sCategories;
+
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -33,8 +36,14 @@ public class NearbyActivity extends ActionBarActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nearby);
         mTitle = "DOT: Nearby Place";
-        mSelectedLocations = new HashMap<>();
-        mSelectedLocationsName = new Vector<>();
+        if (sSelectedLocations == null)
+            sSelectedLocations = new HashMap<>();
+        if (sSelectedLocationsName == null)
+            sSelectedLocationsName = new Vector<>();
+        if (NearbyActivity.sCategories == null)
+            NearbyActivity.sCategories = new Vector<>();
+        if (NearbyActivity.sCategoryStatistics == null)
+            NearbyActivity.sCategoryStatistics = new HashMap<>();
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
 
@@ -45,19 +54,16 @@ public class NearbyActivity extends ActionBarActivity
     }
 
     @Override
-    public void onNavigationDrawerItemSelected(String category, String key) {
+    public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(category, key))
+                .replace(R.id.container, PlaceholderFragment.newInstance(position))
                 .commit();
     }
 
-    public void onSectionAttached(String category, String key) {
-        if (category != null && key != null)
-            mTitle = category + ": " + key;
-        else
-            mTitle = "Start Exploring... ";
+    public void onSectionAttached(int position) {
+        mTitle = sCategories.get(position);
     }
 
     public void restoreActionBar() {
