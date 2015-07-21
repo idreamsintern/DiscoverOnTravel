@@ -2,10 +2,12 @@ package com.example.idreams.dot.chat;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.idreams.dot.R;
@@ -27,11 +29,13 @@ public class ChatListRecyclerAdapter extends RecyclerView.Adapter<ChatListRecycl
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView tvTitle;
+        public CardView chatCardView;
         public Context context;
 
         public ViewHolder(View itemView, Context context) {
             super(itemView);
             this.tvTitle = (TextView) itemView.findViewById(R.id.tv_chatroomtitle);
+            this.chatCardView = (CardView) itemView.findViewById(R.id.card_view);
             this.context = context;
 
             itemView.setOnClickListener(this);
@@ -61,6 +65,7 @@ public class ChatListRecyclerAdapter extends RecyclerView.Adapter<ChatListRecycl
     public void onBindViewHolder(ChatListRecyclerAdapter.ViewHolder holder, int position) {
         Chatroom chatroom = chatrooms.get(position);
         holder.tvTitle.setText(chatroom.getTitle());
+        holder.chatCardView.setBackground(chatroom.getBackground());
     }
 
     @Override
