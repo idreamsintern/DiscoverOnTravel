@@ -1,6 +1,7 @@
 package com.example.idreams.dot.localtopics;
 
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -18,6 +19,9 @@ public class BoardActivity extends BaseActivity {
 
     private final static String LOG_TAG = "BoardActivity";
     private RecyclerView boardRecyclerView;
+    private int spanCount = 2;
+    private int spacing = 30;
+    private boolean includeEdge = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +38,11 @@ public class BoardActivity extends BaseActivity {
         // for significantly smoother scrolling.
         boardRecyclerView.setHasFixedSize(true);
 
-        // First param is number of columns and second param is orientation i.e Vertical or Horizontal
-        StaggeredGridLayoutManager gridLayoutManager =
-                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        GridLayoutManager gridLayoutManager =
+                new GridLayoutManager(getApplicationContext(), 2);
+        boardRecyclerView.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
         // Attach the layout manager to the recycler view
         boardRecyclerView.setLayoutManager(gridLayoutManager);
-        boardRecyclerView.setItemAnimator(new SlideInUpAnimator());
     }
 
     private ArrayList<Board> getBoards() {
