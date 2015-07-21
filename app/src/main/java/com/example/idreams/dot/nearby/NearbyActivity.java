@@ -35,7 +35,6 @@ public class NearbyActivity extends ActionBarActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nearby);
-        setupWindowAnimations();
 
         mTitle = "DOT: Nearby Place";
         mSelectedLocations = new HashMap<>();
@@ -101,11 +100,5 @@ public class NearbyActivity extends ActionBarActivity
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private void setupWindowAnimations() {
-        Explode explode = new Explode();
-        explode.setDuration(2000);
-        getWindow().setEnterTransition(explode);
     }
 }

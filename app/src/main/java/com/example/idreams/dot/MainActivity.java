@@ -65,18 +65,19 @@ public class MainActivity extends BaseActivity implements FragmentSimpleLoginBut
 
     public void nearbyBtn(View view) {
         Intent intent = new Intent(this, NearbyActivity.class);
+        startActivity(intent);
+    }
+
+    public void localTopicBtn(View view) {
+        Intent intent = new Intent(this, BoardActivity.class);
         ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this);
         startActivity(intent, transitionActivityOptions.toBundle());
     }
 
-    public void localBtn(View view) {
-        Intent intent = new Intent(this, BoardActivity.class);
-        startActivity(intent);
-    }
-
     public void chatBtn(View view) {
         Intent intent = new Intent(this, ChatListActivity.class);
-        startActivity(intent);
+        ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this);
+        startActivity(intent, transitionActivityOptions.toBundle());
     }
 
     private void toggleFragment(int index) {

@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.transition.Explode;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -37,6 +38,7 @@ public class ChatActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         Firebase.setAndroidContext(this);
         setContentView(R.layout.activity_chat);
+        setupWindowAnimations();
 
         // Setup our Firebase mFirebaseRef
 
@@ -122,5 +124,11 @@ public class ChatActivity extends BaseActivity {
             mFirebaseRef.push().setValue(chat);
             inputText.setText("");
         }
+    }
+
+    private void setupWindowAnimations() {
+        Explode explode = new Explode();
+        explode.setDuration(2000);
+        getWindow().setEnterTransition(explode);
     }
 }

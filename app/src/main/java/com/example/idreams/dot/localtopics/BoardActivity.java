@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.transition.Explode;
 
 import com.example.idreams.dot.BaseActivity;
 import com.example.idreams.dot.R;
@@ -21,6 +22,7 @@ public class BoardActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_board);
+        setupWindowAnimations();
 
         boardRecyclerView = (RecyclerView) findViewById(R.id.rv_board);
 
@@ -49,5 +51,11 @@ public class BoardActivity extends BaseActivity {
         }
 
         return boardArrayList;
+    }
+
+    private void setupWindowAnimations() {
+        Explode explode = new Explode();
+        explode.setDuration(2000);
+        getWindow().setEnterTransition(explode);
     }
 }
