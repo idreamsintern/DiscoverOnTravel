@@ -25,7 +25,7 @@ public class DotDbHelper extends SQLiteOpenHelper {
         final String SQL_CREATE_FB_CHECKIN_TABLE =
                 "CREATE TABLE " + FbCheckinEntry.TABLE_NAME + " (" +
                 FbCheckinEntry._ID              + " INTEGER PRIMARY KEY," +
-                FbCheckinEntry.COLUMN_ID        + " TEXT UNIQUE NOT NULL, " +
+                FbCheckinEntry.COLUMN_ID        + " TEXT NOT NULL, " +
                 FbCheckinEntry.COLUMN_NAME      + " TEXT NOT NULL, " +
                 FbCheckinEntry.COLUMN_CATEGORY  + " TEXT NOT NULL, " +
                 FbCheckinEntry.COLUMN_LAT       + " TEXT NOT NULL, " +
@@ -33,7 +33,7 @@ public class DotDbHelper extends SQLiteOpenHelper {
                 FbCheckinEntry.COLUMN_CHECKINS  + " INT  NOT NULL, " +
                 FbCheckinEntry.COLUMN_CHECKINS_UPCOUNT + " INT NOT NULL, " +
                 FbCheckinEntry.COLUMN_STARTDATE + " TEXT NOT NULL" +
-                " );";
+                "UNIQUE " + FbCheckinEntry.COLUMN_ID + "ON CONFLICT REPLACE );";
         final String SQL_CREATE_WEATHER_TABLE = "CREATE TABLE " + TopArticleEntry.TABLE_NAME + " (" +
                 // Why AutoIncrement here, and not above?
                 // Unique keys will be auto-generated in either case.  But for weather
