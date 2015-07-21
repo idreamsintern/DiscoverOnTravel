@@ -50,5 +50,6 @@
     <string name="title_activity_chat_list">ChatListActivity</string>
 
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_welcome">Welcome</string>
 
 </resources>
