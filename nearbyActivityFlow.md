@@ -25,8 +25,8 @@
 ### Clicking on the navigation drawer button
 1.  NearbyActivity           . onOptionsItemSelected(MenuItem item): ActionMenuItem@4339
 2.  NearbyActivity           . onCreateOptionsMenu(Menu menu): MenuBuilder@4243
-3 . NavigationDrawerFragment . isDrawerOpen()
-3 . NavigationDrawerFragment . isDrawerOpen()
+3.  NavigationDrawerFragment . isDrawerOpen()
+4.  NavigationDrawerFragment . isDrawerOpen()
 
 ### Clicking on the navigation drawer item food->肉
 1.  NavigationDrawerFragment . selectItem(String key, String category): food, 肉
