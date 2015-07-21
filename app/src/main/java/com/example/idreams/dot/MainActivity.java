@@ -15,11 +15,9 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.idreams.dot.chat.ChatActivity;
 import com.example.idreams.dot.chat.ChatListActivity;
 import com.example.idreams.dot.localtopics.BoardActivity;
 import com.example.idreams.dot.nearby.NearbyActivity;
-import com.example.idreams.dot.utils.FetchContentTask;
 import com.example.idreams.dot.utils.GetToken;
 
 
@@ -30,7 +28,7 @@ public class MainActivity extends BaseActivity implements FragmentSimpleLoginBut
     private static final String STATE_SELECTED_FRAGMENT_INDEX = "selected_fragment_index";
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     public static String tokenstring = "api_doc_token";
-    TextView tv;
+    TextView fbTextView;
     private FragmentManager mFragmentManager;
     private ViewGroup sceneRoot;
 
@@ -39,9 +37,9 @@ public class MainActivity extends BaseActivity implements FragmentSimpleLoginBut
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setupWindowAnimations();
-        setLayout();
+        sceneRoot = (LinearLayout) findViewById(R.id.main_activity_layout);
 
-        tv = (TextView) findViewById(R.id.tv);
+        fbTextView = (TextView) findViewById(R.id.tv);
         FragmentSimpleLoginButton fragment = new FragmentSimpleLoginButton();
         mFragmentManager = getSupportFragmentManager();
         toggleFragment(INDEX_SIMPLE_LOGIN);
@@ -50,7 +48,7 @@ public class MainActivity extends BaseActivity implements FragmentSimpleLoginBut
 
     public void getMessage(String msg) {
         String mUsername = "";
-        tv.setText(msg);
+        fbTextView.setText(msg);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         //mUsername = prefs.getString("username", "traveller");
         prefs.edit().putString("username", msg).commit();
@@ -93,14 +91,10 @@ public class MainActivity extends BaseActivity implements FragmentSimpleLoginBut
 
     private void setupWindowAnimations() {
         Explode explode = new Explode();
-        explode.setDuration(2000);
+        explode.setDuration(1000);
         getWindow().setExitTransition(explode);
 
         Fade fade = new Fade();
         getWindow().setReenterTransition(fade);
-    }
-
-    private void setLayout() {
-        sceneRoot = (LinearLayout) findViewById(R.id.main_activity_layout);
     }
 }

@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.transition.Explode;
+import android.transition.Fade;
 
 import com.example.idreams.dot.BaseActivity;
 import com.example.idreams.dot.R;
@@ -55,7 +56,11 @@ public class BoardActivity extends BaseActivity {
 
     private void setupWindowAnimations() {
         Explode explode = new Explode();
-        explode.setDuration(2000);
+        explode.setDuration(1000);
         getWindow().setEnterTransition(explode);
+
+        Fade fade = new Fade();
+        fade.setDuration(1000);
+        getWindow().setReturnTransition(fade);
     }
 }
