@@ -69,7 +69,7 @@ public class TopicListActivity extends BaseActivity {
 
         progressbar = ProgressDialog.show(this, "下載資料", "請稍待片刻...", true);
         // fetch 10 items for the first time to improve user experience.
-        getData(10);
+        getData(20);
 
         bindSwipeRefresh();
     }

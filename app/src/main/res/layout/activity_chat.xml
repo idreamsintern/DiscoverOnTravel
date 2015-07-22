@@ -2,6 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:id="@+id/chat_view_group"
+    android:transitionName="@string/chatroom_icon"
+    android:background="@drawable/card_background_1"
     tools:context=".ChatActivity">
 
     <ListView
@@ -26,6 +29,7 @@
             android:layout_weight="1"
             android:inputType="textShortMessage"
             android:lines="1"
+            android:focusable="false"
             android:singleLine="true" />
 
         <ImageButton

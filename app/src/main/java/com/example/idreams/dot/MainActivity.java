@@ -1,5 +1,6 @@
 package com.example.idreams.dot;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -9,6 +10,8 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.transition.Explode;
+import android.transition.Fade;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -29,9 +32,9 @@ public class MainActivity extends BaseActivity implements ButtonActivity.MyInter
     private static final String STATE_SELECTED_FRAGMENT_INDEX = "selected_fragment_index";
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     public static String tokenstring = "api_doc_token";
-    TextView tv;
+    TextView fbTextView;
     private FragmentManager mFragmentManager;
-    private Animation fadein,fadeout;
+    private Animation fadein, fadeout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +45,7 @@ public class MainActivity extends BaseActivity implements ButtonActivity.MyInter
         final TextView o = (TextView) findViewById(R.id.o);
         final TextView t = (TextView) findViewById(R.id.t);
         //texttype
-        Typeface tf = Typeface.createFromAsset(getAssets(),"logofont.ttf");
+        Typeface tf = Typeface.createFromAsset(getAssets(), "logofont.ttf");
         d.setTypeface(tf);
         o.setTypeface(tf);
         t.setTypeface(tf);
@@ -53,21 +56,6 @@ public class MainActivity extends BaseActivity implements ButtonActivity.MyInter
         o.startAnimation(fadein);
         t.startAnimation(fadein);
         man.startAnimation(fadein);
-        /*
-        //Ibutton
-        //Animation path(x1,x2,y1,y2)
-        final Animation fadein = new TranslateAnimation(300, 10, 10, 10);
-        //Animation Duration
-        fadein.setDuration(2000);
-        // Animation Repeat times (-1:non stop，0:once)
-        fadein.setRepeatCount(0);
-        //Set anim of ImageButton
-        man.setAnimation(fadein);
-        //start anim
-        fadein.startNow();
-        */
-
-
         //ImageButton:man
         man.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
@@ -101,10 +89,11 @@ public class MainActivity extends BaseActivity implements ButtonActivity.MyInter
 
             }
         });
-        GetToken.getToken();
+        (new GetToken(this)).getToken();
 
     }
-    public void pg1(){
+
+    public void pg1() {
 
         setContentView(R.layout.page1);
 
@@ -151,14 +140,13 @@ public class MainActivity extends BaseActivity implements ButtonActivity.MyInter
                     }
                 });
 
-
-
             }
 
         });
 
     }
-    public void pg2(){
+
+    public void pg2() {
         setContentView(R.layout.page2);
         Animation plane_in = new TranslateAnimation(300, 10, 10, 10);
         plane_in.setDuration(2000);
@@ -201,15 +189,12 @@ public class MainActivity extends BaseActivity implements ButtonActivity.MyInter
                         pg3();
                     }
                 });
-
-
-
             }
-
         });
 
     }
-    public void pg3(){
+
+    public void pg3() {
         setContentView(R.layout.page3);
         Animation plane_in = new TranslateAnimation(300, 10, 10, 10);
         plane_in.setDuration(2000);
@@ -256,13 +241,9 @@ public class MainActivity extends BaseActivity implements ButtonActivity.MyInter
                         toggleFragment(INDEX_SIMPLE_LOGIN);
                     }
                 });
-
-
-
             }
 
         });
-
     }
 
     public void getMessage(String msg) {
@@ -275,23 +256,23 @@ public class MainActivity extends BaseActivity implements ButtonActivity.MyInter
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        GetToken.getToken();
     }
-
 
     public void nearbyBtn(View view) {
         Intent intent = new Intent(this, NearbyActivity.class);
         startActivity(intent);
     }
 
-    public void localBtn(View view) {
+    public void localTopicBtn(View view) {
         Intent intent = new Intent(this, BoardActivity.class);
-        startActivity(intent);
+        ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this);
+        startActivity(intent, transitionActivityOptions.toBundle());
     }
 
     public void chatBtn(View view) {
         Intent intent = new Intent(this, ChatListActivity.class);
-        startActivity(intent);
+        ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this);
+        startActivity(intent, transitionActivityOptions.toBundle());
     }
 
     private void toggleFragment(int index) {
@@ -301,8 +282,16 @@ public class MainActivity extends BaseActivity implements ButtonActivity.MyInter
             case INDEX_SIMPLE_LOGIN:
                 transaction.replace(android.R.id.content, new ButtonActivity(), FRAGMENT_TAG);
                 break;
-
         }
         transaction.commit();
+    }
+
+    private void setupWindowAnimations() {
+        Explode explode = new Explode();
+        explode.setDuration(1000);
+        getWindow().setExitTransition(explode);
+
+        Fade fade = new Fade();
+        getWindow().setReenterTransition(fade);
     }
 }

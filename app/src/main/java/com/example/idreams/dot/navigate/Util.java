@@ -12,7 +12,7 @@ public class Util {
          *
          * @return
          */
-        public static boolean isOnline(Context context) {
+        public static boolean isNetworkAvailable(Context context) {
             ConnectivityManager cm =
                     (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo netInfo = cm.getActiveNetworkInfo();
