@@ -1,17 +1,11 @@
-package com.example.idreams.dot;
+package com.example.idreams.dot.utils;
 
-import android.app.ActivityOptions;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.transition.Explode;
-import android.transition.Fade;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -19,33 +13,24 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.example.idreams.dot.chat.ChatListActivity;
-import com.example.idreams.dot.localtopics.BoardActivity;
-import com.example.idreams.dot.nearby.NearbyActivity;
-import com.example.idreams.dot.utils.GetToken;
+import com.example.idreams.dot.R;
 
+public class Welcome extends Activity {
 
-public class MainActivity extends BaseActivity implements ButtonActivity.MyInterface {
-
-    public static final int INDEX_SIMPLE_LOGIN = 0;
-    public static final String FRAGMENT_TAG = "fragment_tag";
-    private static final String STATE_SELECTED_FRAGMENT_INDEX = "selected_fragment_index";
-    private static final String LOG_TAG = MainActivity.class.getSimpleName();
-    public static String tokenstring = "api_doc_token";
-    TextView fbTextView;
-    private FragmentManager mFragmentManager;
-    private Animation fadein, fadeout;
-
+    Animation fadein,fadeout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_welcome);
+        //
+
+        //
         final ImageButton man = (ImageButton) findViewById(R.id.man);
         final TextView d = (TextView) findViewById(R.id.d);
         final TextView o = (TextView) findViewById(R.id.o);
         final TextView t = (TextView) findViewById(R.id.t);
         //texttype
-        Typeface tf = Typeface.createFromAsset(getAssets(), "logofont.ttf");
+        Typeface tf = Typeface.createFromAsset(getAssets(),"logofont.ttf");
         d.setTypeface(tf);
         o.setTypeface(tf);
         t.setTypeface(tf);
@@ -56,6 +41,21 @@ public class MainActivity extends BaseActivity implements ButtonActivity.MyInter
         o.startAnimation(fadein);
         t.startAnimation(fadein);
         man.startAnimation(fadein);
+        /*
+        //Ibutton
+        //Animation path(x1,x2,y1,y2)
+        final Animation fadein = new TranslateAnimation(300, 10, 10, 10);
+        //Animation Duration
+        fadein.setDuration(2000);
+        // Animation Repeat times (-1:non stop，0:once)
+        fadein.setRepeatCount(0);
+        //Set anim of ImageButton
+        man.setAnimation(fadein);
+        //start anim
+        fadein.startNow();
+        */
+
+
         //ImageButton:man
         man.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
@@ -89,11 +89,9 @@ public class MainActivity extends BaseActivity implements ButtonActivity.MyInter
 
             }
         });
-        (new GetToken(this)).getToken();
-
     }
 
-    public void pg1() {
+    public void pg1(){
 
         setContentView(R.layout.page1);
 
@@ -140,13 +138,14 @@ public class MainActivity extends BaseActivity implements ButtonActivity.MyInter
                     }
                 });
 
+
+
             }
 
         });
 
     }
-
-    public void pg2() {
+    public void pg2(){
         setContentView(R.layout.page2);
         Animation plane_in = new TranslateAnimation(300, 10, 10, 10);
         plane_in.setDuration(2000);
@@ -189,12 +188,15 @@ public class MainActivity extends BaseActivity implements ButtonActivity.MyInter
                         pg3();
                     }
                 });
+
+
+
             }
+
         });
 
     }
-
-    public void pg3() {
+    public void pg3(){
         setContentView(R.layout.page3);
         Animation plane_in = new TranslateAnimation(300, 10, 10, 10);
         plane_in.setDuration(2000);
@@ -235,63 +237,36 @@ public class MainActivity extends BaseActivity implements ButtonActivity.MyInter
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                        setContentView(R.layout.menucontainer);
-                        ButtonActivity fragment = new ButtonActivity();
-                        mFragmentManager = getSupportFragmentManager();
-                        toggleFragment(INDEX_SIMPLE_LOGIN);
+
                     }
                 });
+
+
+
             }
 
         });
-    }
 
-    public void getMessage(String msg) {
-        String mUsername = "";
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        //mUsername = prefs.getString("username", "traveller");
-        prefs.edit().putString("username", msg).commit();
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_welcome, menu);
+        return true;
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
 
-    public void nearbyBtn(View view) {
-        Intent intent = new Intent(this, NearbyActivity.class);
-        startActivity(intent);
-    }
-
-    public void localTopicBtn(View view) {
-        Intent intent = new Intent(this, BoardActivity.class);
-        ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this);
-        startActivity(intent, transitionActivityOptions.toBundle());
-    }
-
-    public void chatBtn(View view) {
-        Intent intent = new Intent(this, ChatListActivity.class);
-        ActivityOptions transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this);
-        startActivity(intent, transitionActivityOptions.toBundle());
-    }
-
-    private void toggleFragment(int index) {
-        Fragment fragment = mFragmentManager.findFragmentByTag(FRAGMENT_TAG);
-        FragmentTransaction transaction = mFragmentManager.beginTransaction();
-        switch (index) {
-            case INDEX_SIMPLE_LOGIN:
-                transaction.replace(android.R.id.content, new ButtonActivity(), FRAGMENT_TAG);
-                break;
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
         }
-        transaction.commit();
-    }
 
-    private void setupWindowAnimations() {
-        Explode explode = new Explode();
-        explode.setDuration(1000);
-        getWindow().setExitTransition(explode);
-
-        Fade fade = new Fade();
-        getWindow().setReenterTransition(fade);
+        return super.onOptionsItemSelected(item);
     }
 }

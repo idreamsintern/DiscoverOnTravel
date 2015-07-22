@@ -24,7 +24,7 @@ import com.facebook.login.widget.LoginButton;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class FragmentSimpleLoginButton extends Fragment {
+public class ButtonActivity extends Fragment {
 
     public MyInterface myInterface;
     private String data = "傳Fragment傳送到Activity的字串";
@@ -51,7 +51,7 @@ public class FragmentSimpleLoginButton extends Fragment {
             Log.d("VIVZ", "onError " + e);
         }
     };
-    public FragmentSimpleLoginButton() {
+    public ButtonActivity() {
     }
 
     public void onAttach(Activity activity) {//當這Fragment加入Activity時，會被callback的方法，僅執行一次。
@@ -62,7 +62,7 @@ public class FragmentSimpleLoginButton extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_fragment_simple_login_button, container, false);
+        View view = inflater.inflate(R.layout.fragment_buttonlist, container, false);
         myInterface.getMessage(data);//將我們要傳送的data，傳到Activity
         return view;
     }
