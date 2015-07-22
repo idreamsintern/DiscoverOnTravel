@@ -13,16 +13,19 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.idreams.dot.BaseActivity;
 import com.example.idreams.dot.R;
+import com.facebook.Profile;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by schwannden on 2015/7/15.
@@ -35,8 +38,11 @@ public class ChatActivity extends BaseActivity {
     private String mUsername;
     private Firebase mFirebaseRef;
     private ValueEventListener mConnectedListener;
+
     private ChatListAdapter mChatListAdapter;
+    private Profile currentProfile;
     private View bgViewGroup;
+    private ImageView currentImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +52,13 @@ public class ChatActivity extends BaseActivity {
         bgViewGroup = findViewById(R.id.chat_view_group);
         setupWindowAnimations();
 
-        // Setup our Firebase mFirebaseRef
+        currentProfile = Profile.getCurrentProfile();
+        currentImage = (ImageView) findViewById(R.id.current_thumbnail);
+        Picasso.with(getApplicationContext())
+                .load(currentProfile.getProfilePictureUri(150, 150))
+                .into(currentImage);
 
+        // Setup our Firebase mFirebaseRef
         mFirebaseRef = new Firebase(FIREBASE_URL).child("chat");
 
         // Setup our input methods. Enter key on the keyboard or pushing the send button

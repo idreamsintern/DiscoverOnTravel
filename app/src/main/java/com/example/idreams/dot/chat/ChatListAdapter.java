@@ -2,11 +2,13 @@ package com.example.idreams.dot.chat;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.idreams.dot.R;
+import com.facebook.Profile;
 import com.firebase.client.Query;
 import com.squareup.picasso.Picasso;
 
@@ -40,6 +42,7 @@ public class ChatListAdapter extends FirebaseListAdapter<Chat> {
         // Map a Chat object to an entry in our listview
         String author = chat.getAuthor();
         TextView authorText = (TextView) view.findViewById(R.id.author);
+        Profile currentProfile = Profile.getCurrentProfile();
 
         authorText.setText(author + ": ");
         // If the message was sent by this user, color it differently
@@ -50,7 +53,9 @@ public class ChatListAdapter extends FirebaseListAdapter<Chat> {
         }
         ((TextView) view.findViewById(R.id.message)).setText(chat.getMessage());
 
+        // set imageview
         ImageView personalThumbnail = (ImageView) view.findViewById(R.id.personal_thumbnail);
-        Picasso.with(view.getContext()).load("http://lorempixel.com/50/50/").into(personalThumbnail);
+        Uri profile_uri = currentProfile.getProfilePictureUri(50, 50);
+        Picasso.with(view.getContext()).load(profile_uri).into(personalThumbnail);
     }
 }

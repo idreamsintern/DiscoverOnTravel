@@ -27,11 +27,13 @@ import com.facebook.login.widget.LoginButton;
 public class ButtonActivity extends Fragment {
 
     public MyInterface myInterface;
-    private String data = "傳Fragment傳送到Activity的字串";
+    private String data = "Fragment傳送到Activity的字串";
     private CallbackManager mCallbackManager;
     private AccessTokenTracker mTokenTracker;
     private ProfileTracker mProfileTracker;
+
     private FacebookCallback<LoginResult> mFacebookCallback = new FacebookCallback<LoginResult>() {
+
         @Override
         public void onSuccess(LoginResult loginResult) {
             Log.d("VIVZ", "onSuccess");
@@ -51,6 +53,7 @@ public class ButtonActivity extends Fragment {
             Log.d("VIVZ", "onError " + e);
         }
     };
+
     public ButtonActivity() {
     }
 
@@ -63,7 +66,7 @@ public class ButtonActivity extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_buttonlist, container, false);
-        myInterface.getMessage(data);//將我們要傳送的data，傳到Activity
+        myInterface.getMessage(data); //將我們要傳送的data，傳到Activity
         return view;
     }
 

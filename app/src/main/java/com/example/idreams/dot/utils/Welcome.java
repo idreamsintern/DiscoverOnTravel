@@ -17,7 +17,8 @@ import com.example.idreams.dot.R;
 
 public class Welcome extends Activity {
 
-    Animation fadein,fadeout;
+    Animation fadein, fadeout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +31,7 @@ public class Welcome extends Activity {
         final TextView o = (TextView) findViewById(R.id.o);
         final TextView t = (TextView) findViewById(R.id.t);
         //texttype
-        Typeface tf = Typeface.createFromAsset(getAssets(),"logofont.ttf");
+        Typeface tf = Typeface.createFromAsset(getAssets(), "logofont.ttf");
         d.setTypeface(tf);
         o.setTypeface(tf);
         t.setTypeface(tf);
@@ -91,7 +92,7 @@ public class Welcome extends Activity {
         });
     }
 
-    public void pg1(){
+    public void pg1() {
 
         setContentView(R.layout.page1);
 
@@ -139,13 +140,13 @@ public class Welcome extends Activity {
                 });
 
 
-
             }
 
         });
 
     }
-    public void pg2(){
+
+    public void pg2() {
         setContentView(R.layout.page2);
         Animation plane_in = new TranslateAnimation(300, 10, 10, 10);
         plane_in.setDuration(2000);
@@ -188,15 +189,13 @@ public class Welcome extends Activity {
                         pg3();
                     }
                 });
-
-
-
             }
 
         });
 
     }
-    public void pg3(){
+
+    public void pg3() {
         setContentView(R.layout.page3);
         Animation plane_in = new TranslateAnimation(300, 10, 10, 10);
         plane_in.setDuration(2000);
@@ -242,12 +241,12 @@ public class Welcome extends Activity {
                 });
 
 
-
             }
 
         });
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
