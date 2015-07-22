@@ -5,11 +5,13 @@
     android:layout_height="fill_parent"
     android:orientation="horizontal">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/personal_thumbnail"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@color/color2"/>
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        app:border_width="2dp"
+        app:border_color="#ff121527"/>
 
     <TextView
         android:id="@+id/author"
