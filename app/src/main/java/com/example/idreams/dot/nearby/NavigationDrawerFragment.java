@@ -100,8 +100,8 @@ public class NavigationDrawerFragment extends Fragment {
             mFromSavedInstanceState = true;
         }
 
-        if (NearbyActivity.sCategories.size() == 0) ;
-        NearbyActivity.sCategories.add("all");
+        if (NearbyActivity.sCategories.size() == 0)
+            NearbyActivity.sCategories.add("all");
         for (String category : NearbyActivity.sCategoryStatistics.keySet()) {
             if (NearbyActivity.sCategoryStatistics.get(category) > 1)
                 NearbyActivity.sCategories.add(category);
