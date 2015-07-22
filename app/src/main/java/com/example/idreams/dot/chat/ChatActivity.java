@@ -138,6 +138,7 @@ public class ChatActivity extends BaseActivity {
         Bundle extras = getIntent().getExtras();
         int background = extras.getInt(chatRoomBackgroud);
         bgViewGroup.setBackground(getResources().getDrawable(background));
+        bgViewGroup.getBackground().setAlpha(150);
 //        setupEnterAnimations();
 //        setupExitAnimations();
     }
