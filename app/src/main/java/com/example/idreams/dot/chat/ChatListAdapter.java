@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.example.idreams.dot.R;
 import com.firebase.client.Query;
+import com.squareup.picasso.Picasso;
 
 /**
  * @author greg
@@ -50,6 +51,6 @@ public class ChatListAdapter extends FirebaseListAdapter<Chat> {
         ((TextView) view.findViewById(R.id.message)).setText(chat.getMessage());
 
         ImageView personalThumbnail = (ImageView) view.findViewById(R.id.personal_thumbnail);
-        // TODO inflate fb image.
+        Picasso.with(view.getContext()).load("http://lorempixel.com/50/50/").into(personalThumbnail);
     }
 }
