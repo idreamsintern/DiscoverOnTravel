@@ -36,6 +36,7 @@
     <string name="title_activity_chat">Chat</string>
     <string name="txt_loginname">登入名稱</string>
     <string name="chatroom_icon">CHATROOM_ICON</string>
+    <string name="title_activity_chat_list">選擇聊天室</string>
 
 
     <!-- LocalTopics -->
@@ -49,6 +50,5 @@
     <string name="start_navigation">開始導航</string>
     <string name="next_site">下個景點</string>
     <string name="share_location">分享</string>
-    <string name="title_activity_chat_list">ChatListActivity</string>
 
 </resources>
