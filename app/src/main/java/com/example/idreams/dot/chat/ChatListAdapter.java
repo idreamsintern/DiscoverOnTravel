@@ -3,6 +3,7 @@ package com.example.idreams.dot.chat;
 import android.app.Activity;
 import android.graphics.Color;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.idreams.dot.R;
@@ -38,6 +39,7 @@ public class ChatListAdapter extends FirebaseListAdapter<Chat> {
         // Map a Chat object to an entry in our listview
         String author = chat.getAuthor();
         TextView authorText = (TextView) view.findViewById(R.id.author);
+
         authorText.setText(author + ": ");
         // If the message was sent by this user, color it differently
         if (author != null && author.equals(mUsername)) {
@@ -46,5 +48,8 @@ public class ChatListAdapter extends FirebaseListAdapter<Chat> {
             authorText.setTextColor(Color.BLUE);
         }
         ((TextView) view.findViewById(R.id.message)).setText(chat.getMessage());
+
+        ImageView personalThumbnail = (ImageView) view.findViewById(R.id.personal_thumbnail);
+        // TODO inflate fb image.
     }
 }
