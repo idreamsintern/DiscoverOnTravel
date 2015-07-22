@@ -1,7 +1,6 @@
 package com.example.idreams.dot.utils;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -14,14 +13,11 @@ import android.view.animation.TranslateAnimation;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.example.idreams.dot.MainActivity;
 import com.example.idreams.dot.R;
 
 public class Welcome extends Activity {
 
     Animation fadein,fadeout;
-    ImageButton man;
-    TextView d,o,t;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,12 +29,12 @@ public class Welcome extends Activity {
         final TextView d = (TextView) findViewById(R.id.d);
         final TextView o = (TextView) findViewById(R.id.o);
         final TextView t = (TextView) findViewById(R.id.t);
-        //文字字體設定
+        //texttype
         Typeface tf = Typeface.createFromAsset(getAssets(),"logofont.ttf");
         d.setTypeface(tf);
         o.setTypeface(tf);
         t.setTypeface(tf);
-        //文字進入效果：
+        //text appear effect
         fadein = AnimationUtils.loadAnimation(this, R.anim.fadein);
         fadeout = AnimationUtils.loadAnimation(this, R.anim.fadeout);
         d.startAnimation(fadein);
@@ -46,25 +42,25 @@ public class Welcome extends Activity {
         t.startAnimation(fadein);
         man.startAnimation(fadein);
         /*
-        //圖片按鈕：
-        //動畫路徑設定(x1,x2,y1,y2)
+        //Ibutton
+        //Animation path(x1,x2,y1,y2)
         final Animation fadein = new TranslateAnimation(300, 10, 10, 10);
-        //動畫開始到結束的時間，2秒
+        //Animation Duration
         fadein.setDuration(2000);
-        // 動畫重覆次數 (-1表示一直重覆，0表示不重覆執行，所以只會執行一次)
+        // Animation Repeat times (-1:non stop，0:once)
         fadein.setRepeatCount(0);
-        //將動畫寫入ImageView
+        //Set anim of ImageButton
         man.setAnimation(fadein);
-        //開始動畫
+        //start anim
         fadein.startNow();
         */
-        //導覽列：
 
-        //按鈕
+
+        //ImageButton:man
         man.setOnClickListener(new ImageButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //畫面淡出換下一個導覽畫面
+                //view fade out and another start
                 d.setText("Discover");
                 d.startAnimation(fadeout);
                 o.startAnimation(fadeout);
@@ -99,16 +95,11 @@ public class Welcome extends Activity {
 
         setContentView(R.layout.page1);
 
-        //動畫路徑設定(x1,x2,y1,y2)
         Animation plane_in = new TranslateAnimation(300, 10, 10, 10);
-        //動畫開始到結束的時間，2秒
         plane_in.setDuration(2000);
-        // 動畫重覆次數 (-1表示一直重覆，0表示不重覆執行，所以只會執行一次)
         plane_in.setRepeatCount(0);
-        //將動畫寫入ImageView
         final ImageButton p1next = (ImageButton) findViewById(R.id.p1next);
         p1next.setAnimation(plane_in);
-        //開始動畫
         plane_in.startNow();
         TextView q1 = (TextView) findViewById(R.id.q1);
         q1.setTextColor(Color.RED);
@@ -125,7 +116,6 @@ public class Welcome extends Activity {
                 next.setRepeatCount(0);
                 next.setFillAfter(true);
                 p1next.setAnimation(next);
-                //開始動畫
                 next.startNow();
                 next.setAnimationListener(new Animation.AnimationListener() {
 
@@ -178,7 +168,6 @@ public class Welcome extends Activity {
                 next.setRepeatCount(0);
                 next.setFillAfter(true);
                 p2next.setAnimation(next);
-                //開始動畫
                 next.startNow();
                 next.setAnimationListener(new Animation.AnimationListener() {
 
@@ -196,9 +185,6 @@ public class Welcome extends Activity {
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                        //進入menuAct
-                        //Intent intent = new Intent(Welcome.this, MainActivity.class);
-                        //startActivity(intent);
                         pg3();
                     }
                 });
@@ -251,9 +237,6 @@ public class Welcome extends Activity {
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                        //進入menuAct
-                        Intent intent = new Intent(Welcome.this, MainActivity.class);
-                        startActivity(intent);
 
                     }
                 });
