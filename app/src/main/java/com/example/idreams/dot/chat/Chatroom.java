@@ -9,12 +9,12 @@ public class Chatroom {
 
     private String mTitle;
     private String mUsers;
-    private Drawable background;
+    private int backgroundId;
 
-    public Chatroom(String title, String users, Drawable background) {
+    public Chatroom(String title, String users, int backgroundId) {
         mTitle = title;
         mUsers = users;
-        this.background = background;
+        this.backgroundId = backgroundId;
     }
 
     public String getTitle() {
@@ -33,11 +33,11 @@ public class Chatroom {
         mUsers = users;
     }
 
-    public Drawable getBackground() {
-        return background;
+    public int getBackground() {
+        return backgroundId;
     }
 
-    public void setBackground(Drawable background) {
-        this.background = background;
+    public void setBackground(int background) {
+        this.backgroundId = background;
     }
 }

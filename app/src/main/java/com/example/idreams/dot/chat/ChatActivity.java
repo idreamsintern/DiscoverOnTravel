@@ -38,6 +38,7 @@ public class ChatActivity extends BaseActivity {
 
     private static final long ANIM_DURATION = 1000;
     private View bgViewGroup;
+    private static final String chatRoomBackgroud = "CHATROOM_BACKGROUND";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,6 +135,9 @@ public class ChatActivity extends BaseActivity {
     }
 
     private void setupWindowAnimations() {
+        Bundle extras = getIntent().getExtras();
+        int background = extras.getInt(chatRoomBackgroud);
+        bgViewGroup.setBackground(getResources().getDrawable(background));
 //        setupEnterAnimations();
 //        setupExitAnimations();
     }

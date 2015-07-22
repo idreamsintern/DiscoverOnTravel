@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -41,7 +42,7 @@ public class ChatListRecyclerAdapter extends RecyclerView.Adapter<ChatListRecycl
     public void onBindViewHolder(ChatListRecyclerAdapter.ViewHolder holder, int position) {
         Chatroom chatroom = chatrooms.get(position);
         holder.tvTitle.setText(chatroom.getTitle());
-        holder.chatCardView.setBackground(chatroom.getBackground());
+        holder.chatCardView.setBackground(context.getDrawable(chatroom.getBackground()));
     }
 
     @Override
@@ -65,10 +66,12 @@ public class ChatListRecyclerAdapter extends RecyclerView.Adapter<ChatListRecycl
 
         @Override
         public void onClick(View v) {
-            int position = getLayoutPosition(); // gets item position
+            int position = getLayoutPosition();
             Chatroom chatroom = chatrooms.get(position);
+            final String chatRoomBackgroud = "CHATROOM_BACKGROUND";
 
             Intent intent = new Intent(context, ChatActivity.class);
+            intent.putExtra(chatRoomBackgroud, chatroom.getBackground());
 
             View sharedView = this.chatCardView;
             String transitionName = v.getResources().getString(R.string.chatroom_icon);

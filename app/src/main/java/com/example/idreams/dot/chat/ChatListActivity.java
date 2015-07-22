@@ -35,9 +35,9 @@ public class ChatListActivity extends BaseActivity {
 
     private ArrayList<Chatroom> getChatroomLists() {
         ArrayList<Chatroom> chatroomArrayList = new ArrayList<>();
-        chatroomArrayList.add(new Chatroom("華山1914文化創意產業園區", "desp1", getDrawable(R.drawable.card_background_1)));
-        chatroomArrayList.add(new Chatroom("信義威秀影城", "desp1", getDrawable(R.drawable.card_background_2)));
-        chatroomArrayList.add(new Chatroom("西門町", "desp1", getDrawable(R.drawable.card_background_3)));
+        chatroomArrayList.add(new Chatroom("華山1914文化創意產業園區", "desp1", R.drawable.card_background_1));
+        chatroomArrayList.add(new Chatroom("信義威秀影城", "desp1", R.drawable.card_background_2));
+        chatroomArrayList.add(new Chatroom("西門町", "desp1", R.drawable.card_background_3));
 
         return chatroomArrayList;
     }
