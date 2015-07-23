@@ -80,7 +80,7 @@ public class TopicListActivity extends BaseActivity {
         params.put("period", 10);
         params.put("limit", limit);
         params.put("board", board_string);
-        params.put("token", MainActivity.tokenstring);
+        params.put("token", MainActivity.sSerToken);
         RestClient.post(url, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {

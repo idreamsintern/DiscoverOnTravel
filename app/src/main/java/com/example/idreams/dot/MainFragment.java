@@ -31,8 +31,7 @@ public class MainFragment extends Fragment {
     private CallbackManager      mCallbackManager;
     private AccessTokenTracker   mTokenTracker;
     private ProfileTracker       mProfileTracker;
-    private FacebookCallback<LoginResult> mFacebookCallback
-            ;
+    private FacebookCallback<LoginResult> mFacebookCallback;
     public MainFragment() {
     }
 

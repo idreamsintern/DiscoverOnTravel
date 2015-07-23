@@ -31,10 +31,10 @@ public class GetToken {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     Log.e(LOG_TAG, "getToken()" + response.toString());
-                    MainActivity.tokenstring = response.getJSONObject("result").getString("token");
-                    Log.e(LOG_TAG, "getToken(): " + MainActivity.tokenstring);
+                    MainActivity.sSerToken = response.getJSONObject("result").getString("token");
+                    Log.e(LOG_TAG, "getToken(): " + MainActivity.sSerToken);
                     FetchContentTask fetchContentTask = new FetchContentTask(GetToken.mContext);
-                    fetchContentTask.execute(MainActivity.tokenstring);
+                    fetchContentTask.execute(MainActivity.sSerToken);
 
                 } catch (Exception err) {
                     Log.e(LOG_TAG, err.getMessage());

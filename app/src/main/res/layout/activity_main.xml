@@ -1,11 +1,5 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout android:id="@+id/scene_root"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <FrameLayout android:id="@+id/scene_root"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <include layout="@layout/welcome_tour_1" />
-    </FrameLayout>
-
-</LinearLayout>
+    android:layout_height="match_parent">
+</RelativeLayout>

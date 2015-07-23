@@ -7,7 +7,16 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.transition.Fade;
+import android.transition.Scene;
+import android.transition.Transition;
+import android.transition.TransitionManager;
+import android.transition.TransitionSet;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
 import com.example.idreams.dot.chat.ChatListActivity;
 import com.example.idreams.dot.localtopics.BoardActivity;
@@ -19,19 +28,44 @@ public class MainActivity extends BaseActivity implements MainFragment.MainFragm
 
     public static final int INDEX_SIMPLE_LOGIN = 0;
     public static final String FRAGMENT_TAG = "fragment_tag";
+    public static String sSerToken = "api_doc_token";
+
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
-    public static String tokenstring = "api_doc_token";
     private FragmentManager mFragmentManager;
+    private Scene           mWelcomeTour;
+    private ViewGroup       mSceneRoot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setContentView(R.layout.menucontainer);
+        mSceneRoot   = (ViewGroup) findViewById(R.id.scene_root);
+        mWelcomeTour = Scene.getSceneForLayout(mSceneRoot, R.layout.welcome, this);
+
+        (new GetToken(this)).getToken();
+        mWelcomeTour.enter();
+    }
+
+    public void gotoHome (View view)
+    {
+        final ImageView imageView = (ImageView) findViewById(R.id.dot_logo);
+        Animation fadeoutAnim = AnimationUtils.loadAnimation(this, R.anim.fadeout);
+        fadeoutAnim.setAnimationListener(new Animation.AnimationListener() {
+            public void onAnimationEnd(Animation animation) {
+                imageView.setVisibility(View.GONE);
+            }
+
+            public void onAnimationRepeat(Animation animation) {
+            }
+
+            public void onAnimationStart(Animation animation) {
+            }
+        });
+
+        imageView.startAnimation(fadeoutAnim);
+
         mFragmentManager = getSupportFragmentManager();
         toggleFragment(INDEX_SIMPLE_LOGIN);
-        (new GetToken(this)).getToken();
-
     }
 
     @Override
