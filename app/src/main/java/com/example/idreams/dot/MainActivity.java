@@ -39,11 +39,7 @@ public class MainActivity extends BaseActivity implements MainFragment.MainFragm
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mSceneRoot   = (ViewGroup) findViewById(R.id.scene_root);
-        mWelcomeTour = Scene.getSceneForLayout(mSceneRoot, R.layout.welcome, this);
-
         (new GetToken(this)).getToken();
-        mWelcomeTour.enter();
     }
 
     public void gotoHome (View view)
