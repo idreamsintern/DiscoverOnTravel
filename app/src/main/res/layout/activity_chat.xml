@@ -1,8 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/chat_view_group"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:id="@+id/chat_view_group"
     android:transitionName="@string/chatroom_icon"
     tools:context=".ChatActivity">
 
@@ -19,15 +19,16 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true"
         android:orientation="horizontal">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/current_thumbnail"
             android:layout_width="45dp"
             android:layout_height="45dp"
-            app:border_width="2dp"
-            app:border_color="#ff121527"/>
+            app:border_color="#ff121527"
+            app:border_width="2dp" />
 
         <EditText
             android:id="@+id/messageInput"
@@ -36,7 +37,6 @@
             android:layout_weight="1"
             android:inputType="textShortMessage"
             android:lines="1"
-            android:focusable="false"
             android:singleLine="true" />
 
         <ImageButton
