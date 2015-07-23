@@ -63,7 +63,8 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
-        myInterface.onFacebookLogin(mUserName);//將我們要傳送的data，傳到Activity
+        myInterface.onFacebookLogin(mUserName);//transfer data to act
+        myInterface.getFragmentStatus();
         return view;
     }
 
@@ -138,5 +139,6 @@ public class MainFragment extends Fragment {
 
     public static interface MainFragmentCallbacks {
         public void onFacebookLogin(String msg);
+        public void getFragmentStatus();
     }
 }

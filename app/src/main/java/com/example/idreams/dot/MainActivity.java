@@ -24,46 +24,75 @@ public class MainActivity extends BaseActivity implements MainFragment.MainFragm
 
     public static final int INDEX_SIMPLE_LOGIN = 0;
     public static final String FRAGMENT_TAG = "fragment_tag";
-    public static String sSerToken = "api_doc_token";
-
+    private static final int STATE_TOUR_1 = 1;
+    private static final int STATE_TOUR_2 = 2;
+    private static final int STATE_TOUR_3 = 3;
+    private static final int STATE_TOUR_4 = 4;
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
+    public static String sSerToken = "api_doc_token";
+    public static int sState;
     private FragmentManager mFragmentManager;
-    private Scene           mWelcomeTour;
-    private ViewGroup       mSceneRoot;
+    private Scene mWelcomeTour;
+    private ViewGroup mSceneRoot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (true) {
+            sState = STATE_TOUR_1;
+        }
         setContentView(R.layout.activity_main);
         (new GetToken(this)).getToken();
     }
 
-    public void gotoHome (View view)
-    {
-        final ImageView imageView = (ImageView) findViewById(R.id.dot_logo);
-        Animation fadeoutAnim = AnimationUtils.loadAnimation(this, R.anim.fadeout);
-        fadeoutAnim.setAnimationListener(new Animation.AnimationListener() {
-            public void onAnimationEnd(Animation animation) {
-                imageView.setVisibility(View.GONE);
-            }
+    public void gotoHome(final View view) {
+        ImageView backgroundPicture = (ImageView) findViewById(R.id.background);
+        switch (sState) {
+            case STATE_TOUR_1:
+                final ImageView imageView = (ImageView) findViewById(R.id.dot_logo);
+                Animation fadeoutAnim = AnimationUtils.loadAnimation(this, R.anim.fadeout);
+                fadeoutAnim.setAnimationListener(new Animation.AnimationListener() {
+                    public void onAnimationEnd(Animation animation) {
+                        imageView.setVisibility(View.GONE);
+                    }
 
-            public void onAnimationRepeat(Animation animation) {
-            }
+                    public void onAnimationRepeat(Animation animation) {
+                    }
 
-            public void onAnimationStart(Animation animation) {
-            }
-        });
+                    public void onAnimationStart(Animation animation) {
+                    }
+                });
 
-        imageView.startAnimation(fadeoutAnim);
+                imageView.startAnimation(fadeoutAnim);
+                mFragmentManager = getSupportFragmentManager();
+                toggleFragment(INDEX_SIMPLE_LOGIN);
+                //set imageview alpha lower
+                final Animation darkenAnim =AnimationUtils.loadAnimation(this,R.anim.back_alpha_lower);
+                backgroundPicture.startAnimation(darkenAnim);
 
-        mFragmentManager = getSupportFragmentManager();
-        toggleFragment(INDEX_SIMPLE_LOGIN);
+                sState++;
+                break;
+            case STATE_TOUR_2:
+                sState++;
+                break;
+            case STATE_TOUR_3:
+                sState++;
+                break;
+            case STATE_TOUR_4:
+                Animation lightenAnim=AnimationUtils.loadAnimation(this,R.anim.back_alpha_higher);
+                //backgroundPicture.startAnimation(lightenAnim);
+                break;
+
+        }
     }
 
     @Override
     public void onFacebookLogin(String msg) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.edit().putString("username", msg).commit();
+    }
+    public void getFragmentStatus(){
+
     }
 
     @Override
