@@ -24,46 +24,47 @@ import com.facebook.login.widget.LoginButton;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class ButtonActivity extends Fragment {
+public class MainFragment extends Fragment {
 
-    public MyInterface myInterface;
-    private String data = "傳Fragment傳送到Activity的字串";
-    private CallbackManager mCallbackManager;
-    private AccessTokenTracker mTokenTracker;
-    private ProfileTracker mProfileTracker;
-    private FacebookCallback<LoginResult> mFacebookCallback = new FacebookCallback<LoginResult>() {
-        @Override
-        public void onSuccess(LoginResult loginResult) {
-            Log.d("VIVZ", "onSuccess");
-            AccessToken accessToken = loginResult.getAccessToken();
-            Profile profile = Profile.getCurrentProfile();
-            data = getUserFromFb(profile);
-            myInterface.getMessage(data);
-        }
-
-        @Override
-        public void onCancel() {
-            Log.d("VIVZ", "onCancel");
-        }
-
-        @Override
-        public void onError(FacebookException e) {
-            Log.d("VIVZ", "onError " + e);
-        }
-    };
-    public ButtonActivity() {
+    public MainFragmentCallbacks myInterface;
+    private String               mUserName;
+    private CallbackManager      mCallbackManager;
+    private AccessTokenTracker   mTokenTracker;
+    private ProfileTracker       mProfileTracker;
+    private FacebookCallback<LoginResult> mFacebookCallback
+            ;
+    public MainFragment() {
     }
 
-    public void onAttach(Activity activity) {//當這Fragment加入Activity時，會被callback的方法，僅執行一次。
-        myInterface = (MyInterface) activity;  //這樣可以取到實作MyInterface的Activity
+    public void onAttach(Activity activity) {
+        myInterface = (MainFragmentCallbacks) activity;
+        mFacebookCallback = new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Log.d("VIVZ", "onSuccess");
+                Profile profile = Profile.getCurrentProfile();
+                mUserName = getUserFromFb(profile);
+                myInterface.onFacebookLogin(mUserName);
+            }
+
+            @Override
+            public void onCancel() {
+                Log.d("VIVZ", "onCancel");
+            }
+
+            @Override
+            public void onError(FacebookException e) {
+                Log.d("VIVZ", "onError " + e);
+            }
+        };
         super.onAttach(activity);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_buttonlist, container, false);
-        myInterface.getMessage(data);//將我們要傳送的data，傳到Activity
+        View view = inflater.inflate(R.layout.fragment_main, container, false);
+        myInterface.onFacebookLogin(mUserName);//將我們要傳送的data，傳到Activity
         return view;
     }
 
@@ -136,7 +137,7 @@ public class ButtonActivity extends Fragment {
         return stringBuffer.toString();
     }
 
-    public interface MyInterface {
-        public void getMessage(String msg);
+    public static interface MainFragmentCallbacks {
+        public void onFacebookLogin(String msg);
     }
 }
