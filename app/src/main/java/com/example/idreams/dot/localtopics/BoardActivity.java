@@ -32,6 +32,10 @@ public class BoardActivity extends BaseActivity {
         setContentView(R.layout.activity_board);
         setupWindowAnimations();
 
+        setupRecyclerView();
+    }
+
+    private void setupRecyclerView() {
         boardRecyclerView = (RecyclerView) findViewById(R.id.rv_board);
 
         adapter = new BoardRecyclerViewAdapter(this, getBoards());
@@ -76,10 +80,10 @@ public class BoardActivity extends BaseActivity {
         inflater.inflate(R.menu.search_menu, menu);
         MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Toast.makeText(getApplicationContext(), "search: " + query, Toast.LENGTH_LONG).show();
                 adapter.setFilter(query);
                 return true;
             }
@@ -88,6 +92,9 @@ public class BoardActivity extends BaseActivity {
             public boolean onQueryTextChange(String newText) {
                 if (newText.isEmpty())
                     adapter.flushFilter();
+                else {
+                    adapter.setFilter(newText);
+                }
                 return false;
             }
         });
