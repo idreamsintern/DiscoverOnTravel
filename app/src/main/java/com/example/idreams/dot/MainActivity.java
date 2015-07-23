@@ -7,9 +7,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.transition.Scene;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -32,8 +30,6 @@ public class MainActivity extends BaseActivity implements MainFragment.MainFragm
     public static String sSerToken = "api_doc_token";
     public static int sState;
     private FragmentManager mFragmentManager;
-    private Scene mWelcomeTour;
-    private ViewGroup mSceneRoot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +42,7 @@ public class MainActivity extends BaseActivity implements MainFragment.MainFragm
     }
 
     public void gotoHome(final View view) {
-        ImageView backgroundPicture = (ImageView) findViewById(R.id.background);
+        ImageView backgroundPicture = (ImageView) findViewById(R.id.back_image);
         switch (sState) {
             case STATE_TOUR_1:
                 final ImageView imageView = (ImageView) findViewById(R.id.dot_logo);

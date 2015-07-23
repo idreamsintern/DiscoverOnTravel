@@ -4,13 +4,12 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ImageView;
 
 import com.example.idreams.dot.R;
 
@@ -41,8 +40,7 @@ public class ChatListRecyclerAdapter extends RecyclerView.Adapter<ChatListRecycl
     @Override
     public void onBindViewHolder(ChatListRecyclerAdapter.ViewHolder holder, int position) {
         Chatroom chatroom = chatrooms.get(position);
-        holder.tvTitle.setText(chatroom.getTitle());
-        holder.chatCardView.setBackground(context.getDrawable(chatroom.getBackground()));
+        holder.ivTitle.setImageDrawable (context.getDrawable(chatroom.getBackground()));
     }
 
     @Override
@@ -51,13 +49,13 @@ public class ChatListRecyclerAdapter extends RecyclerView.Adapter<ChatListRecycl
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView tvTitle;
+        public ImageView ivTitle;
         public CardView chatCardView;
         public Context context;
 
         public ViewHolder(View itemView, Context context) {
             super(itemView);
-            this.tvTitle = (TextView) itemView.findViewById(R.id.tv_chat_room_title);
+            this.ivTitle = (ImageView) itemView.findViewById(R.id.tv_chat_room_title);
             this.chatCardView = (CardView) itemView.findViewById(R.id.card_view);
             this.context = context;
 
@@ -69,9 +67,19 @@ public class ChatListRecyclerAdapter extends RecyclerView.Adapter<ChatListRecycl
             int position = getLayoutPosition();
             Chatroom chatroom = chatrooms.get(position);
             final String chatRoomBackgroud = "CHATROOM_BACKGROUND";
+            int largeBackground = chatroom.getBackground();
+            switch (largeBackground) {
+                case R.drawable.chatroom1small:
+                    largeBackground = R.drawable.chatroom1large; break;
+                case R.drawable.chatroom2small:
+                    largeBackground = R.drawable.chatroom2large; break;
+                case R.drawable.chatroom3small:
+                    largeBackground = R.drawable.chatroom3large; break;
+            }
+
 
             Intent intent = new Intent(context, ChatActivity.class);
-            intent.putExtra(chatRoomBackgroud, chatroom.getBackground());
+            intent.putExtra(chatRoomBackgroud, largeBackground);
 
             View sharedView = this.chatCardView;
             String transitionName = v.getResources().getString(R.string.chatroom_icon);
