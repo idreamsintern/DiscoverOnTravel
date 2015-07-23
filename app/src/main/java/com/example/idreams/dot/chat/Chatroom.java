@@ -11,10 +11,10 @@ public class Chatroom {
     private String mUsers;
     private int backgroundId;
 
-    public Chatroom(String title, String users, int backgroundId) {
+    public Chatroom(String title, String users, int backgroundColor) {
         mTitle = title;
         mUsers = users;
-        this.backgroundId = backgroundId;
+        this.backgroundId = backgroundColor;
     }
 
     public String getTitle() {

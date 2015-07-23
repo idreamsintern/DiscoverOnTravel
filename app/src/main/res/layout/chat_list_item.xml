@@ -8,21 +8,16 @@
         android:id="@+id/card_view"
         android:layout_gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="130dp"
         android:layout_margin="@dimen/activity_vertical_margin"
-        card_view:cardCornerRadius="4dp" >
+        card_view:cardCornerRadius="10dp"
+        card_view:cardBackgroundColor="#D28E38">
 
-        <TextView
+        <ImageView
             android:id="@+id/tv_chat_room_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/color1"
             android:textSize="20dp" />
-
-        <TextView
-            android:id="@+id/tv_users_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
 
     </android.support.v7.widget.CardView>
 

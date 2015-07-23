@@ -7,13 +7,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.transition.Fade;
-import android.transition.Scene;
-import android.transition.Transition;
-import android.transition.TransitionManager;
-import android.transition.TransitionSet;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -32,8 +26,6 @@ public class MainActivity extends BaseActivity implements MainFragment.MainFragm
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private FragmentManager mFragmentManager;
-    private Scene           mWelcomeTour;
-    private ViewGroup       mSceneRoot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
