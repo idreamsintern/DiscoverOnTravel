@@ -44,10 +44,9 @@ public class ChatListActivity extends BaseActivity {
 
     private void setupWindowAnimations() {
         Explode explode = new Explode();
-        explode.setDuration(1000);
-        getWindow().setExitTransition(explode);
-
         Fade fade = new Fade();
+        explode.setDuration(1000);
+        getWindow().setExitTransition(fade);
         getWindow().setReenterTransition(fade);
     }
 }
