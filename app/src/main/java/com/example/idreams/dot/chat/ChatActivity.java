@@ -4,25 +4,28 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.SharedPreferences;
 import android.database.DataSetObserver;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.transition.Explode;
 import android.transition.Transition;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.idreams.dot.BaseActivity;
 import com.example.idreams.dot.R;
+import com.facebook.Profile;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by schwannden on 2015/7/15.
@@ -30,15 +33,16 @@ import com.firebase.client.ValueEventListener;
 public class ChatActivity extends BaseActivity {
 
     private static final String FIREBASE_URL = "https://torrid-inferno-6846.firebaseio.com/";
-
+    private static final long ANIM_DURATION = 1000;
+    private static final String chatRoomBackgroud = "CHATROOM_BACKGROUND";
     private String mUsername;
     private Firebase mFirebaseRef;
     private ValueEventListener mConnectedListener;
-    private ChatListAdapter mChatListAdapter;
 
-    private static final long ANIM_DURATION = 1000;
+    private ChatListAdapter mChatListAdapter;
+    private Profile currentProfile;
     private View bgViewGroup;
-    private static final String chatRoomBackgroud = "CHATROOM_BACKGROUND";
+    private ImageView currentImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +52,13 @@ public class ChatActivity extends BaseActivity {
         bgViewGroup = findViewById(R.id.chat_view_group);
         setupWindowAnimations();
 
-        // Setup our Firebase mFirebaseRef
+        currentProfile = Profile.getCurrentProfile();
+        currentImage = (ImageView) findViewById(R.id.current_thumbnail);
+        Picasso.with(getApplicationContext())
+                .load(currentProfile.getProfilePictureUri(150, 150))
+                .into(currentImage);
 
+        // Setup our Firebase mFirebaseRef
         mFirebaseRef = new Firebase(FIREBASE_URL).child("chat");
 
         // Setup our input methods. Enter key on the keyboard or pushing the send button
@@ -137,90 +146,8 @@ public class ChatActivity extends BaseActivity {
     private void setupWindowAnimations() {
         Bundle extras = getIntent().getExtras();
         int background = extras.getInt(chatRoomBackgroud);
-        bgViewGroup.setBackground(getResources().getDrawable(background));
+        Drawable backgroundImage = getResources().getDrawable(background);
+        bgViewGroup.setBackground(backgroundImage);
         bgViewGroup.getBackground().setAlpha(150);
-//        setupEnterAnimations();
-//        setupExitAnimations();
-    }
-
-    private void setupEnterAnimations() {
-        Transition enterTransition = getWindow().getSharedElementEnterTransition();
-        enterTransition.addListener(new Transition.TransitionListener() {
-            @Override
-            public void onTransitionStart(Transition transition) {
-            }
-
-            @Override
-            public void onTransitionEnd(Transition transition) {
-                animateRevealShow(bgViewGroup);
-            }
-
-            @Override
-            public void onTransitionCancel(Transition transition) {
-            }
-
-            @Override
-            public void onTransitionPause(Transition transition) {
-            }
-
-            @Override
-            public void onTransitionResume(Transition transition) {
-            }
-        });
-    }
-
-    private void setupExitAnimations() {
-        Transition sharedElementReturnTransition = getWindow().getSharedElementReturnTransition();
-        sharedElementReturnTransition.setStartDelay(ANIM_DURATION);
-
-
-        Transition returnTransition = getWindow().getReturnTransition();
-        returnTransition.setDuration(ANIM_DURATION);
-        returnTransition.addListener(new Transition.TransitionListener() {
-            @Override
-            public void onTransitionStart(Transition transition) {
-                animateRevealHide(bgViewGroup);
-            }
-
-            @Override
-            public void onTransitionEnd(Transition transition) {}
-
-            @Override
-            public void onTransitionCancel(Transition transition) {}
-
-            @Override
-            public void onTransitionPause(Transition transition) {}
-
-            @Override
-            public void onTransitionResume(Transition transition) {}
-        });
-    }
-
-    private void animateRevealShow(View viewRoot) {
-        int cx = (viewRoot.getLeft() + viewRoot.getRight()) / 2;
-        int cy = (viewRoot.getTop() + viewRoot.getBottom()) / 2;
-        int finalRadius = Math.max(viewRoot.getWidth(), viewRoot.getHeight());
-
-        Animator anim = ViewAnimationUtils.createCircularReveal(viewRoot, cx, cy, 0, finalRadius);
-        viewRoot.setVisibility(View.VISIBLE);
-        anim.setDuration(ANIM_DURATION);
-        anim.start();
-    }
-
-    private void animateRevealHide(final View viewRoot) {
-        int cx = (viewRoot.getLeft() + viewRoot.getRight()) / 2;
-        int cy = (viewRoot.getTop() + viewRoot.getBottom()) / 2;
-        int initialRadius = viewRoot.getWidth();
-
-        Animator anim = ViewAnimationUtils.createCircularReveal(viewRoot, cx, cy, initialRadius, 0);
-        anim.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                viewRoot.setVisibility(View.INVISIBLE);
-            }
-        });
-        anim.setDuration(ANIM_DURATION);
-        anim.start();
     }
 }
