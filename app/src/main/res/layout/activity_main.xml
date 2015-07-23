@@ -2,8 +2,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/travel_with_backpack"
     android:onClick="gotoHome">
+    <ImageView
+        android:id="@+id/back_image"
+        android:scaleType="fitXY"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:src="@drawable/travel_with_backpack" />
     <ImageView
         android:id="@+id/dot_logo"
         android:layout_width="wrap_content"
