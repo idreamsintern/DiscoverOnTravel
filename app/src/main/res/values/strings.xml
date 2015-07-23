@@ -23,6 +23,9 @@
     <string name="chat">Chat With Locals</string>
     <string name="title_activity_tab">TabActivity</string>
     <string name="app_id">1606543712966553</string>
+    <string name="welcome_tour_1">title1</string>
+    <string name="welcome_tour_2">title2</string>
+    <string name="welcome_tour_3">title3</string>
 
     <!-- NearbyActivity -->
     <string name="nearby_settings">我的設定</string>

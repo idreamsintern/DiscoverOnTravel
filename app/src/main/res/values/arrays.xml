@@ -9,4 +9,6 @@
         <item>@string/pref_language_en</item>
         <item>@string/pref_language_zhTW</item>
     </string-array>
+
+
 </resources>
