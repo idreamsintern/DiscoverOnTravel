@@ -54,8 +54,10 @@ public class ChatListAdapter extends FirebaseListAdapter<Chat> {
         ((TextView) view.findViewById(R.id.message)).setText(chat.getMessage());
 
         // set imageview
-        ImageView personalThumbnail = (ImageView) view.findViewById(R.id.personal_thumbnail);
-        Uri profile_uri = currentProfile.getProfilePictureUri(50, 50);
-        Picasso.with(view.getContext()).load(profile_uri).into(personalThumbnail);
+        if (currentProfile != null) {
+            Uri profile_uri = currentProfile.getProfilePictureUri(50, 50);
+            ImageView personalThumbnail = (ImageView) view.findViewById(R.id.personal_thumbnail);
+            Picasso.with(view.getContext()).load(profile_uri).into(personalThumbnail);
+        }
     }
 }

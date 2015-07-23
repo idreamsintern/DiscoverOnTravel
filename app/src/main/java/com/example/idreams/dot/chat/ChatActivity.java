@@ -53,10 +53,12 @@ public class ChatActivity extends BaseActivity {
         setupWindowAnimations();
 
         currentProfile = Profile.getCurrentProfile();
-        currentImage = (ImageView) findViewById(R.id.current_thumbnail);
-        Picasso.with(getApplicationContext())
-                .load(currentProfile.getProfilePictureUri(150, 150))
-                .into(currentImage);
+        if (currentProfile != null) {
+            currentImage = (ImageView) findViewById(R.id.current_thumbnail);
+            Picasso.with(getApplicationContext())
+                    .load(currentProfile.getProfilePictureUri(150, 150))
+                    .into(currentImage);
+        }
 
         // Setup our Firebase mFirebaseRef
         mFirebaseRef = new Firebase(FIREBASE_URL).child("chat");
