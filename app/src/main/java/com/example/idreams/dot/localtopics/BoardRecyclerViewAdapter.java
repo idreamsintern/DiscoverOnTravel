@@ -70,8 +70,9 @@ public class BoardRecyclerViewAdapter extends
         Board board = visibleBoards.get(position);
         holder.tvName.setText(board.getName());
 
+
         Picasso.with(holder.context)
-                .load("http://lorempixel.com/200/200/")
+                .load("http://lorempixel.com/200/200/?p=" + position)
                 .into(holder.mvBoard);
     }
 
