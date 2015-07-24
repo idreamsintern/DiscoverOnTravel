@@ -36,6 +36,7 @@ public class ChatActivity extends BaseActivity {
     private static final long ANIM_DURATION = 1000;
     private static final String chatRoomBackgroud = "CHATROOM_BACKGROUND";
     private String mUsername;
+    private String mUserId;
     private Firebase mFirebaseRef;
     private ValueEventListener mConnectedListener;
 
@@ -131,6 +132,7 @@ public class ChatActivity extends BaseActivity {
     private void setupUsername() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         mUsername = prefs.getString("username", "traveller");
+        mUserId = prefs.getString("userid", null);
     }
 
     private void sendMessage() {
@@ -138,7 +140,7 @@ public class ChatActivity extends BaseActivity {
         String input = inputText.getText().toString();
         if (!input.equals("")) {
             // Create our 'model', a Chat object
-            Chat chat = new Chat(input, mUsername);
+            Chat chat = new Chat(input, mUsername, mUserId);
             // Create a new, auto-generated child of that chat location, and save our chat data there
             mFirebaseRef.push().setValue(chat);
             inputText.setText("");

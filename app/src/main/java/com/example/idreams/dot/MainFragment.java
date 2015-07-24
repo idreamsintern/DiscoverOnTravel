@@ -2,7 +2,9 @@ package com.example.idreams.dot;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -28,6 +30,7 @@ public class MainFragment extends Fragment {
 
     public MainFragmentCallbacks myInterface;
     private String               mUserName;
+    private String               mId;
     private CallbackManager      mCallbackManager;
     private AccessTokenTracker   mTokenTracker;
     private ProfileTracker       mProfileTracker;
@@ -41,9 +44,6 @@ public class MainFragment extends Fragment {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Log.d("VIVZ", "onSuccess");
-                Profile profile = Profile.getCurrentProfile();
-                mUserName = getUserFromFb(profile);
-                myInterface.onFacebookLogin(mUserName);
             }
 
             @Override
@@ -63,7 +63,7 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
-        myInterface.onFacebookLogin(mUserName);//transfer data to act
+        myInterface.onFacebookLogin();//transfer data to act
         myInterface.getFragmentStatus();
         return view;
     }
@@ -88,7 +88,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Profile profile = Profile.getCurrentProfile();
+        myInterface.onFacebookLogin();
     }
 
     @Override
@@ -129,16 +129,8 @@ public class MainFragment extends Fragment {
         mButtonLogin.registerCallback(mCallbackManager, mFacebookCallback);
     }
 
-    private String getUserFromFb(Profile profile) {
-        StringBuffer stringBuffer = new StringBuffer();
-        if (profile != null) {
-            stringBuffer.append(profile.getName());
-        }
-        return stringBuffer.toString();
-    }
-
     public static interface MainFragmentCallbacks {
-        public void onFacebookLogin(String msg);
+        public void onFacebookLogin();
         public void getFragmentStatus();
     }
 }

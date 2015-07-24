@@ -16,6 +16,7 @@ import com.example.idreams.dot.chat.ChatListActivity;
 import com.example.idreams.dot.localtopics.BoardActivity;
 import com.example.idreams.dot.nearby.NearbyActivity;
 import com.example.idreams.dot.utils.GetToken;
+import com.facebook.Profile;
 
 
 public class MainActivity extends BaseActivity implements MainFragment.MainFragmentCallbacks {
@@ -83,9 +84,19 @@ public class MainActivity extends BaseActivity implements MainFragment.MainFragm
     }
 
     @Override
-    public void onFacebookLogin(String msg) {
+    public void onFacebookLogin() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        prefs.edit().putString("username", msg).commit();
+        Profile profile = Profile.getCurrentProfile();
+        String userName = getUserFromFb(profile);
+        String id       = getIdFromFb  (profile);
+        if (userName == null) {
+            userName = prefs.getString("username", "traveller");
+        }
+        if (id == null) {
+            id = prefs.getString("userid", null);
+        }
+        prefs.edit().putString("username", userName).commit();
+        prefs.edit().putString("userid", id).commit();
     }
     public void getFragmentStatus(){
 
@@ -121,5 +132,21 @@ public class MainActivity extends BaseActivity implements MainFragment.MainFragm
                 break;
         }
         transaction.commit();
+    }
+
+    private String getUserFromFb(Profile profile) {
+        StringBuffer stringBuffer = new StringBuffer();
+        if (profile != null) {
+            stringBuffer.append(profile.getName());
+        }
+        return stringBuffer.toString();
+    }
+
+    private String getIdFromFb(Profile profile) {
+        StringBuffer stringBuffer = new StringBuffer();
+        if (profile != null) {
+            stringBuffer.append(profile.getId());
+        }
+        return stringBuffer.toString();
     }
 }
