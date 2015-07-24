@@ -11,7 +11,7 @@
         android:maxWidth="200dp"
         android:adjustViewBounds="true"
         android:src="@drawable/dot_logo"
-        android:onClick="gotoHome"
+        android:onClick="welcomeTour"
         android:layout_marginStart="95dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"

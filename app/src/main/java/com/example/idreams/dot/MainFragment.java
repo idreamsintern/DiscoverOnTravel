@@ -64,7 +64,6 @@ public class MainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         myInterface.onFacebookLogin(mUserName);//transfer data to act
-        myInterface.getFragmentStatus();
         return view;
     }
 
@@ -83,6 +82,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         setupLoginButton(view);
+        myInterface.onFragmentViewCreated(view);
     }
 
     @Override
@@ -139,6 +139,6 @@ public class MainFragment extends Fragment {
 
     public static interface MainFragmentCallbacks {
         public void onFacebookLogin(String msg);
-        public void getFragmentStatus();
+        public void onFragmentViewCreated(View view);
     }
 }

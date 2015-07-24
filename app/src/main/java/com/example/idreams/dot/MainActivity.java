@@ -18,7 +18,8 @@ import com.example.idreams.dot.nearby.NearbyActivity;
 import com.example.idreams.dot.utils.GetToken;
 
 
-public class MainActivity extends BaseActivity implements MainFragment.MainFragmentCallbacks {
+public class MainActivity extends BaseActivity
+        implements MainFragment.MainFragmentCallbacks {
 
     public static final int INDEX_SIMPLE_LOGIN = 0;
     public static final String FRAGMENT_TAG = "fragment_tag";
@@ -41,7 +42,8 @@ public class MainActivity extends BaseActivity implements MainFragment.MainFragm
         (new GetToken(this)).getToken();
     }
 
-    public void gotoHome(final View view) {
+    @Override
+    public void onFragmentViewCreated(View view) {
         ImageView backgroundPicture = (ImageView) findViewById(R.id.back_image);
         switch (sState) {
             case STATE_TOUR_1:
@@ -49,7 +51,7 @@ public class MainActivity extends BaseActivity implements MainFragment.MainFragm
                 Animation fadeoutAnim = AnimationUtils.loadAnimation(this, R.anim.fadeout);
                 fadeoutAnim.setAnimationListener(new Animation.AnimationListener() {
                     public void onAnimationEnd(Animation animation) {
-                        imageView.setVisibility(View.GONE);
+                        imageView.setVisibility(View.INVISIBLE);
                     }
 
                     public void onAnimationRepeat(Animation animation) {
