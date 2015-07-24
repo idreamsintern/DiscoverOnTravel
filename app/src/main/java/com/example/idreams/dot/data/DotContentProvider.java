@@ -18,12 +18,12 @@ public class DotContentProvider extends ContentProvider {
     private static final SQLiteQueryBuilder sQueryBuilder;
     private static final UriMatcher sUriMatcher = buildUriMatcher();
 
-    static final int FB_CHECKIN = 100;
-    static final int FB_CHECKIN_SEARCH_CATEGORY = 101;
-    static final int FB_CHECKIN_SEARCH_KEYWORD = 102;
+    static final int FB_CHECKIN                         = 100;
+    static final int FB_CHECKIN_SEARCH_CATEGORY         = 101;
+    static final int FB_CHECKIN_SEARCH_KEYWORD          = 102;
     static final int FB_CHECKIN_SEARCH_CATEGORY_KEYWORD = 103;
-    static final int TOP_ARTICLE = 200;
-    static final int TOP_ARTICLE_SEARCH_SOURCE = 201;
+    static final int TOP_ARTICLE                        = 200;
+    static final int TOP_ARTICLE_SEARCH_SOURCE          = 201;
 
     static {
         sQueryBuilder = new SQLiteQueryBuilder();

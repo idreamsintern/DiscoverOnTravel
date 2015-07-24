@@ -45,8 +45,8 @@ public class NearbyCursorAdapter extends CursorAdapter {
             ckCheck.setChecked(false);
         }
         //**change color with number of checkins. */
-        tvName.setText(cursor.getString(PlaceholderFragment.COLUMN_FB_CHECKIN_NAME));
-        tvCheckins.setText(cursor.getString(PlaceholderFragment.COLUMN_FB_CHECKIN_CHECKINS));
+        tvName.setText(cursor.getString(nearbyFragment.COLUMN_FB_CHECKIN_NAME));
+        tvCheckins.setText(cursor.getString(nearbyFragment.COLUMN_FB_CHECKIN_CHECKINS));
 
         ckCheck.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,14 +65,14 @@ public class NearbyCursorAdapter extends CursorAdapter {
     }
 
     private String getLat(Cursor cursor) {
-        return cursor.getString(PlaceholderFragment.COLUMN_FB_CHECKIN_LAT);
+        return cursor.getString(nearbyFragment.COLUMN_FB_CHECKIN_LAT);
     }
 
     private String getLng(Cursor cursor) {
-        return cursor.getString(PlaceholderFragment.COLUMN_FB_CHECKIN_LNG);
+        return cursor.getString(nearbyFragment.COLUMN_FB_CHECKIN_LNG);
     }
 
     private String getName(Cursor cursor) {
-        return cursor.getString(PlaceholderFragment.COLUMN_FB_CHECKIN_NAME);
+        return cursor.getString(nearbyFragment.COLUMN_FB_CHECKIN_NAME);
     }
 }

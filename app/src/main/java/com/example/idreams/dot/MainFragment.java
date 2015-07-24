@@ -2,9 +2,7 @@ package com.example.idreams.dot;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -29,8 +27,6 @@ import com.facebook.login.widget.LoginButton;
 public class MainFragment extends Fragment {
 
     public MainFragmentCallbacks myInterface;
-    private String               mUserName;
-    private String               mId;
     private CallbackManager      mCallbackManager;
     private AccessTokenTracker   mTokenTracker;
     private ProfileTracker       mProfileTracker;

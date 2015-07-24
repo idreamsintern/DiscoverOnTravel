@@ -12,7 +12,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +23,7 @@ import com.example.idreams.dot.data.DotDbContract.FbCheckinEntry;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class PlaceholderFragment extends Fragment
+public class nearbyFragment extends Fragment
         implements LoaderManager.LoaderCallbacks<Cursor> {
     private static final int FB_CHECKIN_LOADER = 0;
     private static final String ARG_POSITION = "arg_position";
@@ -44,26 +43,26 @@ public class PlaceholderFragment extends Fragment
             FbCheckinEntry.COLUMN_CHECKINS_UPCOUNT
     };
 
-    static final int COLUMN_FB_CHECKIN_ID_ = 0;
-    static final int COLUMN_FB_CHECKIN_ID = 1;
-    static final int COLUMN_FB_CHECKIN_NAME = 2;
-    static final int COLUMN_FB_CHECKIN_CATEGORY = 3;
-    static final int COLUMN_FB_CHECKIN_LAT = 4;
-    static final int COLUMN_FB_CHECKIN_LNG = 5;
-    static final int COLUMN_FB_CHECKIN_CHECKINS = 6;
+    static final int COLUMN_FB_CHECKIN_ID_              = 0;
+    static final int COLUMN_FB_CHECKIN_ID               = 1;
+    static final int COLUMN_FB_CHECKIN_NAME             = 2;
+    static final int COLUMN_FB_CHECKIN_CATEGORY         = 3;
+    static final int COLUMN_FB_CHECKIN_LAT              = 4;
+    static final int COLUMN_FB_CHECKIN_LNG              = 5;
+    static final int COLUMN_FB_CHECKIN_CHECKINS         = 6;
     static final int COLUMN_FB_CHECKIN_CHECKINS_UPCOUNT = 7;
-    static final int COLUMN_FB_CHECKIN_STARTDATE = 8;
+    static final int COLUMN_FB_CHECKIN_STARTDATE        = 8;
 
 
-    public PlaceholderFragment() {
+    public nearbyFragment() {
     }
 
     /**
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static PlaceholderFragment newInstance(int position) {
-        PlaceholderFragment fragment = new PlaceholderFragment();
+    public static nearbyFragment newInstance(int position) {
+        nearbyFragment fragment = new nearbyFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_POSITION, position);
         fragment.setArguments(args);
@@ -99,42 +98,6 @@ public class PlaceholderFragment extends Fragment
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         getLoaderManager().initLoader(FB_CHECKIN_LOADER, null, this);
-    }
-
-    @Override
-    public void onStart () {
-        super.onStart();
-        Log.v(LOG_TAG, "onStart");
-    }
-
-    @Override
-    public void onResume () {
-        super.onResume();
-        Log.v(LOG_TAG, "onResume");
-    }
-
-    @Override
-    public void onPause () {
-        super.onPause();
-        Log.v(LOG_TAG, "onPause");
-    }
-
-    @Override
-    public void onStop () {
-        super.onStop();
-        Log.v(LOG_TAG, "onStop");
-    }
-
-    @Override
-    public void onDestroy () {
-        super.onDestroy();
-        Log.v(LOG_TAG, "onDestroy");
-    }
-
-    @Override
-    public void onDetach () {
-        super.onDetach();
-        Log.v(LOG_TAG, "onDetach");
     }
 
     @Override

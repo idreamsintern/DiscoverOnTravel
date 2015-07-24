@@ -5,7 +5,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.transition.Explode;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -60,7 +59,7 @@ public class NearbyActivity extends ActionBarActivity
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position))
+                .replace(R.id.container, nearbyFragment.newInstance(position))
                 .commit();
     }
 
