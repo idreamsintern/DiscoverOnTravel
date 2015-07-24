@@ -43,7 +43,7 @@ public class ChatListAdapter extends FirebaseListAdapter<Chat> {
         String author = chat.getAuthor();
         String id     = chat.getId();
         TextView authorText = (TextView) view.findViewById(R.id.author);
-        Profile currentProfile = Profile.getCurrentProfile();
+        // Profile currentProfile = Profile.getCurrentProfile();
 
         authorText.setText(author + ": ");
         // If the message was sent by this user, color it differently
@@ -54,11 +54,11 @@ public class ChatListAdapter extends FirebaseListAdapter<Chat> {
         }
         ((TextView) view.findViewById(R.id.message)).setText(chat.getMessage());
 
-        // set imageview
-        if (currentProfile != null) {
-            Uri profile_uri = currentProfile.getProfilePictureUri(50, 50);
-            ImageView personalThumbnail = (ImageView) view.findViewById(R.id.personal_thumbnail);
-            Picasso.with(view.getContext()).load(profile_uri).into(personalThumbnail);
-        }
+        // set facebook user thumbnail
+        String thumbnail_address = "https://graph.facebook.com/v2.4/" + id + "/picture/";
+        ImageView personalThumbnail = (ImageView) view.findViewById(R.id.personal_thumbnail);
+        Picasso.with(view.getContext())
+                .load(thumbnail_address)
+                .into(personalThumbnail);
     }
 }
