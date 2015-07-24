@@ -15,6 +15,12 @@
     <string name="pref_language_en">en</string>
     <string name="pref_language_label_zhTW">繁體中文</string>
     <string name="pref_language_label_en">English</string>
+    <string name="pref_tutorial_key">tutorial</string>
+    <string name="pref_tutorial_label">Show App Tutorial on Start Up</string>
+    <string name="pref_tutorial_yes">yes</string>
+    <string name="pref_tutorial_no">no</string>
+    <string name="pref_tutorial_label_yes">Yes</string>
+    <string name="pref_tutorial_label_no">No</string>
 
     <!-- MainActivity -->
     <string name="title_activity_nearby">NearbyActivity</string>

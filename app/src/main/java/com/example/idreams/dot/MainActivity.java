@@ -27,12 +27,13 @@ public class MainActivity extends BaseActivity
 
     public static final int INDEX_SIMPLE_LOGIN = 0;
     public static final String FRAGMENT_TAG = "fragment_tag";
-    private static final int STATE_TOUR_WELCOME = 1;
+    private static final int STATE_TOUR_START_TOUR = 1;
     private static final int STATE_TOUR_1 = 2;
     private static final int STATE_TOUR_2 = 3;
     private static final int STATE_TOUR_3 = 4;
     private static final int STATE_TOUR_COMPLETE = 5;
     private static final int STATE_TOUR_DISABLE = 6;
+    private static final int STATE_TOUR_NO_TOUR = 7;
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     public static String sSerToken = "api_doc_token";
     public static int sState;
@@ -41,15 +42,25 @@ public class MainActivity extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (true) {
-            sState = STATE_TOUR_WELCOME;
-        }
         setContentView(R.layout.activity_main);
         (new GetToken(this)).getToken();
+        sState = STATE_TOUR_DISABLE;
     }
 
     @Override
     public void onFragmentViewCreated(View view) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String tutorial = prefs.getString(getString(R.string.pref_tutorial_key),
+                getString(R.string.pref_tutorial_yes));
+        if (tutorial.equals(getString(R.string.pref_tutorial_yes))) {
+            prefs.edit().putString(getString(R.string.pref_tutorial_key),
+                    getString(R.string.pref_tutorial_no)).commit();
+            sState = STATE_TOUR_START_TOUR;
+        } else if (sState == STATE_TOUR_NO_TOUR) {
+            sState = STATE_TOUR_DISABLE;
+        } else if (sState == STATE_TOUR_DISABLE){
+            sState = STATE_TOUR_NO_TOUR;
+        }
         ImageView backgroundPicture = (ImageView) findViewById(R.id.back_image);
         View rootView = view.getRootView();
         Button      nearbyPlace   = (Button) rootView.findViewById(R.id.button1);
@@ -65,14 +76,18 @@ public class MainActivity extends BaseActivity
         lightenAnim.setFillAfter(true);
         fadeoutAnim.setFillAfter(true);
         switch (sState) {
-            case STATE_TOUR_WELCOME:
-                ImageView lgog = (ImageView) rootView.findViewById(R.id.dot_logo);
-                lgog.startAnimation(fadeoutAnim);
+            case STATE_TOUR_START_TOUR:
+                ImageView logo = (ImageView) rootView.findViewById(R.id.dot_logo);
                 backgroundPicture.startAnimation(darkenAnim);
                 mFragmentManager = getSupportFragmentManager();
                 toggleFragment(INDEX_SIMPLE_LOGIN);
-                //set imageview alpha lower
                 sState = STATE_TOUR_1;
+                break;
+            case STATE_TOUR_NO_TOUR:
+                logo = (ImageView) rootView.findViewById(R.id.dot_logo);
+                logo.startAnimation(fadeoutAnim);
+                mFragmentManager = getSupportFragmentManager();
+                toggleFragment(INDEX_SIMPLE_LOGIN);
                 break;
             case STATE_TOUR_1:
                 helpMessage.startAnimation(fadeinAnim);
@@ -102,6 +117,8 @@ public class MainActivity extends BaseActivity
                 loginButton.startAnimation(lightenAnim);
                 sState = STATE_TOUR_DISABLE;
                 break;
+            case STATE_TOUR_DISABLE:
+                helpMessage.setVisibility(View.INVISIBLE);
         }
     }
 

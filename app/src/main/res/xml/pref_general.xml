@@ -17,4 +17,11 @@
         android:entries="@array/pref_language_options"
         android:entryValues="@array/pref_language_values" />
 
+    <ListPreference
+        android:key="@string/pref_tutorial_key"
+        android:title="@string/pref_tutorial_label"
+        android:defaultValue="@string/pref_tutorial_label_yes"
+        android:entries="@array/pref_tutorial_options"
+        android:entryValues="@array/pref_tutorial_values" />
+
 </PreferenceScreen>
