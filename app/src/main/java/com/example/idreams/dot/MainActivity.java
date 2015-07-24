@@ -34,6 +34,7 @@ public class MainActivity extends BaseActivity
     private static final int STATE_TOUR_COMPLETE = 5;
     private static final int STATE_TOUR_DISABLE = 6;
     private static final int STATE_TOUR_NO_TOUR = 7;
+    private static final int STATE_TOUR_ON_CREATE = 8;
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     public static String sSerToken = "api_doc_token";
     public static int sState;
@@ -44,7 +45,7 @@ public class MainActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         (new GetToken(this)).getToken();
-        sState = STATE_TOUR_DISABLE;
+        sState = STATE_TOUR_ON_CREATE;
     }
 
     @Override
@@ -59,6 +60,8 @@ public class MainActivity extends BaseActivity
         } else if (sState == STATE_TOUR_NO_TOUR) {
             sState = STATE_TOUR_DISABLE;
         } else if (sState == STATE_TOUR_DISABLE){
+            sState = STATE_TOUR_DISABLE;
+        } else if (sState == STATE_TOUR_ON_CREATE) {
             sState = STATE_TOUR_NO_TOUR;
         }
         ImageView backgroundPicture = (ImageView) findViewById(R.id.back_image);
@@ -79,6 +82,7 @@ public class MainActivity extends BaseActivity
             case STATE_TOUR_START_TOUR:
                 ImageView logo = (ImageView) rootView.findViewById(R.id.dot_logo);
                 backgroundPicture.startAnimation(darkenAnim);
+                logo.startAnimation(fadeoutAnim);
                 mFragmentManager = getSupportFragmentManager();
                 toggleFragment(INDEX_SIMPLE_LOGIN);
                 sState = STATE_TOUR_1;
