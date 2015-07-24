@@ -12,6 +12,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.idreams.dot.chat.ChatListActivity;
 import com.example.idreams.dot.localtopics.BoardActivity;
@@ -26,11 +27,12 @@ public class MainActivity extends BaseActivity
 
     public static final int INDEX_SIMPLE_LOGIN = 0;
     public static final String FRAGMENT_TAG = "fragment_tag";
-    private static final int STATE_TOUR_1 = 1;
-    private static final int STATE_TOUR_2 = 2;
-    private static final int STATE_TOUR_3 = 3;
-    private static final int STATE_TOUR_4 = 4;
+    private static final int STATE_TOUR_WELCOME = 1;
+    private static final int STATE_TOUR_1 = 2;
+    private static final int STATE_TOUR_2 = 3;
+    private static final int STATE_TOUR_3 = 4;
     private static final int STATE_TOUR_COMPLETE = 5;
+    private static final int STATE_TOUR_DISABLE = 6;
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     public static String sSerToken = "api_doc_token";
     public static int sState;
@@ -40,7 +42,7 @@ public class MainActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (true) {
-            sState = STATE_TOUR_1;
+            sState = STATE_TOUR_WELCOME;
         }
         setContentView(R.layout.activity_main);
         (new GetToken(this)).getToken();
@@ -53,44 +55,52 @@ public class MainActivity extends BaseActivity
         Button      nearbyPlace   = (Button) rootView.findViewById(R.id.button1);
         Button      whatsHot      = (Button) rootView.findViewById(R.id.button2);
         Button      chatWithLocal = (Button) rootView.findViewById(R.id.button3);
+        TextView    helpMessage   = (TextView) rootView.findViewById(R.id.textView);
         LoginButton loginButton   = (LoginButton) rootView.findViewById(R.id.login_button);
         Animation darkenAnim = AnimationUtils.loadAnimation(this,R.anim.back_alpha_lower);
         Animation lightenAnim = AnimationUtils.loadAnimation(this,R.anim.back_alpha_higher);
+        Animation fadeinAnim = AnimationUtils.loadAnimation(this, R.anim.fadein);
+        Animation fadeoutAnim = AnimationUtils.loadAnimation(this, R.anim.fadeout);
         darkenAnim.setFillAfter(true);
         lightenAnim.setFillAfter(true);
+        fadeoutAnim.setFillAfter(true);
         switch (sState) {
-            case STATE_TOUR_1:
+            case STATE_TOUR_WELCOME:
                 ImageView lgog = (ImageView) rootView.findViewById(R.id.dot_logo);
-                Animation fadeoutAnim = AnimationUtils.loadAnimation(this, R.anim.fadeout);
-                fadeoutAnim.setFillAfter(true);
                 lgog.startAnimation(fadeoutAnim);
                 backgroundPicture.startAnimation(darkenAnim);
                 mFragmentManager = getSupportFragmentManager();
                 toggleFragment(INDEX_SIMPLE_LOGIN);
                 //set imageview alpha lower
-                sState = STATE_TOUR_2;
+                sState = STATE_TOUR_1;
                 break;
-            case STATE_TOUR_2:
+            case STATE_TOUR_1:
+                helpMessage.startAnimation(fadeinAnim);
+                helpMessage.setText(getString(R.string.welcome_tour_1));
                 loginButton.startAnimation(darkenAnim);
                 whatsHot.startAnimation(darkenAnim);
                 chatWithLocal.startAnimation(darkenAnim);
+                sState = STATE_TOUR_2;
+                break;
+            case STATE_TOUR_2:
+                helpMessage.setText(getString(R.string.welcome_tour_2));
+                nearbyPlace.startAnimation(darkenAnim);
+                whatsHot.startAnimation(lightenAnim);
                 sState = STATE_TOUR_3;
                 break;
             case STATE_TOUR_3:
-                nearbyPlace.startAnimation(darkenAnim);
-                whatsHot.startAnimation(lightenAnim);
-                sState = STATE_TOUR_4;
-                break;
-            case STATE_TOUR_4:
+                helpMessage.setText(getString(R.string.welcome_tour_3));
                 whatsHot.startAnimation(darkenAnim);
                 chatWithLocal.startAnimation(lightenAnim);
                 sState = STATE_TOUR_COMPLETE;
                 break;
             case STATE_TOUR_COMPLETE:
+                helpMessage.startAnimation(fadeoutAnim);
                 nearbyPlace.startAnimation(lightenAnim);
                 whatsHot.startAnimation(lightenAnim);
                 backgroundPicture.startAnimation(lightenAnim);
                 loginButton.startAnimation(lightenAnim);
+                sState = STATE_TOUR_DISABLE;
                 break;
         }
     }
@@ -109,9 +119,6 @@ public class MainActivity extends BaseActivity
         }
         prefs.edit().putString("username", userName).commit();
         prefs.edit().putString("userid", id).commit();
-    }
-    public void getFragmentStatus(){
-
     }
 
     @Override

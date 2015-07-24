@@ -2,35 +2,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivityFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-    <Button android:id="@+id/button1"
-        style="@style/HomeButton"
-        android:text="@string/nearby"
-        android:onClick="nearbyBtn" />
-
-    <Button android:id="@+id/button2"
-        style="@style/HomeButton"
-        android:text="@string/localTopics"
-        android:onClick="localTopicBtn" />
-
-    <Button android:id="@+id/button3"
-        style="@style/HomeButton"
-        android:text="@string/chat"
-        android:onClick="chatBtn" />
-
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/login_button"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_gravity="center"/>
+        android:orientation="vertical"
+        android:weightSum="1"
+        android:id="@+id/linearLayout">
+
+        <Button
+            android:id="@+id/button1"
+            style="@style/HomeButton"
+            android:onClick="nearbyBtn"
+            android:text="@string/nearby" />
+
+        <Button
+            android:id="@+id/button2"
+            style="@style/HomeButton"
+            android:onClick="localTopicBtn"
+            android:text="@string/localTopics" />
+
+        <Button
+            android:id="@+id/button3"
+            style="@style/HomeButton"
+            android:onClick="chatBtn"
+            android:text="@string/chat" />
+
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp" />
+
     </LinearLayout>
+
+    <TextView android:id="@+id/textView"
+        android:layout_width="250dp"
+        android:layout_height="120dp"
+        android:layout_below="@id/linearLayout"
+        android:background="#FFFFFF"
+        android:alpha="0.6"
+        android:layout_marginTop="100dp"
+        android:shadowColor="#000000"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="2"
+        android:gravity="center"
+        android:textSize="16dp"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
