@@ -10,12 +10,15 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.idreams.dot.chat.ChatListActivity;
 import com.example.idreams.dot.localtopics.BoardActivity;
 import com.example.idreams.dot.nearby.NearbyActivity;
 import com.example.idreams.dot.utils.GetToken;
+import com.facebook.Profile;
+import com.facebook.login.widget.LoginButton;
 
 
 public class MainActivity extends BaseActivity
@@ -27,6 +30,7 @@ public class MainActivity extends BaseActivity
     private static final int STATE_TOUR_2 = 2;
     private static final int STATE_TOUR_3 = 3;
     private static final int STATE_TOUR_4 = 4;
+    private static final int STATE_TOUR_COMPLETE = 5;
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     public static String sSerToken = "api_doc_token";
     public static int sState;
@@ -45,49 +49,66 @@ public class MainActivity extends BaseActivity
     @Override
     public void onFragmentViewCreated(View view) {
         ImageView backgroundPicture = (ImageView) findViewById(R.id.back_image);
+        View rootView = view.getRootView();
+        Button      nearbyPlace   = (Button) rootView.findViewById(R.id.button1);
+        Button      whatsHot      = (Button) rootView.findViewById(R.id.button2);
+        Button      chatWithLocal = (Button) rootView.findViewById(R.id.button3);
+        LoginButton loginButton   = (LoginButton) rootView.findViewById(R.id.login_button);
+        Animation darkenAnim = AnimationUtils.loadAnimation(this,R.anim.back_alpha_lower);
+        Animation lightenAnim = AnimationUtils.loadAnimation(this,R.anim.back_alpha_higher);
+        darkenAnim.setFillAfter(true);
+        lightenAnim.setFillAfter(true);
         switch (sState) {
             case STATE_TOUR_1:
-                final ImageView imageView = (ImageView) findViewById(R.id.dot_logo);
+                ImageView lgog = (ImageView) rootView.findViewById(R.id.dot_logo);
                 Animation fadeoutAnim = AnimationUtils.loadAnimation(this, R.anim.fadeout);
-                fadeoutAnim.setAnimationListener(new Animation.AnimationListener() {
-                    public void onAnimationEnd(Animation animation) {
-                        imageView.setVisibility(View.INVISIBLE);
-                    }
-
-                    public void onAnimationRepeat(Animation animation) {
-                    }
-
-                    public void onAnimationStart(Animation animation) {
-                    }
-                });
-
-                imageView.startAnimation(fadeoutAnim);
+                fadeoutAnim.setFillAfter(true);
+                lgog.startAnimation(fadeoutAnim);
+                backgroundPicture.startAnimation(darkenAnim);
                 mFragmentManager = getSupportFragmentManager();
                 toggleFragment(INDEX_SIMPLE_LOGIN);
                 //set imageview alpha lower
-                final Animation darkenAnim =AnimationUtils.loadAnimation(this,R.anim.back_alpha_lower);
-                backgroundPicture.startAnimation(darkenAnim);
-
-                sState++;
+                sState = STATE_TOUR_2;
                 break;
             case STATE_TOUR_2:
-                sState++;
+                loginButton.startAnimation(darkenAnim);
+                whatsHot.startAnimation(darkenAnim);
+                chatWithLocal.startAnimation(darkenAnim);
+                sState = STATE_TOUR_3;
                 break;
             case STATE_TOUR_3:
-                sState++;
+                nearbyPlace.startAnimation(darkenAnim);
+                whatsHot.startAnimation(lightenAnim);
+                sState = STATE_TOUR_4;
                 break;
             case STATE_TOUR_4:
-                Animation lightenAnim=AnimationUtils.loadAnimation(this,R.anim.back_alpha_higher);
-                //backgroundPicture.startAnimation(lightenAnim);
+                whatsHot.startAnimation(darkenAnim);
+                chatWithLocal.startAnimation(lightenAnim);
+                sState = STATE_TOUR_COMPLETE;
                 break;
-
+            case STATE_TOUR_COMPLETE:
+                nearbyPlace.startAnimation(lightenAnim);
+                whatsHot.startAnimation(lightenAnim);
+                backgroundPicture.startAnimation(lightenAnim);
+                loginButton.startAnimation(lightenAnim);
+                break;
         }
     }
 
     @Override
-    public void onFacebookLogin(String msg) {
+    public void onFacebookLogin() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        prefs.edit().putString("username", msg).commit();
+        Profile profile = Profile.getCurrentProfile();
+        String userName = getUserFromFb(profile);
+        String id       = getIdFromFb  (profile);
+        if (userName == null) {
+            userName = prefs.getString("username", "traveller");
+        }
+        if (id == null) {
+            id = prefs.getString("userid", null);
+        }
+        prefs.edit().putString("username", userName).commit();
+        prefs.edit().putString("userid", id).commit();
     }
     public void getFragmentStatus(){
 
@@ -123,5 +144,21 @@ public class MainActivity extends BaseActivity
                 break;
         }
         transaction.commit();
+    }
+
+    private String getUserFromFb(Profile profile) {
+        StringBuffer stringBuffer = new StringBuffer();
+        if (profile != null) {
+            stringBuffer.append(profile.getName());
+        }
+        return stringBuffer.toString();
+    }
+
+    private String getIdFromFb(Profile profile) {
+        StringBuffer stringBuffer = new StringBuffer();
+        if (profile != null) {
+            stringBuffer.append(profile.getId());
+        }
+        return stringBuffer.toString();
     }
 }
