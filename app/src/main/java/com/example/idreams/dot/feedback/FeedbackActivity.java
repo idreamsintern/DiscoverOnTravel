@@ -20,6 +20,8 @@ import com.example.idreams.dot.MainActivity;
 import com.example.idreams.dot.R;
 import com.example.idreams.dot.chat.ChatActivity;
 import com.example.idreams.dot.chat.ChatListActivity;
+import com.example.idreams.dot.localtopics.BoardActivity;
+import com.example.idreams.dot.localtopics.TopicContentActivity;
 import com.example.idreams.dot.nearby.NearbyActivity;
 import com.example.idreams.dot.utils.TemplateAdapter;
 import com.firebase.client.Firebase;
@@ -38,6 +40,9 @@ public class FeedbackActivity extends BaseActivity implements TemplateAdapter.Cr
             case "NearbyActivity":  targetClass = NearbyActivity.class; break;
             case "ChatListActivity":  targetClass = ChatListActivity.class; break;
             case "ChatActivity":  targetClass = ChatActivity.class; break;
+            case "BoardActivity": targetClass = BoardActivity.class; break;
+            case "TopicContentActivity": targetClass = TopicContentActivity.class; break;
+            default: targetClass = MainActivity.class; break;
         }
         setContentView(R.layout.activity_feedback);
         item1=new Item("bug report","state what error you encountered");
@@ -45,9 +50,9 @@ public class FeedbackActivity extends BaseActivity implements TemplateAdapter.Cr
         mAdapter=new TemplateAdapter<Item>(this, R.layout.feedback_item);
         mAdapter.add(item1);
         mAdapter.add(item2);
-        ListView feedback_list= (ListView) findViewById(R.id.feedback_list);
+        ListView feedback_list = (ListView) findViewById(R.id.feedback_list);
         feedback_list.setAdapter(mAdapter);
-        ActionBar actionBar=getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
     @Override
@@ -60,19 +65,22 @@ public class FeedbackActivity extends BaseActivity implements TemplateAdapter.Cr
     public View createViewFromResource(int position, View convertView, ViewGroup parent, int Resource ){
         View view=null;
         if(convertView==null){
-            //view=getLayoutInflater().inflate(Resource, parent);
             LayoutInflater inflater =(LayoutInflater)LayoutInflater.from(this);
-            view=inflater.inflate(R.layout.feedback_item,parent,false);
+            view = inflater.inflate(R.layout.feedback_item,parent,false);
+            ViewHolder viewHolder = new ViewHolder(
+                    (Button) view.findViewById(R.id.itembtn),
+                    (TextView)view.findViewById(R.id.description)
+            );
+            view.setTag(viewHolder);
         }
         else{
             view=convertView;
         }
         Item item = (Item)mAdapter.getItem(position);
-        Button itembtn=(Button)view.findViewById(R.id.itembtn);
-        TextView discription = (TextView)view.findViewById(R.id.description);
-        itembtn.setTag(item);
+        final Button itembtn=((ViewHolder)view.getTag()).getButton();
+        TextView description = ((ViewHolder) view.getTag()).getTextView();
         itembtn.setText(item.getTitle());
-        discription.setText(item.getDiscription());
+        description.setText(item.getDiscription());
         itembtn.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,7 +89,7 @@ public class FeedbackActivity extends BaseActivity implements TemplateAdapter.Cr
                 FeedbackFragment feedback_frag = new FeedbackFragment();
                 fragmentTrans.replace(R.id.container, feedback_frag, "feedback");
                 fragmentTrans.commit();
-                setTitle((String) (((Item) v.getTag()).getTitle()));
+                setTitle((String) itembtn.getText());
             }
         });
         return view;
@@ -93,19 +101,35 @@ public class FeedbackActivity extends BaseActivity implements TemplateAdapter.Cr
         Firebase.setAndroidContext(this);
         String FirebaseURL="https://torrid-inferno-6846.firebaseio.com/";
         mFirebaseRef = new Firebase(FirebaseURL).child("feedback");
-        feedbackObj obj=new feedbackObj(sType,sFeedback);
+        FeedbackObj obj=new FeedbackObj(sType,sFeedback);
         mFirebaseRef.push().setValue(obj);
         feedback.setText("");
-        Toast.makeText(this,"Thanks for your "+getTitle(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Thanks for your " + getTitle(), Toast.LENGTH_SHORT).show();
 
     }
-    public class feedbackObj{
+    public class FeedbackObj {
         public String type,content;
-        feedbackObj(){}
-        feedbackObj(String type,String content){
+        FeedbackObj(){}
+        FeedbackObj(String type, String content){
             this.type=type;
             this.content=content;
         }
+    }
+
+    public class ViewHolder {
+        private Button mButton;
+        private TextView mTextView;
+        public ViewHolder (Button button, TextView textView) {
+            mButton = button;
+            mTextView = textView;
+        }
+        public Button getButton () {
+            return mButton;
+        }
+        public TextView getTextView () {
+            return mTextView;
+        }
+
     }
 
 }
