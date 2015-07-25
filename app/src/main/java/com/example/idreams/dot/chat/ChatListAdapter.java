@@ -2,13 +2,11 @@ package com.example.idreams.dot.chat;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.idreams.dot.R;
-import com.facebook.Profile;
 import com.firebase.client.Query;
 import com.squareup.picasso.Picasso;
 
@@ -60,5 +58,6 @@ public class ChatListAdapter extends FirebaseListAdapter<Chat> {
         Picasso.with(view.getContext())
                 .load(thumbnail_address)
                 .into(personalThumbnail);
+
     }
 }

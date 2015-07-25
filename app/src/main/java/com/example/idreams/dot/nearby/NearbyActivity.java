@@ -1,5 +1,6 @@
 package com.example.idreams.dot.nearby;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
@@ -9,6 +10,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.idreams.dot.R;
+import com.example.idreams.dot.SettingsActivity;
+import com.example.idreams.dot.feedback.FeedbackActivity;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.HashMap;
@@ -97,6 +100,14 @@ public class NearbyActivity extends ActionBarActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startActivity(new Intent(this, SettingsActivity.class));
+            return true;
+        }
+        if(id == R.id.action_feedback){
+            String sourceContext = this.getClass().getSimpleName();
+            Intent intent = new Intent(this, FeedbackActivity.class);
+            intent.putExtra("source_context", sourceContext);
+            startActivity(intent);
             return true;
         }
 

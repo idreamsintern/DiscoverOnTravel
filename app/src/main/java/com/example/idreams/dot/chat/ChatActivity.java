@@ -1,16 +1,12 @@
 package com.example.idreams.dot.chat;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.content.SharedPreferences;
 import android.database.DataSetObserver;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.transition.Transition;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewAnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -154,4 +150,5 @@ public class ChatActivity extends BaseActivity {
         bgViewGroup.setBackground(backgroundImage);
         bgViewGroup.getBackground().setAlpha(150);
     }
+
 }

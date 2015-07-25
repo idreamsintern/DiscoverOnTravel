@@ -11,7 +11,7 @@
         android:layout_weight="0.8"
         android:inputType="textMultiLine"
         android:ems="10"
-        android:id="@+id/feedcack"
+        android:id="@+id/feedback"
         android:text="type your feedback here"
          />
 
@@ -20,8 +20,10 @@
         android:layout_height="0dp"
         android:layout_weight="0.2"
         android:text="Send"
+        android:background="@color/blue"
         android:id="@+id/sendFeedback"
         android:layout_gravity="center_horizontal"
+        android:onClick="getFeedback"
          />
 
 </LinearLayout>
