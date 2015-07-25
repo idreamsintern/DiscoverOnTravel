@@ -6,6 +6,13 @@
     android:onClick="onFragmentViewCreated">
 
     <ImageView
+        android:id="@+id/back_image_vague"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/bg_vague" />
+
+    <ImageView
         android:id="@+id/back_image"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

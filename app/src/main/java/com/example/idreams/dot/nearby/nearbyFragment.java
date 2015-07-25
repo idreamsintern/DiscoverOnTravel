@@ -103,7 +103,7 @@ public class nearbyFragment extends Fragment
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         Uri searchUri = buildQueryUri();
-        String sortOrder = FbCheckinEntry.COLUMN_CHECKINS + " ASC";
+        String sortOrder = FbCheckinEntry.COLUMN_CHECKINS + " DESC";
         return new CursorLoader(getActivity(), searchUri, PROJECTION, null, null, sortOrder);
     }
 

@@ -53,7 +53,6 @@ public class MainActivity extends BaseActivity
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
 
-        //new一個class，參數this表示把MainActivity當成參數傳進FetchBoardTask的建構子
         FetchBoardTask fetchBoardTask = new FetchBoardTask(/*this*/);
         fetchBoardTask.execute();
 
@@ -85,6 +84,7 @@ public class MainActivity extends BaseActivity
         Button      chatWithLocal = (Button) rootView.findViewById(R.id.chat_room_btn);
         TextView    helpMessage   = (TextView) rootView.findViewById(R.id.textView);
         LoginButton loginButton   = (LoginButton) rootView.findViewById(R.id.login_button);
+        ImageView   logo          = (ImageView) rootView.findViewById(R.id.dot_logo);
         Animation darkenAnim = AnimationUtils.loadAnimation(this,R.anim.back_alpha_lower);
         Animation lightenAnim = AnimationUtils.loadAnimation(this,R.anim.back_alpha_higher);
         Animation fadeinAnim = AnimationUtils.loadAnimation(this, R.anim.fadein);
@@ -94,20 +94,17 @@ public class MainActivity extends BaseActivity
         fadeoutAnim.setFillAfter(true);
         switch (sState) {
             case STATE_TOUR_START_TOUR:
-                ImageView logo = (ImageView) rootView.findViewById(R.id.dot_logo);
                 backgroundPicture.startAnimation(darkenAnim);
-                logo.startAnimation(fadeoutAnim);
                 mFragmentManager = getSupportFragmentManager();
                 toggleFragment(INDEX_SIMPLE_LOGIN);
                 sState = STATE_TOUR_1;
                 break;
             case STATE_TOUR_NO_TOUR:
-                logo = (ImageView) rootView.findViewById(R.id.dot_logo);
-                logo.startAnimation(fadeoutAnim);
                 mFragmentManager = getSupportFragmentManager();
                 toggleFragment(INDEX_SIMPLE_LOGIN);
                 break;
             case STATE_TOUR_1:
+                logo.startAnimation(fadeoutAnim);
                 helpMessage.startAnimation(fadeinAnim);
                 helpMessage.setText(getString(R.string.welcome_tour_1));
                 loginButton.startAnimation(darkenAnim);
@@ -128,11 +125,13 @@ public class MainActivity extends BaseActivity
                 sState = STATE_TOUR_COMPLETE;
                 break;
             case STATE_TOUR_COMPLETE:
+                logo.startAnimation(fadeinAnim);
                 helpMessage.startAnimation(fadeoutAnim);
                 nearbyPlace.startAnimation(lightenAnim);
                 whatsHot.startAnimation(lightenAnim);
                 backgroundPicture.startAnimation(lightenAnim);
                 loginButton.startAnimation(lightenAnim);
+                backgroundPicture.startAnimation(fadeoutAnim);
                 sState = STATE_TOUR_DISABLE;
                 break;
             case STATE_TOUR_DISABLE:

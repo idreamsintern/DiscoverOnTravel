@@ -2,6 +2,7 @@ package com.example.idreams.dot;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -59,7 +64,8 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
-        myInterface.onFacebookLogin();//transfer data to act
+        myInterface.onFacebookLogin();//transfer data to actAppCompatButton v = (AppCompatButton) findViewById(R.id.mybutton);
+
         return view;
     }
 
@@ -85,6 +91,10 @@ public class MainFragment extends Fragment {
     public void onResume() {
         super.onResume();
         myInterface.onFacebookLogin();
+        LoginButton loginButton = (LoginButton) getActivity().findViewById(R.id.login_button);
+        Animation darkenAnim = AnimationUtils.loadAnimation(getActivity(), R.anim.back_alpha_lower);
+        darkenAnim.setFillAfter(true);
+        loginButton.startAnimation(darkenAnim);
     }
 
     @Override

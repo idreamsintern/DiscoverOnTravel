@@ -164,8 +164,8 @@ public class FetchContentTask extends AsyncTask<String, Void, Void> {
             Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon().build();
             Uri postParams = Uri.parse("").buildUpon()
                     .appendQueryParameter(QTOKEN_PARAM, params[0])
-                    .appendQueryParameter(COORDI_PARAM, "25.041399,121.554233")
-                    .appendQueryParameter(RADIUS_PARAM, "100")
+                    .appendQueryParameter(COORDI_PARAM, "25.031827, 121.575170")
+                    .appendQueryParameter(RADIUS_PARAM, "5")
                     .appendQueryParameter(LIMITS_PARAM, "100")
                     .build();
 

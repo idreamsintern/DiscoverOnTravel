@@ -24,8 +24,8 @@
 
     <!-- MainActivity -->
     <string name="title_activity_nearby">NearbyActivity</string>
-    <string name="nearby">Nearby Place</string>
-    <string name="localTopics">What\'s Hot Here</string>
+    <string name="nearby">Hot Spots</string>
+    <string name="localTopics">Local News</string>
     <string name="chat">Chat With Locals</string>
     <string name="title_activity_tab">TabActivity</string>
     <string name="app_id">1606543712966553</string>

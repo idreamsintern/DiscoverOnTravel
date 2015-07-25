@@ -52,8 +52,8 @@ public class NearbyCursorAdapter extends CursorAdapter {
             tvCheckins.setText(tempk + "." + tempn + "k");
 
             //**change color with number of checkins. */
-            if(likes >= 500000)
-                view.setBackgroundColor(context.getResources().getColor(R.color.color4));
+            if     (likes >= 500000)
+                view.setBackgroundColor(context.getResources().getColor(R.color.color3));
             else if(likes >= 100000)
                 view.setBackgroundColor(context.getResources().getColor(R.color.color3));
         }
@@ -63,7 +63,7 @@ public class NearbyCursorAdapter extends CursorAdapter {
             tvCheckins.setText(tempm + "." + tempn + "m");
 
             //**change color with number of checkins. */
-            if(likes >= 50000000)
+            if     (likes >= 50000000)
                 view.setBackgroundColor(context.getResources().getColor(R.color.color1));
             else if(likes >= 10000000)
                 view.setBackgroundColor(context.getResources().getColor(R.color.color2));
