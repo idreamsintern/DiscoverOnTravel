@@ -20,7 +20,15 @@
         android:layout_alignParentBottom="true">
 
         <Button
-            android:id="@+id/send"
+            android:id="@+id/currentPlace"
+            android:text="目前位置"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="currentPlace" />
+
+        <Button
+            android:id="@+id/next_site"
             android:text="@string/next_site"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"

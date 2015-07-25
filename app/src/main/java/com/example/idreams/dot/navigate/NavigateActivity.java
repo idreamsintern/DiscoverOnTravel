@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -18,6 +19,8 @@ import com.example.idreams.dot.BaseActivity;
 import com.example.idreams.dot.R;
 import com.example.idreams.dot.SettingsActivity;
 import com.example.idreams.dot.nearby.NearbyActivity;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareButton;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.Places;
@@ -32,7 +35,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-public class NavigateActivity extends BaseActivity implements RoutingListener, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
+public class NavigateActivity extends BaseActivity implements
+        RoutingListener,
+        GoogleApiClient.OnConnectionFailedListener,
+        GoogleApiClient.ConnectionCallbacks {
 
     protected GoogleMap map;
     protected GoogleApiClient mGoogleApiClient;
@@ -47,7 +53,6 @@ public class NavigateActivity extends BaseActivity implements RoutingListener, G
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigate);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
         MapsInitializer.initialize(this);
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -71,65 +76,6 @@ public class NavigateActivity extends BaseActivity implements RoutingListener, G
 
         map.moveCamera(center);
         map.animateCamera(zoom);
-
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-
-        locationManager.requestLocationUpdates(
-                LocationManager.NETWORK_PROVIDER, 5000, 0,
-                new LocationListener() {
-                    @Override
-                    public void onLocationChanged(Location location) {
-
-                        CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude()));
-                        CameraUpdate zoom = CameraUpdateFactory.zoomTo(16);
-
-                        map.moveCamera(center);
-                        map.animateCamera(zoom);
-                    }
-
-                    @Override
-                    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-                    }
-
-                    @Override
-                    public void onProviderEnabled(String provider) {
-
-                    }
-
-                    @Override
-                    public void onProviderDisabled(String provider) {
-
-                    }
-                });
-
-
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                3000, 0, new LocationListener() {
-                    @Override
-                    public void onLocationChanged(Location location) {
-                        CameraUpdate center = CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude()));
-                        CameraUpdate zoom = CameraUpdateFactory.zoomTo(16);
-
-                        map.moveCamera(center);
-                        map.animateCamera(zoom);
-                    }
-
-                    @Override
-                    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-                    }
-
-                    @Override
-                    public void onProviderEnabled(String provider) {
-
-                    }
-
-                    @Override
-                    public void onProviderDisabled(String provider) {
-
-                    }
-                });
 
         sendRequest();
     }
@@ -166,14 +112,14 @@ public class NavigateActivity extends BaseActivity implements RoutingListener, G
     public void onRoutingSuccess(PolylineOptions mPolyOptions, Route route) {
         CameraUpdate center = CameraUpdateFactory.newLatLng(destinations[0]);
         CameraUpdate zoom = CameraUpdateFactory.zoomTo(16);
-
         map.moveCamera(center);
+//        map.animateCamera(zoom);
 
         if (polyline != null)
             polyline.remove();
 
         polyline = null;
-        //adds route to the map.
+        // adds route to the map.
         PolylineOptions polyOptions = new PolylineOptions();
         polyOptions.color(getResources().getColor(R.color.primary_dark));
         polyOptions.width(10);
@@ -184,12 +130,14 @@ public class NavigateActivity extends BaseActivity implements RoutingListener, G
         MarkerOptions options = new MarkerOptions();
         options.position(destinations[0]);
         options.icon(BitmapDescriptorFactory.fromResource(R.drawable.start_blue));
+        options.title("起始點");
         map.addMarker(options);
 
         // End marker
         options = new MarkerOptions();
         options.position(destinations[0]);
         options.icon(BitmapDescriptorFactory.fromResource(R.drawable.end_green));
+        options.title("終點");
         map.addMarker(options);
     }
 
@@ -209,11 +157,80 @@ public class NavigateActivity extends BaseActivity implements RoutingListener, G
     }
 
     public void nextSite(View view) {
-        Toast.makeText(getApplicationContext(), "next site", Toast.LENGTH_LONG);
+        Toast.makeText(getApplicationContext(), "next site", Toast.LENGTH_LONG).show();
     }
 
-    public void shareInfo(View view) {
+    public void currentPlace(View view) {
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
+        // Use network to get current location
+        locationManager.requestLocationUpdates(
+                LocationManager.NETWORK_PROVIDER, 5000, 0,
+                new LocationListener() {
+                    @Override
+                    public void onLocationChanged(Location location) {
+
+                        LatLng currentLagLng = new LatLng(location.getLatitude(), location.getLongitude());
+                        CameraUpdate center = CameraUpdateFactory.newLatLng(currentLagLng);
+                        CameraUpdate zoom = CameraUpdateFactory.zoomTo(16);
+
+                        map.moveCamera(center);
+                        map.animateCamera(zoom);
+                        map.addMarker(new MarkerOptions()
+                            .position(currentLagLng)
+                            .title("目前位置"));
+                    }
+
+                    @Override
+                    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                    }
+
+                    @Override
+                    public void onProviderEnabled(String provider) {
+
+                    }
+
+                    @Override
+                    public void onProviderDisabled(String provider) {
+
+                    }
+                });
+        // Use GPS to get current location
+        locationManager.requestLocationUpdates(
+                LocationManager.GPS_PROVIDER, 3000, 0, new LocationListener() {
+                    @Override
+                    public void onLocationChanged(Location location) {
+                        LatLng currentLagLng = new LatLng(location.getLatitude(), location.getLongitude());
+                        CameraUpdate center = CameraUpdateFactory.newLatLng(currentLagLng);
+                        CameraUpdate zoom = CameraUpdateFactory.zoomTo(16);
+
+                        map.moveCamera(center);
+                        map.animateCamera(zoom);
+                        map.addMarker(new MarkerOptions()
+                                .position(currentLagLng)
+                                .title("目前位置"));
+                    }
+
+                    @Override
+                    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                    }
+
+                    @Override
+                    public void onProviderEnabled(String provider) {
+
+                    }
+
+                    @Override
+                    public void onProviderDisabled(String provider) {
+
+                    }
+                });
+    }
+
+    private void shareCurrentLocation() {
+        Toast.makeText(getApplicationContext(), "share", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -225,15 +242,13 @@ public class NavigateActivity extends BaseActivity implements RoutingListener, G
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
             return true;
+        } else if(id == R.id.menu_item_share) {
+            shareCurrentLocation();
         }
 
         return super.onOptionsItemSelected(item);
