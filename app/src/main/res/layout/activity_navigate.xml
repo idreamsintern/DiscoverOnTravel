@@ -27,12 +27,6 @@
             android:layout_weight="1"
             android:onClick="nextSite" />
 
-        <Button
-            android:text="@string/share_location"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_weight="1"
-            android:onClick="shareInfo" />
     </LinearLayout>
 
 </FrameLayout>
