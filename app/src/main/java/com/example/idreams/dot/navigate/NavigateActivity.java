@@ -1,6 +1,7 @@
 package com.example.idreams.dot.navigate;
 
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -55,6 +56,7 @@ public class NavigateActivity extends BaseActivity implements
     private LatLng[] currentDestinations = new LatLng[2];
     private int start = 0;
     private int end = 1;
+    private Marker currentMarker;
 
     /**
      * This activity loads a map and then displays the route and pushpins on it.
@@ -87,6 +89,8 @@ public class NavigateActivity extends BaseActivity implements
         map.moveCamera(center);
         map.animateCamera(zoom);
 
+        currentMarker = map.addMarker(new MarkerOptions().position(new LatLng(22, 120)));
+        currentMarker.setVisible(false);
         updateCurrentLocation();
         sendRequest();
     }
@@ -173,7 +177,6 @@ public class NavigateActivity extends BaseActivity implements
     }
 
     public void nextSite(View view) {
-        Toast.makeText(getApplicationContext(), "next site", Toast.LENGTH_LONG).show();
         if (start == end - 1 && end < destinations.length - 1) {
             start++;
             end++;
@@ -195,14 +198,6 @@ public class NavigateActivity extends BaseActivity implements
 
     public void currentPlace(View view) {
         updateCurrentLocation();
-
-//  TODO has to resolve the problem of async and drawing marker.
-//                        map.clear();
-//                        map.moveCamera(center);
-//                        map.animateCamera(zoom);
-//                        map.addMarker(new MarkerOptions()
-//                                .position(currentLagLng)
-//                                .title("目前位置"));
     }
 
     private void updateCurrentLocation() {
@@ -214,10 +209,16 @@ public class NavigateActivity extends BaseActivity implements
                 new LocationListener() {
                     @Override
                     public void onLocationChanged(Location location) {
-
                         currentLagLng = new LatLng(location.getLatitude(), location.getLongitude());
                         CameraUpdate center = CameraUpdateFactory.newLatLng(currentLagLng);
-                        CameraUpdate zoom = CameraUpdateFactory.zoomTo(16);
+
+                        if (currentMarker.isVisible())
+                            currentMarker.remove();
+                        map.moveCamera(center);
+                        currentMarker.setVisible(true);
+                        currentMarker.setPosition(currentLagLng);
+                        currentMarker.setTitle("目前位置");
+                        currentMarker.showInfoWindow();
                     }
 
                     @Override
@@ -243,7 +244,14 @@ public class NavigateActivity extends BaseActivity implements
                     public void onLocationChanged(Location location) {
                         currentLagLng = new LatLng(location.getLatitude(), location.getLongitude());
                         CameraUpdate center = CameraUpdateFactory.newLatLng(currentLagLng);
-                        CameraUpdate zoom = CameraUpdateFactory.zoomTo(16);
+
+                        if (currentMarker.isVisible())
+                            currentMarker.remove();
+                        map.moveCamera(center);
+                        currentMarker.setVisible(true);
+                        currentMarker.setPosition(currentLagLng);
+                        currentMarker.setTitle("目前位置");
+                        currentMarker.showInfoWindow();
                     }
 
                     @Override
