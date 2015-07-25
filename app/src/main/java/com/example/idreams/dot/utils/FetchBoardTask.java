@@ -19,12 +19,7 @@ public class FetchBoardTask extends AsyncTask<String, Void, Void> {
     private Context mContext;
 
     public static List<String> sBoardName = new ArrayList<String>();
-/*
-    public FetchBoardTask(Context context) {
-        //this 代表MainActivity
-        mContext = context;boardName
-    }
-*/
+
     @Override
     protected Void doInBackground(String... params) {
         Document mDoc = null;
@@ -34,9 +29,11 @@ public class FetchBoardTask extends AsyncTask<String, Void, Void> {
             mDoc  = Jsoup.connect("http://api.ser.ideas.iii.org.tw/docs/ptt_board_list.html").get();
             metaElems = mDoc.getElementsByTag("span");
             int boardSize = metaElems.size();
-            //塞進boardName這個vector裡面
             for (int i = 1; i < boardSize; i++){
-                sBoardName.add(metaElems.get(i).childNode(0).toString());
+                sBoardName.add(metaElems.get(i)
+                        .childNode(0)
+                        .toString()
+                        .replaceAll(" ", ""));
             }
         } catch (IOException e) {
             Log.e(LOG_TAG, "Error ", e);
