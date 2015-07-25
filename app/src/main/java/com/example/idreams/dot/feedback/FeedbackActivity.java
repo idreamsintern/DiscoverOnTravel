@@ -56,8 +56,9 @@ public class FeedbackActivity extends BaseActivity implements TemplateAdapter.Cr
                 FragmentManager fragmentMgr = ((Activity)v.getContext()).getFragmentManager();
                 FragmentTransaction fragmentTrans = fragmentMgr.beginTransaction();
                 FeedbackFragment feedback_frag=new FeedbackFragment();
-                fragmentTrans.replace(R.id.container,feedback_frag,"feedback");
+                fragmentTrans.replace(R.id.container, feedback_frag, "feedback");
                 fragmentTrans.commit();
+                setTitle((String)(((Item)v.getTag()).getTitle()));
                //Toast.makeText(v.getContext(), ((Item)v.getTag()).getTitle(), Toast.LENGTH_SHORT).show();
                // getActionBar().setTitle("Test");
             }
