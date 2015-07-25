@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.idreams.dot.nearby.NearbyActivity">
     <item
-        android:id="@+id/action_example"
+        android:id="@+id/start_navigate"
         android:title="@string/start_navigation"
         app:showAsAction="withText|ifRoom" />
     <item

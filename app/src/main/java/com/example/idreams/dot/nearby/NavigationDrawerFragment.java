@@ -260,7 +260,7 @@ public class NavigationDrawerFragment extends Fragment {
             return true;
         }
 
-        if (item.getItemId() == R.id.action_example) {
+        if (item.getItemId() == R.id.start_navigate) {
             Log.e(LOG_TAG, NearbyActivity.sSelectedLocations.size() + "");
             if (NearbyActivity.sSelectedLocations.size() == 0) {
                 new AlertDialog.Builder(new ContextThemeWrapper(getActivity(), R.style.AlertDialogCustom))

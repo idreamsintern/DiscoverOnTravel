@@ -18,11 +18,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="95dp"
+        android:layout_marginStart="80dp"
         android:layout_marginTop="47dp"
         android:adjustViewBounds="true"
         android:maxHeight="200dp"
         android:maxWidth="200dp"
-        android:src="@drawable/dot_logo" />
+        android:src="@drawable/background_logo" />
 
 </RelativeLayout>
