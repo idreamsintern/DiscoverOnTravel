@@ -45,6 +45,8 @@ public class NavigateActivity extends BaseActivity implements
     private String LOG_TAG = "NavigateActivity";
     private Polyline polyline;
     private LatLng[] destinations;
+    private int start = 0;
+    private int end = 1;
 
     /**
      * This activity loads a map and then displays the route and pushpins on it.
@@ -80,6 +82,8 @@ public class NavigateActivity extends BaseActivity implements
         sendRequest();
     }
 
+    // First, get destinations info from nearby activity,
+    // and then call routing method.
     private void sendRequest() {
         if (Util.Operations.isNetworkAvailable(this)) {
             destinations = new LatLng[NearbyActivity.sSelectedLocations.size()];
@@ -89,9 +93,7 @@ public class NavigateActivity extends BaseActivity implements
                 i++;
             }
 
-            Routing routing = new Routing(Routing.TravelMode.WALKING);
-            routing.registerListener(this);
-            routing.execute(destinations);
+            routeToNext();
         } else {
             Toast.makeText(this, "No internet connectivity", Toast.LENGTH_SHORT).show();
         }
@@ -121,21 +123,21 @@ public class NavigateActivity extends BaseActivity implements
         polyline = null;
         // adds route to the map.
         PolylineOptions polyOptions = new PolylineOptions();
-        polyOptions.color(getResources().getColor(R.color.primary_dark));
+        polyOptions.color(getResources().getColor(R.color.blue));
         polyOptions.width(10);
         polyOptions.addAll(mPolyOptions.getPoints());
         polyline = map.addPolyline(polyOptions);
 
         // Start marker
         MarkerOptions options = new MarkerOptions();
-        options.position(destinations[0]);
+        options.position(destinations[start]);
         options.icon(BitmapDescriptorFactory.fromResource(R.drawable.start_blue));
         options.title("起始點");
         map.addMarker(options);
 
         // End marker
         options = new MarkerOptions();
-        options.position(destinations[0]);
+        options.position(destinations[end]);
         options.icon(BitmapDescriptorFactory.fromResource(R.drawable.end_green));
         options.title("終點");
         map.addMarker(options);
@@ -143,7 +145,6 @@ public class NavigateActivity extends BaseActivity implements
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-
         Log.v(LOG_TAG, connectionResult.toString());
     }
 
@@ -158,6 +159,21 @@ public class NavigateActivity extends BaseActivity implements
 
     public void nextSite(View view) {
         Toast.makeText(getApplicationContext(), "next site", Toast.LENGTH_LONG).show();
+        if (start  == end-1 && end < destinations.length - 1) {
+            start++;
+            end++;
+        } else {
+            start = 0;
+            end = 1;
+        }
+        routeToNext();
+    }
+
+    private void routeToNext() {
+        map.clear();
+        Routing routing = new Routing(Routing.TravelMode.WALKING);
+        routing.registerListener(this);
+        routing.execute(destinations);
     }
 
     public void currentPlace(View view) {
