@@ -18,7 +18,7 @@ import com.example.idreams.dot.utils.TemplateAdapter;
 
 public class FeedbackActivity extends BaseActivity implements TemplateAdapter.CreateViewFromCallback,FeedbackFragment.FeedbackFragmentCallbacks {
     TemplateAdapter mAdapter;
-    Item item1,item2;
+    Item item1, item2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +30,6 @@ public class FeedbackActivity extends BaseActivity implements TemplateAdapter.Cr
         mAdapter.add(item2);
         ListView feedback_list= (ListView) findViewById(R.id.feedback_list);
         feedback_list.setAdapter(mAdapter);
-
     }
 
     @Override

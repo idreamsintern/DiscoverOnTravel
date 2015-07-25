@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -18,6 +19,12 @@ import com.example.idreams.dot.BaseActivity;
 import com.example.idreams.dot.R;
 import com.example.idreams.dot.SettingsActivity;
 import com.example.idreams.dot.nearby.NearbyActivity;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.share.Sharer;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.Places;
@@ -137,7 +144,7 @@ public class NavigateActivity extends BaseActivity implements
         options.position(currentDestinations[0]);
         options.icon(BitmapDescriptorFactory.fromResource(R.drawable.start_blue));
         options.title(destinationsName[start]);
-        options.snippet(destinationsName[start]);
+        options.snippet("第" + (start+1) + "站");
         Marker start = map.addMarker(options);
         start.showInfoWindow();
 
@@ -146,7 +153,7 @@ public class NavigateActivity extends BaseActivity implements
         options.position(currentDestinations[1]);
         options.icon(BitmapDescriptorFactory.fromResource(R.drawable.end_green));
         options.title(destinationsName[end]);
-        options.snippet(destinationsName[end]);
+        options.snippet("第" + (end+1) + "站");
         Marker end = map.addMarker(options);
         // end.showInfoWindow();
     }
@@ -257,7 +264,40 @@ public class NavigateActivity extends BaseActivity implements
     }
 
     private void shareCurrentLocation() {
-        Toast.makeText(getApplicationContext(), "share", Toast.LENGTH_SHORT).show();
+        CallbackManager callbackManager;
+        final ShareDialog shareDialog;
+        String app_id = getResources().getString(R.string.app_id);
+
+        callbackManager = CallbackManager.Factory.create();
+        shareDialog = new ShareDialog(this);
+        shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
+
+            @Override
+            public void onSuccess(Sharer.Result result) {
+                Toast.makeText(getApplicationContext(), "success", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancel() {
+                Toast.makeText(getApplicationContext(), "cancel", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(FacebookException e) {
+                Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        if (ShareDialog.canShow(ShareLinkContent.class)) {
+            ShareLinkContent linkContent = new ShareLinkContent.Builder()
+                    .setContentTitle("我正要前往" + destinationsName[start])
+                    .setContentDescription(
+                            "我還有" + (destinations.length - end) + "站還需努力～")
+                    .setContentUrl(Uri.parse("https://developers.facebook.com/apps/" + app_id + "/dashboard/"))
+                    .build();
+
+            shareDialog.show(linkContent);
+        }
     }
 
     @Override

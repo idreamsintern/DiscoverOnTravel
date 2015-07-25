@@ -21,7 +21,6 @@ public class NearbyCursorAdapter extends CursorAdapter {
         super(context, c, flags);
     }
 
-
     // views are reused as needed.
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
