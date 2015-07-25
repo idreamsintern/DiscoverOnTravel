@@ -39,9 +39,11 @@ public class NavigateActivity extends BaseActivity implements
 
     protected GoogleMap map;
     protected GoogleApiClient mGoogleApiClient;
+    private LatLng currentLagLng;
     private String LOG_TAG = "NavigateActivity";
     private Polyline polyline;
     private LatLng[] destinations;
+    private String[] destinationsName;
     private LatLng[] currentDestinations = new LatLng[2];
     private int start = 0;
     private int end = 1;
@@ -77,6 +79,7 @@ public class NavigateActivity extends BaseActivity implements
         map.moveCamera(center);
         map.animateCamera(zoom);
 
+        updateCurrentLocation();
         sendRequest();
     }
 
@@ -85,9 +88,11 @@ public class NavigateActivity extends BaseActivity implements
     private void sendRequest() {
         if (Util.Operations.isNetworkAvailable(this)) {
             destinations = new LatLng[NearbyActivity.sSelectedLocations.size()];
+            destinationsName = new String[NearbyActivity.sSelectedLocationsName.size()];
             int i = 0;
             for (String key : NearbyActivity.sSelectedLocations.keySet()) {
                 destinations[i] = NearbyActivity.sSelectedLocations.get(key);
+                destinationsName[i] = NearbyActivity.sSelectedLocationsName.get(i);
                 i++;
             }
 
@@ -130,14 +135,14 @@ public class NavigateActivity extends BaseActivity implements
         MarkerOptions options = new MarkerOptions();
         options.position(currentDestinations[0]);
         options.icon(BitmapDescriptorFactory.fromResource(R.drawable.start_blue));
-        options.title("起始點");
+        options.title(destinationsName[start]);
         map.addMarker(options);
 
         // End marker
         options = new MarkerOptions();
         options.position(currentDestinations[1]);
         options.icon(BitmapDescriptorFactory.fromResource(R.drawable.end_green));
-        options.title("終點");
+        options.title(destinationsName[end]);
         map.addMarker(options);
     }
 
@@ -177,6 +182,18 @@ public class NavigateActivity extends BaseActivity implements
     }
 
     public void currentPlace(View view) {
+        updateCurrentLocation();
+
+//  TODO has to resolve the problem of async and drawing marker.
+//                        map.clear();
+//                        map.moveCamera(center);
+//                        map.animateCamera(zoom);
+//                        map.addMarker(new MarkerOptions()
+//                                .position(currentLagLng)
+//                                .title("目前位置"));
+    }
+
+    private void updateCurrentLocation() {
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
         // Use network to get current location
@@ -186,16 +203,9 @@ public class NavigateActivity extends BaseActivity implements
                     @Override
                     public void onLocationChanged(Location location) {
 
-                        LatLng currentLagLng = new LatLng(location.getLatitude(), location.getLongitude());
+                        currentLagLng = new LatLng(location.getLatitude(), location.getLongitude());
                         CameraUpdate center = CameraUpdateFactory.newLatLng(currentLagLng);
                         CameraUpdate zoom = CameraUpdateFactory.zoomTo(16);
-
-                        map.clear();
-                        map.moveCamera(center);
-                        map.animateCamera(zoom);
-                        map.addMarker(new MarkerOptions()
-                                .position(currentLagLng)
-                                .title("目前位置"));
                     }
 
                     @Override
@@ -213,20 +223,15 @@ public class NavigateActivity extends BaseActivity implements
 
                     }
                 });
+
         // Use GPS to get current location
         locationManager.requestLocationUpdates(
                 LocationManager.GPS_PROVIDER, 3000, 0, new LocationListener() {
                     @Override
                     public void onLocationChanged(Location location) {
-                        LatLng currentLagLng = new LatLng(location.getLatitude(), location.getLongitude());
+                        currentLagLng = new LatLng(location.getLatitude(), location.getLongitude());
                         CameraUpdate center = CameraUpdateFactory.newLatLng(currentLagLng);
                         CameraUpdate zoom = CameraUpdateFactory.zoomTo(16);
-
-                        map.moveCamera(center);
-                        map.animateCamera(zoom);
-                        map.addMarker(new MarkerOptions()
-                                .position(currentLagLng)
-                                .title("目前位置"));
                     }
 
                     @Override
