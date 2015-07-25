@@ -80,6 +80,7 @@ public class ChatListRecyclerAdapter extends RecyclerView.Adapter<ChatListRecycl
 
             Intent intent = new Intent(context, ChatActivity.class);
             intent.putExtra(chatRoomBackgroud, largeBackground);
+            intent.putExtra("chatroom_title", chatroom.getTitle());
 
             View sharedView = this.chatCardView;
             String transitionName = v.getResources().getString(R.string.chatroom_icon);

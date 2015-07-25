@@ -58,7 +58,8 @@ public class ChatActivity extends BaseActivity {
         }
 
         // Setup our Firebase mFirebaseRef
-        mFirebaseRef = new Firebase(FIREBASE_URL).child("chat");
+        String chatroomTitle = getIntent().getStringExtra("chatroom_title");
+        mFirebaseRef = new Firebase(FIREBASE_URL).child(chatroomTitle);
 
         // Setup our input methods. Enter key on the keyboard or pushing the send button
         EditText inputText = (EditText) findViewById(R.id.messageInput);
