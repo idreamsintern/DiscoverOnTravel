@@ -17,6 +17,8 @@ import android.widget.TextView;
 import com.example.idreams.dot.chat.ChatListActivity;
 import com.example.idreams.dot.localtopics.BoardActivity;
 import com.example.idreams.dot.nearby.NearbyActivity;
+import com.example.idreams.dot.utils.FetchBoardTask;
+import com.example.idreams.dot.utils.FetchContentTask;
 import com.example.idreams.dot.utils.GetToken;
 import com.facebook.Profile;
 import com.facebook.login.widget.LoginButton;
@@ -44,6 +46,10 @@ public class MainActivity extends BaseActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //new一個class，參數this表示把MainActivity當成參數傳進FetchBoardTask的建構子
+        FetchBoardTask fetchBoardTask = new FetchBoardTask(/*this*/);
+        fetchBoardTask.execute();
+
         (new GetToken(this)).getToken();
         sState = STATE_TOUR_ON_CREATE;
     }
