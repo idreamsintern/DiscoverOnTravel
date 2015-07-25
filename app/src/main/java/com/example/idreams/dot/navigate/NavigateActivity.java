@@ -28,6 +28,7 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -136,14 +137,18 @@ public class NavigateActivity extends BaseActivity implements
         options.position(currentDestinations[0]);
         options.icon(BitmapDescriptorFactory.fromResource(R.drawable.start_blue));
         options.title(destinationsName[start]);
-        map.addMarker(options);
+        options.snippet(destinationsName[start]);
+        Marker start = map.addMarker(options);
+        start.showInfoWindow();
 
         // End marker
         options = new MarkerOptions();
         options.position(currentDestinations[1]);
         options.icon(BitmapDescriptorFactory.fromResource(R.drawable.end_green));
         options.title(destinationsName[end]);
-        map.addMarker(options);
+        options.snippet(destinationsName[end]);
+        Marker end = map.addMarker(options);
+        // end.showInfoWindow();
     }
 
     @Override
