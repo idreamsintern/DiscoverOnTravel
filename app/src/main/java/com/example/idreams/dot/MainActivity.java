@@ -31,6 +31,8 @@ public class MainActivity extends BaseActivity implements MainFragment.MainFragm
     public static int sState;
     private FragmentManager mFragmentManager;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +92,8 @@ public class MainActivity extends BaseActivity implements MainFragment.MainFragm
     public void getFragmentStatus(){
 
     }
+
+
 
     @Override
     public void onSaveInstanceState(Bundle outState) {

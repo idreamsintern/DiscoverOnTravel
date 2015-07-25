@@ -6,9 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.idreams.dot.feedback.FeedbackActivity;
+
 /**
  * Created by chichunchen on 2015/7/17.
  */
+//menu/mainmenu
 public class BaseActivity extends AppCompatActivity {
 
     @Override
@@ -33,6 +36,10 @@ public class BaseActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
+            return true;
+        }
+        if(id==R.id.action_feedback){
+            startActivity(new Intent(this, FeedbackActivity.class));
             return true;
         }
 

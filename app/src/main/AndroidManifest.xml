@@ -33,7 +33,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
 
         <meta-data
@@ -84,9 +83,15 @@
             android:name=".chat.ChatListActivity"
             android:label="@string/title_activity_chat_list" >
         </activity>
+
         <provider
             android:name=".data.DotContentProvider"
             android:authorities="com.example.idreams.dot" />
+
+        <activity
+            android:name=".feedback.FeedbackActivity"
+            android:label="@string/title_activity_feedback" >
+        </activity>
     </application>
 
 </manifest>
