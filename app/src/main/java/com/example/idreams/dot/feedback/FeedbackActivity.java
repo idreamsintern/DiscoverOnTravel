@@ -16,7 +16,7 @@ import com.example.idreams.dot.R;
 import com.example.idreams.dot.utils.TemplateAdapter;
 
 
-public class FeedbackActivity extends BaseActivity implements TemplateAdapter.CreateViewFromCallback {
+public class FeedbackActivity extends BaseActivity implements TemplateAdapter.CreateViewFromCallback,FeedbackFragment.FeedbackFragmentCallbacks {
     TemplateAdapter mAdapter;
     Item item1,item2;
     @Override
@@ -56,7 +56,7 @@ public class FeedbackActivity extends BaseActivity implements TemplateAdapter.Cr
                 FragmentManager fragmentMgr = ((Activity)v.getContext()).getFragmentManager();
                 FragmentTransaction fragmentTrans = fragmentMgr.beginTransaction();
                 FeedbackFragment feedback_frag=new FeedbackFragment();
-                fragmentTrans.replace(0,feedback_frag,"feedback");
+                fragmentTrans.replace(R.id.container,feedback_frag,"feedback");
                 fragmentTrans.commit();
                //Toast.makeText(v.getContext(), ((Item)v.getTag()).getTitle(), Toast.LENGTH_SHORT).show();
                // getActionBar().setTitle("Test");
