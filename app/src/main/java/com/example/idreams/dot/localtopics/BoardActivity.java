@@ -1,4 +1,5 @@
 package com.example.idreams.dot.localtopics;
+import com.example.idreams.dot.utils.FetchBoardTask;
 
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
@@ -10,7 +11,6 @@ import android.transition.Fade;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.idreams.dot.BaseActivity;
 import com.example.idreams.dot.R;
@@ -53,7 +53,9 @@ public class BoardActivity extends BaseActivity {
     }
 
     private ArrayList<Board> getBoards() {
-        String[] boardStringArray = getResources().getStringArray(R.array.board);
+
+        //抓board-array.xml進來
+        String[] boardStringArray = FetchBoardTask.sBoardName.toArray(new String[FetchBoardTask.sBoardName.size()]);
 
         ArrayList<Board> boardArrayList = new ArrayList<>();
 
