@@ -59,5 +59,11 @@
     <string name="current_location">現在位置</string>
     <string name="next_site">下個景點</string>
     <string name="share_location">分享</string>
+    <string name="title_activity_feedback">FeedbackActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

@@ -1,0 +1,27 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.idreams.dot.feedback.feedback_fragment">
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.8"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/feedcack"
+        android:text="type your feedback here"
+         />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2"
+        android:text="Send"
+        android:id="@+id/sendFeedback"
+        android:layout_gravity="center_horizontal"
+         />
+
+</LinearLayout>
