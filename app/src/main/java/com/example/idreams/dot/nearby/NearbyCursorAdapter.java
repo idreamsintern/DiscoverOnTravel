@@ -35,6 +35,7 @@ public class NearbyCursorAdapter extends CursorAdapter {
         CheckBox ckCheck = (CheckBox) view.findViewById(R.id.checkbox);
         TextView tvName = (TextView) view.findViewById(R.id.show_name);
         TextView tvCheckins = (TextView) view.findViewById(R.id.show_checkins);
+        int likes = Integer.valueOf(cursor.getString(nearbyFragment.COLUMN_FB_CHECKIN_CHECKINS));
 
         InputFilter[] namefilter = new InputFilter[] {new InputFilter.LengthFilter(11)};
         tvName.setFilters(namefilter);
@@ -44,9 +45,33 @@ public class NearbyCursorAdapter extends CursorAdapter {
         } else {
             ckCheck.setChecked(false);
         }
-        //**change color with number of checkins. */
+
         tvName.setText(cursor.getString(nearbyFragment.COLUMN_FB_CHECKIN_NAME));
-        tvCheckins.setText(cursor.getString(nearbyFragment.COLUMN_FB_CHECKIN_CHECKINS));
+        if (Integer.valueOf(likes) >= 1000 && Integer.valueOf(likes) <= 1000000) {
+            int tempk = Integer.valueOf(likes)/1000;
+            int tempn = (Integer.valueOf(likes)%1000)/100;
+            tvCheckins.setText(tempk + "." + tempn + "k");
+
+            //**change color with number of checkins. */
+            if(likes >= 500000)
+                view.setBackgroundColor(context.getResources().getColor(R.color.color4));
+            else if(likes >= 100000)
+                view.setBackgroundColor(context.getResources().getColor(R.color.color3));
+        }
+        else if (Integer.valueOf(likes) > 1000000) {
+            int tempm = Integer.valueOf(likes)/1000000;
+            int tempn = (Integer.valueOf(likes)%1000000)/100000;
+            tvCheckins.setText(tempm + "." + tempn + "m");
+
+            //**change color with number of checkins. */
+            if(likes >= 50000000)
+                view.setBackgroundColor(context.getResources().getColor(R.color.color1));
+            else if(likes >= 10000000)
+                view.setBackgroundColor(context.getResources().getColor(R.color.color2));
+        }
+        else {
+            tvCheckins.setText(likes);
+        }
 
         ckCheck.setOnClickListener(new View.OnClickListener() {
             @Override
