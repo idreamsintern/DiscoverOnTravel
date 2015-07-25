@@ -43,9 +43,13 @@ public class BaseActivity extends AppCompatActivity {
             return true;
         }
         if(id==R.id.action_feedback){
-            startActivity(new Intent(this, FeedbackActivity.class));
+            String sourceContext = this.getClass().getSimpleName();
+            Intent intent = new Intent(this, FeedbackActivity.class);
+            intent.putExtra("source_context", sourceContext);
+            startActivity(intent);
             return true;
         }
+
 
         return super.onOptionsItemSelected(item);
     }

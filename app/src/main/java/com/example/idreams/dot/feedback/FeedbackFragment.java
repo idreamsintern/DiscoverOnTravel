@@ -43,6 +43,7 @@ public class FeedbackFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         view.setBackgroundColor(Color.WHITE);
+
     }
 
     @Override
