@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.directions.route.AbstractRouting;
 import com.directions.route.Route;
 import com.directions.route.Routing;
 import com.directions.route.RoutingListener;
@@ -45,6 +46,7 @@ public class NavigateActivity extends BaseActivity implements
     private String LOG_TAG = "NavigateActivity";
     private Polyline polyline;
     private LatLng[] destinations;
+    private LatLng[] currentDestinations = new LatLng[2];
     private int start = 0;
     private int end = 1;
 
@@ -112,7 +114,7 @@ public class NavigateActivity extends BaseActivity implements
 
     @Override
     public void onRoutingSuccess(PolylineOptions mPolyOptions, Route route) {
-        CameraUpdate center = CameraUpdateFactory.newLatLng(destinations[0]);
+        CameraUpdate center = CameraUpdateFactory.newLatLng(currentDestinations[0]);
         CameraUpdate zoom = CameraUpdateFactory.zoomTo(16);
         map.moveCamera(center);
 //        map.animateCamera(zoom);
@@ -130,14 +132,14 @@ public class NavigateActivity extends BaseActivity implements
 
         // Start marker
         MarkerOptions options = new MarkerOptions();
-        options.position(destinations[start]);
+        options.position(currentDestinations[0]);
         options.icon(BitmapDescriptorFactory.fromResource(R.drawable.start_blue));
         options.title("起始點");
         map.addMarker(options);
 
         // End marker
         options = new MarkerOptions();
-        options.position(destinations[end]);
+        options.position(currentDestinations[1]);
         options.icon(BitmapDescriptorFactory.fromResource(R.drawable.end_green));
         options.title("終點");
         map.addMarker(options);
@@ -160,20 +162,20 @@ public class NavigateActivity extends BaseActivity implements
     public void nextSite(View view) {
         Toast.makeText(getApplicationContext(), "next site", Toast.LENGTH_LONG).show();
         if (start  == end-1 && end < destinations.length - 1) {
-            start++;
-            end++;
+            start++; end++;
         } else {
-            start = 0;
-            end = 1;
+            start = 0; end = 1;
         }
         routeToNext();
     }
 
     private void routeToNext() {
         map.clear();
-        Routing routing = new Routing(Routing.TravelMode.WALKING);
+        Routing routing = new Routing(Routing.TravelMode.DRIVING);
         routing.registerListener(this);
-        routing.execute(destinations);
+        currentDestinations[0] = destinations[start];
+        currentDestinations[1] = destinations[end];
+        routing.execute(currentDestinations);
     }
 
     public void currentPlace(View view) {
