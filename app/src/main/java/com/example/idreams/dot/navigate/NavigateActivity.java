@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -12,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.directions.route.AbstractRouting;
 import com.directions.route.Route;
 import com.directions.route.Routing;
 import com.directions.route.RoutingListener;
@@ -20,8 +18,6 @@ import com.example.idreams.dot.BaseActivity;
 import com.example.idreams.dot.R;
 import com.example.idreams.dot.SettingsActivity;
 import com.example.idreams.dot.nearby.NearbyActivity;
-import com.facebook.share.model.ShareLinkContent;
-import com.facebook.share.widget.ShareButton;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.Places;
@@ -117,7 +113,7 @@ public class NavigateActivity extends BaseActivity implements
         CameraUpdate center = CameraUpdateFactory.newLatLng(currentDestinations[0]);
         CameraUpdate zoom = CameraUpdateFactory.zoomTo(16);
         map.moveCamera(center);
-//        map.animateCamera(zoom);
+        map.animateCamera(zoom);
 
         if (polyline != null)
             polyline.remove();
@@ -161,10 +157,12 @@ public class NavigateActivity extends BaseActivity implements
 
     public void nextSite(View view) {
         Toast.makeText(getApplicationContext(), "next site", Toast.LENGTH_LONG).show();
-        if (start  == end-1 && end < destinations.length - 1) {
-            start++; end++;
+        if (start == end - 1 && end < destinations.length - 1) {
+            start++;
+            end++;
         } else {
-            start = 0; end = 1;
+            start = 0;
+            end = 1;
         }
         routeToNext();
     }
@@ -192,11 +190,12 @@ public class NavigateActivity extends BaseActivity implements
                         CameraUpdate center = CameraUpdateFactory.newLatLng(currentLagLng);
                         CameraUpdate zoom = CameraUpdateFactory.zoomTo(16);
 
+                        map.clear();
                         map.moveCamera(center);
                         map.animateCamera(zoom);
                         map.addMarker(new MarkerOptions()
-                            .position(currentLagLng)
-                            .title("目前位置"));
+                                .position(currentLagLng)
+                                .title("目前位置"));
                     }
 
                     @Override
@@ -265,7 +264,7 @@ public class NavigateActivity extends BaseActivity implements
         if (id == R.id.action_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
             return true;
-        } else if(id == R.id.menu_item_share) {
+        } else if (id == R.id.menu_item_share) {
             shareCurrentLocation();
         }
 

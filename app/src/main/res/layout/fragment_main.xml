@@ -14,19 +14,19 @@
         android:id="@+id/linearLayout">
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/nearby_btn"
             style="@style/HomeButton"
             android:onClick="nearbyBtn"
             android:text="@string/nearby" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/local_topic_btn"
             style="@style/HomeButton"
             android:onClick="localTopicBtn"
             android:text="@string/localTopics" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/chat_room_btn"
             style="@style/HomeButton"
             android:onClick="chatBtn"
             android:text="@string/chat" />

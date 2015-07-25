@@ -70,9 +70,9 @@ public class MainActivity extends BaseActivity
         }
         ImageView backgroundPicture = (ImageView) findViewById(R.id.back_image);
         View rootView = view.getRootView();
-        Button      nearbyPlace   = (Button) rootView.findViewById(R.id.button1);
-        Button      whatsHot      = (Button) rootView.findViewById(R.id.button2);
-        Button      chatWithLocal = (Button) rootView.findViewById(R.id.button3);
+        Button      nearbyPlace   = (Button) rootView.findViewById(R.id.nearby_btn);
+        Button      whatsHot      = (Button) rootView.findViewById(R.id.local_topic_btn);
+        Button      chatWithLocal = (Button) rootView.findViewById(R.id.chat_room_btn);
         TextView    helpMessage   = (TextView) rootView.findViewById(R.id.textView);
         LoginButton loginButton   = (LoginButton) rootView.findViewById(R.id.login_button);
         Animation darkenAnim = AnimationUtils.loadAnimation(this,R.anim.back_alpha_lower);
