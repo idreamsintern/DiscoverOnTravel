@@ -41,6 +41,8 @@ public class MainActivity extends BaseActivity
     public static int sState;
     private FragmentManager mFragmentManager;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -145,6 +147,8 @@ public class MainActivity extends BaseActivity
         prefs.edit().putString("username", userName).commit();
         prefs.edit().putString("userid", id).commit();
     }
+
+
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
